@@ -19,9 +19,22 @@ module.exports = {
         async loadPosts(_, {limit}) {
           try {
             const posts = await Post.find({}).sort({createdAt:-1}).limit(parseInt(limit))
-
-
-
+            return posts;
+          } catch (error) {
+            throw new Error(error);
+          }
+        },
+        async loadBySex(_, {limit, sex}) {
+          try {
+            const posts = await Post.find({sex:sex}).sort({createdAt:-1}).limit(parseInt(limit))
+            return posts;
+          } catch (error) {
+            throw new Error(error);
+          }
+        },
+        async loadByCategory(_, {limit, category}) {
+          try {
+            const posts = await Post.find({sex:category}).sort({createdAt:-1}).limit(parseInt(limit))
             return posts;
           } catch (error) {
             throw new Error(error);
@@ -50,7 +63,7 @@ module.exports = {
       },
       Mutation: {
         
-        async createPost(_, { caption, image, color}, context){
+        async createPost(_, { title, caption, image, price, productLink, sex, category}, context){
           const user = checkAuth(context) //authenticate user
 
           if(caption.trim() === ''){
@@ -58,10 +71,15 @@ module.exports = {
           }
 
           const newPost = new Post({ 
+            title, 
             caption,
+            productLink,
             image,
-            color,
+            price,
+            sex, 
+            category,
             user: user.id,
+            brandLink: user.brandLink,
             username: user.username,
             createdAt: new Date().toISOString()
           })

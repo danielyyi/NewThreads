@@ -15,9 +15,10 @@ const checkAuth = require('../../util/check-auth');
 function generateToken(user){
     return jwt.sign({
         id: user.id,
-        email: user.email,
         username: user.username,
-        bio: user.bio
+        email: user.email,
+        bio: user.bio,
+        brandLink: user.brandLink
     }, SECRET_KEY, {expiresIn: '1h'})
 }
 
@@ -58,14 +59,6 @@ module.exports = {
     },
     
     Mutation:{
-        async editBio(_, {bio}, context){
-            const user = checkAuth(context)
-            if(user){
-                return User.findByIdAndUpdate(user.id, {bio: bio}, {new:true})
-            }else{
-                throw new Error('Action not allowed')
-            }
-        },
         async login(_, {username, password}){
             //checks for input-side errors like empty inputs
             const {errors, valid} = validateLoginInput(username, password)
@@ -98,11 +91,13 @@ module.exports = {
             }
         },
 
-        async register(_, {registerInput: {username, email, password, confirmPassword}}){
+        async register(_, {registerInput: {username, password, email, bio, brandLink, confirmPassword}}){
             //Validate user data
             //this will call our validator register function which will check for input-side errors like incorrect email adresses 
             //or too long usernames. It will then return valid for true or false, and also any errors
-            const {valid, errors} = validateRegisterInput(username, email, password, confirmPassword)
+            const {valid, errors} = validateRegisterInput(username, password, email, confirmPassword)
+
+            //TODO: Need to update external validators
 
             //if there are any input-side errors then return them
             if(!valid){
@@ -122,9 +117,11 @@ module.exports = {
 
             //then makes a new user (referring to the User model) with these variables
             const newUser = new User ({
-                email, 
                 username, 
                 password,
+                email, 
+                bio,
+                brandLink,
                 createdAt: new Date().toISOString(),
             })
 

@@ -1,8 +1,8 @@
 //client side validating login and register inputs
 module.exports.validateRegisterInput = (
     username, 
-    email, 
     password,
+    email, 
     confirmPassword
 ) =>{
     const errors = {}

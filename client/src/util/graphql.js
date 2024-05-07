@@ -5,6 +5,7 @@ export const FETCH_USERS_QUERY = gql`
       id
       bio
       createdAt
+      brandLink
       username
     }
   }
@@ -16,16 +17,12 @@ export const FETCH_POSTS_QUERY = gql`
       id
       caption
       image
-      color
+      price
+      title
+      brandLink
+      productLink
       createdAt
       username
-      commentCount
-      comments {
-        id
-        username
-        createdAt
-        body
-      }
     }
   }
 `;
@@ -34,14 +31,10 @@ export const LOAD_POSTS_QUERY = gql`
 query LoadPosts($limit: Int!) {
   loadPosts(limit: $limit) {
     caption
-    color
-    commentCount
-    comments {
-      body
-      createdAt
-      id
-      username
-    }
+    price
+    title
+    brandLink
+    productLink
     createdAt
     id
     image

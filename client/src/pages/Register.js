@@ -15,6 +15,8 @@ function Register(props) {
     username: "",
     email: "",
     password: "",
+    bio: "", 
+    brandLink: "",
     confirmPassword: "",
   });
 
@@ -38,8 +40,8 @@ function Register(props) {
     <>
     <div className="form-holder">
       <form className="form" onSubmit={onSubmit} noValidate>
-      <div class="title">Youstagram</div>
-      <div class="subtitle">Sign Up</div>
+      <div class="title">New Threads</div>
+      <div class="subtitle">Register Your Brand</div>
       <div class="input-container ic1">
         <input
           placeholder=" "
@@ -63,6 +65,30 @@ function Register(props) {
         />
         <div class="cut"></div>
         <label for="email" className="placeholder">Email</label>
+        </div>
+        <div class="input-container ic2">
+        <input
+          placeholder=" "
+          id="bio"
+          name="bio"
+          value={values.bio}
+          className="input"
+          onChange={onChange}
+        />
+        <div class="cut"></div>
+        <label for="bio" className="placeholder">Bio</label>
+        </div>
+        <div class="input-container ic2">
+        <input
+          placeholder=" "
+          id="brandLink"
+          name="brandLink"
+          value={values.brandLink}
+          className="input"
+          onChange={onChange}
+        />
+        <div class="cut"></div>
+        <label for="brandLink" className="placeholder">Brand Link</label>
         </div>
         <div class="input-container ic2">
         <input
@@ -101,7 +127,7 @@ function Register(props) {
           </ul>
         </div>
       )}
-      <Link to="/noprofile">
+      <Link to="/">
         <div style={{  fontSize:"larger",color: "white", margin:15 }}>Back</div>
       </Link>
       </form>
@@ -116,6 +142,8 @@ const REGISTER_USER = gql`
   mutation register(
     $username: String!
     $email: String!
+    $bio: String!
+    $brandLink: String!
     $password: String!
     $confirmPassword: String!
   ) {
@@ -125,6 +153,8 @@ const REGISTER_USER = gql`
         email: $email
         password: $password
         confirmPassword: $confirmPassword
+        brandLink: $brandLink
+        bio: $bio
       }
     ) {
       id
@@ -133,6 +163,7 @@ const REGISTER_USER = gql`
       createdAt
       token
       bio
+      brandLink
     }
   }
 `;

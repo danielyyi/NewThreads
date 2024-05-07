@@ -80,7 +80,7 @@ function ProfileHeaderbar() {
         {edit ? (
             <></>
           ) : (
-            <img className="pfp" src={pfp} alt={"logo"} />
+            <></>
           )}
         
       </div>

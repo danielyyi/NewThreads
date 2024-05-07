@@ -15,7 +15,7 @@ import {
 import gql from "graphql-tag";
 import { FETCH_POSTS_QUERY } from "../util/graphql";
 //YOU NEED TO CHANGE CREATE POST TO LOAD POST QUERY
-function Home() {
+function Men() {
   var posts = [];
   const limit = 5;
   const { loading, data, refetch } = useQuery(LOAD_POSTS_QUERY, {
@@ -68,4 +68,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Men;

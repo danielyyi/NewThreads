@@ -35,7 +35,7 @@ function Search() {
               <div>
                 {user.username.toLowerCase().indexOf(term.toLowerCase()) !=
                 -1 ? (
-                  <Link to={`/users/${user.username}`}>
+                  <Link to={`/search/${user.username}`}>
                     <div key={user.id} className="user-search-widget">
                       <img
                         className="pfp"

@@ -1,17 +1,23 @@
 const {model, Schema} = require('mongoose')
+
 const postSchema = new Schema({
-    caption: String,
+    username: String, //brandName
+    title: String,
+    caption: String, //description
+    price: String,
     image: String,
-    color: String,
-    username: String,
+    productLink: String,
+    brandLink: String,
     createdAt: String,
-    comments: [
-        {
-            body: String,
-            username: String,
-            createdAt: String,
-        }
-    ],
+    
+    sex: {
+        type: String,
+        enum: ['male', 'female', 'unisex'] // Enum for sex
+    },
+    category: {
+        type: String,
+        enum: ['sweatshirt', 'tshirt', 'shorts', 'pants'] // Enum for type
+    },
     user: {
         type: Schema.Types.ObjectId,
         ref: 'users'

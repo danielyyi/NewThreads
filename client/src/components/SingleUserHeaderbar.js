@@ -11,11 +11,12 @@ import pfp from "../pfp.png";
 function SingleUserHeaderbar({username}) {
     console.log(username);  
     //if it works it works...
+    const limit = 4;
     const {
-      data,
+      data
     } = useQuery(FETCH_USER_QUERY, {
       variables: {
-        username
+        username,
       }
     });
    
@@ -37,7 +38,6 @@ function SingleUserHeaderbar({username}) {
             <div className="profile-name">{username}</div>
             <div className="profile-bio">{bio}</div>
           </div>
-          <img className="pfp" src={pfp} alt={"logo"} />
         </div>
       </div>
 

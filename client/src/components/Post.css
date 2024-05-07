@@ -1,0 +1,25 @@
+*{
+  font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+.card {
+  font-size: 1.1em;
+  text-align: left;
+  margin: 5px;
+  }
+  
+  .price{
+    font-size: large;
+  }
+  .minimal{
+    font-size:small;
+  }
+  .card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+  
+
+
+  .image{
+    width: 300px;
+  }

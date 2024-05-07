@@ -66,16 +66,10 @@ const GET_USER_POSTS = gql`
   query GetPostsByUser($username: String!, $limit: Int!) {
     getPostsByUser(username: $username, limit: $limit) {
       caption
-      color
-      commentCount
-      comments {
-        body
-        createdAt
-        id
-        username
-      }
       createdAt
       id
+      brandLink
+      productLink
       image
       username
     }
