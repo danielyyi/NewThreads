@@ -10,6 +10,7 @@ module.exports = gql`
     bio: String
     brandLink: String!
     createdAt: String!
+    pfp: String!
   }
   type Post {
     id: ID!
@@ -28,18 +29,21 @@ module.exports = gql`
   type Query {
     getPosts: [Post]
     getUsers: [User]
+    getRandomUser: [User]
+    loadUsers(limit: Int!, offset: Int!): [User]
     getPostsByUser(username: String!, limit: Int!): [Post]
     getPost(postId: ID!): Post
     getUser(id: ID!): User
     getUserByName(username: String!): User
     searchUser(username: String!): User
-    loadPosts(limit: Int!): [Post]
+    loadPosts(limit: Int!, offset: Int!): [Post]
     loadBySex(limit: Int!, sex: String!): [Post]
     loadByCategory(limit: Int!, category: String!): [Post]
   }
   input RegisterInput {
     username: String!
     password: String!
+    pfp: String!
     confirmPassword: String!
     bio: String!
     brandLink: String!

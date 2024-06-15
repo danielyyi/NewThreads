@@ -16,114 +16,64 @@ import gql from "graphql-tag";
 import { useMutation, useQuery } from "@apollo/client";
 import { useForm } from "../util/hooks";
 import { FETCH_POSTS_QUERY } from "../util/graphql";
-
+import "./ProfileHeaderbar.css";
 import { Link } from "react-router-dom";
 
 function ProfileHeaderbar() {
-  /*How the bio works: updateBio and bio are a function and variable from context/auth.js, in that page, bio is set to ''. Now, if
-  that bio == '', then we know the bio has not since been edited so we will set theBio, which is what the bio is always supposed to be, to 
-  user.bio because that is what the value is. If we edit the bio, then we call the updateBio function in context/auth.js, so 
-  bio will go from '' to the new value. Now theBio will be set to that so the edited bio will be displayed in real time*/
-  const { user, logout, updateBio, bio } = useContext(AuthContext);
-  console.log(bio)
-  console.log(user.bio)
-  var theBio = "";
-  if(user.bio){
-    theBio = user.bio;
-  }
-  
-  if(bio!=''){
-    theBio = bio
-  }
-
-  console.log(useContext(AuthContext));
-  const [edit, updateEdit] = useState(false);
-  const { values, onChange, onSubmit } = useForm(createPostCallback, {
-    bio: theBio,
+  const { user, logout } = useContext(AuthContext);
+  //if it works it works...
+  const { data } = useQuery(FETCH_USER_QUERY, {
+    variables: {
+      username: user.username,
+    },
   });
-
-  const [editBio, { error }] = useMutation(EDIT_BIO_MUTATION, {
-    variables: values,
-  });
-
-  function createPostCallback() {
-    editBio();
-    updateBio(values.bio);
-    updateEdit(false);
+  console.log(data);
+  let searchUser;
+  if (data) {
+    searchUser = data.searchUser;
   }
-
-  return (
-    <div className="profile-headerbar">
-      
-      <div className="profile-header-info">
-        <div className="profile-name-bio">
-          <div className="profile-name">{user.username}</div>
-          {edit ? (
-            <div>
-              <form onSubmit={onSubmit} className="edit-bio-form">
-              
-                <textarea
-                  className="edit-bio-input"
-                  name="bio"
-                  maxLength={45}
-                  onChange={onChange}
-                  value={values.bio}
-                  rows="2" cols="4" wrap="hard"
-                ></textarea>
-                <button type="submit"  className="edit-profile-button" style={{margin:10}}>Done</button>
-              </form>
-            </div>
-          ) : (
-            <div className="profile-bio">{values.bio}</div>
-          )}
+  //----
+  let postMarkup;
+  if (!searchUser) {
+    postMarkup = <p>Loading...</p>;
+  } else {
+    const { bio, createdAt, email, id, username, pfp, brandLink } = searchUser;
+    postMarkup = (
+      <div className="profile-headerbar">
+        <div className="profile-top">
+          <img className="pfp" src={pfp}></img>
         </div>
-        {edit ? (
-            <></>
-          ) : (
-            <></>
-          )}
-        
-      </div>
-      <div className="profile-header-buttons">
-        <Link to="/createpost">
-          <button className="post-button">Post +</button>
-        </Link>
-        <div className="header-right">
-          {edit ? (
-            <button
-              type="button"
-              className="edit-profile-button"
-              onClick={() => updateEdit(false)}
-            >
-              Cancel Edit
-            </button>
-          ) : (
-            <button
-              className="edit-profile-button"
-              onClick={() => updateEdit(true)}
-            >
-              Edit Profile
-            </button>
-          )}
-
-          <Link to="/">
-            <button className="dots-button" onClick={logout}>
-              Logout
-            </button>
-          </Link>
+        <div className="profile-middle">
+          <div className="profile-name">{username}</div>
+          <div className="profile-buttons">
+            <Link to="/createpost">
+              <button className="post-button">Post +</button>
+            </Link>
+            <Link to="/">
+              <button className="dots-button" onClick={logout}>
+                Logout
+              </button>
+            </Link>
+          </div>
         </div>
+
+        <div className="profile-bio">"{bio}"</div>
       </div>
-    </div>
-  );
+    );
+  }
+  return postMarkup;
 }
-const EDIT_BIO_MUTATION = gql`
-  mutation editBio($bio: String!) {
-    editBio(bio: $bio) {
+
+const FETCH_USER_QUERY = gql`
+  query ($username: String!) {
+    searchUser(username: $username) {
       bio
       createdAt
       email
       id
+      pfp
       username
+      brandLink
     }
   }
 `;

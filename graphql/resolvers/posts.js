@@ -16,9 +16,9 @@ module.exports = {
             throw new Error(error);
           }
         },
-        async loadPosts(_, {limit}) {
+        async loadPosts(_, {limit, offset}) {
           try {
-            const posts = await Post.find({}).sort({createdAt:-1}).limit(parseInt(limit))
+            const posts = await Post.find({}).sort({createdAt:-1}).skip(parseInt(offset)).limit(parseInt(limit))
             return posts;
           } catch (error) {
             throw new Error(error);
@@ -94,7 +94,8 @@ module.exports = {
           try{
             const post = await Post.findById(postId)
             if(user.username === post.username || user.username == "Admin"){
-              await post.delete() 
+             
+              await post.deleteOne();
               return 'Post deleted successfully'
             }else{
               throw new AuthenticationError('Action not allowed')

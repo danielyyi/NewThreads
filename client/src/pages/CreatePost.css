@@ -1,0 +1,106 @@
+.create-image{
+  width: 400px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+.images{
+  
+}
+.post-form{
+  display: flex;
+  flex-direction: column;
+
+}
+.create-holder{
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 100px 0px 20px;
+}
+
+.cropper {
+  position: relative;
+  height: 40vh;
+  background-color:rgb(255, 0, 0);
+}
+
+.viewer {
+  height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.output {
+  position: relative;
+  width: 300px;
+  overflow: hidden;
+  box-shadow: 0 0 32px rgba(91, 91, 91, 0.8);
+}
+
+.output img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: top left;
+}
+
+textarea{
+  resize: none;
+  margin: 8px 0;
+  padding: 12px 20px;
+  box-sizing: border-box;
+}
+#share{
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-style: normal;
+  font-weight:600;
+  font-size: .7em;
+}
+.dev-nav{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgb(0, 0, 0);
+  padding: 30px 100px;
+  background-color: rgb(216, 216, 216);
+  height: 30px;
+}
+/* Links inside the navbar */
+.dev-nav a {
+  font-size: 16px;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+button{
+  padding: 10px 10px;
+  margin: 8px 5px;
+  box-sizing: border-box;
+}
+
+
+input{
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+select{
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+#category{
+  max-width: 200px;
+}
+#sex{
+  max-width: 200px;
+}
+
+#price{
+  max-width: 200px;
+}

@@ -6,6 +6,7 @@ export const FETCH_USERS_QUERY = gql`
       bio
       createdAt
       brandLink
+      pfp
       username
     }
   }
@@ -19,7 +20,6 @@ export const FETCH_POSTS_QUERY = gql`
       image
       price
       title
-      brandLink
       productLink
       createdAt
       username
@@ -28,16 +28,40 @@ export const FETCH_POSTS_QUERY = gql`
 `;
 
 export const LOAD_POSTS_QUERY = gql`
-query LoadPosts($limit: Int!) {
-  loadPosts(limit: $limit) {
+query LoadPosts($limit: Int!, $offset: Int!) {
+  loadPosts(limit: $limit, offset: $offset) {
     caption
     price
     title
-    brandLink
+  
     productLink
     createdAt
     id
     image
     username
+  }
+}`
+
+export const LOAD_USERS_QUERY = gql`
+query LoadUsers($limit: Int!, $offset: Int!) {
+  loadUsers(limit: $limit, offset: $offset) {
+    id
+      bio
+      createdAt
+      brandLink
+      username
+      pfp
+  }
+}`
+
+export const GET_RANDOM_USER_QUERY = gql`
+ {
+  getRandomUser {
+    id
+      bio
+      createdAt
+      pfp
+      brandLink
+      username
   }
 }`

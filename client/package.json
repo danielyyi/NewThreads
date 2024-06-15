@@ -20,6 +20,7 @@
     "react-bootstrap": "^2.10.2",
     "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
+    "react-easy-crop": "^5.0.7",
     "react-file-base64": "^1.0.3",
     "react-image-crop": "^11.0.5",
     "react-router": "^6.22.1",

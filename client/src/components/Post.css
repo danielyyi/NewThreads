@@ -1,25 +1,45 @@
-*{
-  font-family:Georgia, 'Times New Roman', Times, serif;
+.card {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 1.1em;
+  background-color: rgb(239, 239, 239);
+  max-width: 300px;
+  margin: 10px 10px;
+  padding: 5px;
+
 }
 
-.card {
-  font-size: 1.1em;
+.image{
+  animation-name: example;
+  animation-duration: .25s;
+  animation-iteration-count: 1;
+}
+
+@keyframes example {
+  0%  {opacity: 0;}
+  100% {opacity: 1;}
+}
+.price {
+  font-size: large;
+}
+.minimal {
+  font-size: small;
+}
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card-text {
+  padding: 5px;
   text-align: left;
-  margin: 5px;
-  }
-  
-  .price{
-    font-size: large;
-  }
-  .minimal{
-    font-size:small;
-  }
-  .card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-  }
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.text-bottom{
+  display: flex;
+  justify-content: space-between ;
+  text-align: left;
+}
 
 
-  .image{
-    width: 300px;
-  }

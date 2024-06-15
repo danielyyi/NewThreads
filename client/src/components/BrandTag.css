@@ -1,0 +1,25 @@
+#brand-tag{
+    display: flex;
+    padding: 10px 20px 10px 10px;
+    justify-content: space-between;
+    
+}
+#tag-pfp{
+    height: 200px;
+}
+#tag-text{
+    margin: auto 20px;
+}
+#tag-desc{
+    max-height: 100px;
+    overflow: scroll;
+    margin: 10px;
+    font-size: large;
+}
+a{
+    text-decoration: none;
+    color: inherit;
+}
+#tag-name{
+    font-size: xx-large;
+}

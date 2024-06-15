@@ -1,0 +1,25 @@
+.posts-holder{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px;
+
+}
+
+.nav-button {
+    background-color: #777777; /* Green */
+    border: none;
+    color: white;
+    padding: 7px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 0px 10px 30px;
+  }
+
+  .nav-button:hover{
+    background-color: rgb(179, 179, 179);
+  }
+
+  

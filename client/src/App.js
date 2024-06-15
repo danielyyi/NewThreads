@@ -14,8 +14,10 @@ import Search from "./pages/Search";
 import NoProfile from "./pages/NoProfile";
 import CreatePost from "./pages/CreatePost";
 import SinglePost from "./pages/SinglePost";
+import Clothes from "./pages/Clothes";
 import SingleUser from "./pages/SingleUser";
 import Men from "./pages/Men";
+import Brands from "./pages/Brands";
 import Women from "./pages/Women";
 import EditProfile from "./pages/EditProfile";
 import { HashRouter } from "react-router-dom";
@@ -26,11 +28,13 @@ function App() {
       <Router>
         <Routes>
           <Route exact path="/search" element={<Search />} />
+          <Route exact path="/brands" element={<Brands />} />
           <Route exact path="/men" element={<Men />} />
+          <Route exact path="/clothes/:page" element={<Clothes />} />
           <Route exact path="/women" element={<Women />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/posts/:postId" element={<SinglePost />} />
-          <Route exact path="/search/:username" element={<SingleUser />} />
+          <Route exact path="/brands/:username" element={<SingleUser />} />
           <Route exact path="/" element={<Home />} />
           <Route exact path="/profile" element={<Profile />} />
           <Route exact path="/noprofile" element={<NoProfile />} />

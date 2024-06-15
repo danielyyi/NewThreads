@@ -4,7 +4,7 @@ const userSchema = new Schema({
     password: String,
     email: String,
     bio: String, //description
-    //add logo
+    pfp:String,
     brandLink: String,
     createdAt: String,
 })

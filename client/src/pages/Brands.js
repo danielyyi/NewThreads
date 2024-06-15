@@ -8,9 +8,9 @@ import pfp from "../pfp.png";
 import "../Misc.css";
 import "./Search.css";
 import Headerbar from "../components/Headerbar";
-import BrandCard from "../components/BrandCard";
+import BrandTag from "../components/BrandTag";
 
-function Search() {
+function Brands() {
   const { loading, data } = useQuery(FETCH_USERS_QUERY);
   const [term, newTerm] = useState("");
   var users = [];
@@ -30,7 +30,7 @@ function Search() {
               <div className="brand-card">
                 {user.username.toLowerCase().indexOf(term.toLowerCase()) !=
                 -1 ? (
-                  <BrandCard user={user}></BrandCard>
+                  <BrandTag user={user}></BrandTag>
                 ) : (
                   <></>
                 )}
@@ -63,4 +63,4 @@ const SEARCH_USER = gql`
             </div>
           </div>*/
 
-export default Search;
+export default Brands;

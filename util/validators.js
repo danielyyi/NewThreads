@@ -9,8 +9,8 @@ module.exports.validateRegisterInput = (
 
     if(username.trim() === ''){
         errors.username = 'Username must not be empty'
-    }else if(username.length > 15){
-        errors.username = 'Username must not exceed 15 characters'
+    }else if(username.length > 40){
+        errors.username = 'Username must not exceed 40 characters'
     }
     if(email.trim() === ''){
         errors.email = 'Email must not be empty'

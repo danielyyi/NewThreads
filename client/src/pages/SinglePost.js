@@ -48,6 +48,8 @@ function SinglePost() {
       image,
       username,
       title, 
+      category, 
+      sex,
       createdAt,
       price,
       productLink,
@@ -58,6 +60,7 @@ function SinglePost() {
     postMarkup = (
       <>
       <Headerbar/>
+      <button onClick={() => navigate(-1)}>Go back</button>
       <div class="container">
         <div class="item-image">
           <img src={image} alt={"post"} />
@@ -66,12 +69,12 @@ function SinglePost() {
           <h2>{title}</h2>
           <h3>${price}</h3>
           <div>{caption}</div>
-          <div>{username}</div>
-          <div>Product Link: {productLink}</div>
-          <div>Brand Link: {brandLink}</div>
-          <button>Visit Product</button>
+          <div>{username}</div>        
+          <a target="_blank" rel="noopener noreferrer" href={`${productLink}`}><button>Visit Product</button></a>
           <div> Posted on         {moment(createdAt).format("MMMM Do, YYYY")} (
         {moment(createdAt).fromNow()})</div>
+        <div>{category}</div>
+        <div>{sex}</div>
 
         {user && (user.username === username || user.username == "Admin") && (
           <DeleteButton postId={id} callback={deletePostCallback} />
@@ -93,11 +96,13 @@ const FETCH_POST_QUERY = gql`
       username
       title
       caption
+      category
+      sex
       createdAt
       price
       productLink
       username
-      brandLink
+      
     }
   }
 `;

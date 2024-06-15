@@ -24,22 +24,24 @@ function Post({
   const { user } = useContext(AuthContext);
 
   return (
-      <div class="card">
-        <Link to={`/posts/${id}`}>
-          <img src={image} alt={"post"} className="image" />
-        </Link>
+    <div class="card">
+      <Link to={`/posts/${id}`}>
+        <img src={image} alt={"post"} className="image" />
+      </Link>
+      <div className="card-text">
         <div>
-          <div>{title}</div>
-          <div class="price">${price}</div>
-          <br></br>
-          <div>{username}</div>
+        <div>{title}</div>
+        <div class="price">${price}</div>
         </div>
-        {user && (user.username === username || user.username == "Admin") && (
-        <DeleteButton postId={id} />
-      )}
+        <br></br>
+        <div className="text-bottom">
+          <div>{username}</div>
+          {user && (user.username === username || user.username == "Admin") && (
+            <DeleteButton postId={id} />
+          )}
+        </div>
       </div>
-
-
+    </div>
   );
 }
 export default Post;
