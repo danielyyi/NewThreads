@@ -7,7 +7,6 @@ const {
   validateRegisterInput,
   validateLoginInput,
 } = require("../../graphql/util/validators");
-//const { SECRET_KEY } = require("../config");
 const User = require("../models/User");
 const Application = require("../models/Application");
 const { getIntrospectionQuery } = require("graphql");
@@ -23,7 +22,7 @@ function generateToken(user) {
       id: user.id,
       username: user.username,
     },
-    'Bote61did',
+    process.env.SECRET_KEY,
     { expiresIn: "1h" }
   );
 }

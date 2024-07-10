@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 
 const typeDefs = require('./typeDefs.js');
 const resolvers = require('./resolvers/index.js');
-//const { MONGODB } = require('./config.js');
 
 const PORT = process.env.PORT || 5000;
 
@@ -14,7 +13,7 @@ const server = new ApolloServer({
 });
 
 mongoose
-  .connect('mongodb+srv://yidan23:Bote61did@cluster0.f34jv.mongodb.net/Clothes?retryWrites=true&w=majority', {  })
+  .connect(process.env.MONGODB, {  })
   .then(() => {
     console.log('MongoDB Connected');
     return server.listen({ port: PORT });
