@@ -14,7 +14,7 @@ const server = new ApolloServer({
 });
 
 mongoose
-  .connect(MONGODB, {  })
+  .connect('mongodb+srv://yidan23:Bote61did@cluster0.f34jv.mongodb.net/Clothes?retryWrites=true&w=majority', {  })
   .then(() => {
     console.log('MongoDB Connected');
     return server.listen({ port: PORT });
