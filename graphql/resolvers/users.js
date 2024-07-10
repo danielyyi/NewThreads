@@ -7,7 +7,7 @@ const {
   validateRegisterInput,
   validateLoginInput,
 } = require("../../graphql/util/validators");
-const { SECRET_KEY } = require("../config");
+//const { SECRET_KEY } = require("../config");
 const User = require("../models/User");
 const Application = require("../models/Application");
 const { getIntrospectionQuery } = require("graphql");

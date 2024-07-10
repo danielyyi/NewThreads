@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const typeDefs = require('./typeDefs.js');
 const resolvers = require('./resolvers/index.js');
-const { MONGODB } = require('./config.js');
+//const { MONGODB } = require('./config.js');
 
 const PORT = process.env.PORT || 5000;
 
