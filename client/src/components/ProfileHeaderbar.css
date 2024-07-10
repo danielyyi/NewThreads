@@ -25,8 +25,15 @@
   height: 200px;
 }
 .profile-buttons button{
-  margin: 0px 5px;
+  background-color: rgb(80, 80, 80);
+  color: white;
+  border: none;
+  margin: 5px 5px;
 }
+.profile-buttons button:hover {
+  background-color: rgb(106, 106, 106);
+}
+
 .profile-top {
   display: flex;
   justify-content: center;

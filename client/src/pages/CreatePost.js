@@ -197,6 +197,7 @@ function MakePost(props) {
               Title
             </label>
             <input
+              maximum-scale={1}
               wrap="soft"
               type="text"
               maxLength={100}
@@ -209,6 +210,7 @@ function MakePost(props) {
               Price
             </label>
             <input
+              maximum-scale={1}
               wrap="soft"
               type="number"
               min="0"
@@ -224,7 +226,13 @@ function MakePost(props) {
             <label for="sex" className="">
               Sex
             </label>
-            <select onChange={onChange} id="sex" value={values.sex} name="sex">
+            <select
+              onChange={onChange}
+              id="sex"
+              value={values.sex}
+              name="sex"
+              maximum-scale={1}
+            >
               <option value="unisex">Unisex</option>
               <option value="male">Men</option>
               <option value="female">Women</option>
@@ -233,6 +241,7 @@ function MakePost(props) {
               Category
             </label>
             <select
+              maximum-scale={1}
               onChange={onChange}
               id="category"
               value={values.category}
@@ -250,6 +259,7 @@ function MakePost(props) {
               Product Link
             </label>
             <input
+              maximum-scale={1}
               wrap="soft"
               type="text"
               maxLength={100}
@@ -263,6 +273,7 @@ function MakePost(props) {
               Description
             </label>
             <textarea
+              maximum-scale={1}
               wrap="soft"
               rows="20"
               cols="70"
@@ -282,31 +293,34 @@ function MakePost(props) {
               multiple={false}
               onDone={({ base64 }) => changeImage(base64)}
             />
-            {image ? (            <div className="images">
-              <div className="cropper">
-                <Cropper
-                  image={image}
-                  aspect={CROP_AREA_ASPECT}
-                  crop={crop}
-                  zoom={zoom}
-                  onCropChange={setCrop}
-                  onZoomChange={setZoom}
-                  onCropAreaChange={setCroppedArea}
-                />
-              </div>
-              <div className="viewer">
-                <div>
-                  {croppedArea && (
-                    <Output
-                      ratio={CROP_AREA_ASPECT}
-                      image={image}
-                      croppedArea={croppedArea}
-                    />
-                  )}
+            {image ? (
+              <div className="images">
+                <div className="cropper">
+                  <Cropper
+                    image={image}
+                    aspect={CROP_AREA_ASPECT}
+                    crop={crop}
+                    zoom={zoom}
+                    onCropChange={setCrop}
+                    onZoomChange={setZoom}
+                    onCropAreaChange={setCroppedArea}
+                  />
+                </div>
+                <div className="viewer">
+                  <div>
+                    {croppedArea && (
+                      <Output
+                        ratio={CROP_AREA_ASPECT}
+                        image={image}
+                        croppedArea={croppedArea}
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>):(<></>)}
-
+            ) : (
+              <></>
+            )}
 
             <div>
               {errors.length > 0 ? (

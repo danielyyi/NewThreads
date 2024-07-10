@@ -100,6 +100,7 @@ function EditProfile(props) {
               Username
             </label>
             <input
+            maximum-scale={1}
               placeholder=" "
               id="username"
               name="username"
@@ -113,6 +114,7 @@ function EditProfile(props) {
               Email
             </label>
             <input
+            maximum-scale={1}
               placeholder=" "
               id="email"
               name="email"
@@ -126,6 +128,7 @@ function EditProfile(props) {
               Bio
             </label>
             <textarea
+            maximum-scale={1}
               placeholder=" "
               id="bio"
               name="bio"
@@ -139,6 +142,7 @@ function EditProfile(props) {
               Brand Link
             </label>
             <input
+            maximum-scale={1}
               placeholder=" "
               id="brandLink"
               name="brandLink"
@@ -165,7 +169,7 @@ function EditProfile(props) {
           </div>
           {loading ? (
             <div className="loader-holder-small">
-              <div className="loader-small"></div>
+              <div className="loader-small">Loading...</div>
             </div>
           ) : (
             <div className="edit-button-holder">

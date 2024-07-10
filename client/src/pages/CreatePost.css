@@ -55,7 +55,6 @@ textarea {
   box-sizing: border-box;
 }
 #share {
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   font-style: normal;
   font-weight: 600;
   font-size: 0.7em;
@@ -79,17 +78,25 @@ textarea {
 }
 
 #create-button {
-  padding: 10px 10px;
-  margin: 8px 5px;
-  font-size: large;
-  box-sizing: border-box;
+  background-color: rgb(80, 80, 80);
+  color: white;
+  border: none;
+  margin: 5px 0px;
+}
+#create-button:hover {
+  background-color: rgb(106, 106, 106);
 }
 
+
+
 #cancel-button {
-  padding: 10px 10px;
-  margin: 15px 8px;
-  font-size:small;
-  box-sizing: border-box;
+  background-color: rgb(80, 80, 80);
+  color: white;
+  border: none;
+  margin: 5px 0px;
+}
+#cancel-button:hover {
+  background-color: rgb(106, 106, 106);
 }
 
 input {

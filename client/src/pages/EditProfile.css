@@ -1,28 +1,35 @@
-.edit-profile-button{
-    padding: 10px;
-   
+.edit-profile-button {
+    background-color: rgb(80, 80, 80);
+    color: white;
+    border: none;
+    margin: 5px 5px;
+  }
+  .edit-profile-button:hover {
+    background-color: rgb(106, 106, 106);
+  }
+.edit-button-holder {
+  display: flex;
+  justify-content: center;
 }
-.edit-button-holder{
-    display: flex;
-    justify-content: center;
+#cancel-button {
+  margin: 10px;
 }
-#cancel-button{
-    margin: 10px;
+.edit-form-holder {
+  padding: 0px 20px;
 }
-.edit-form-holder{
-    padding: 0px 20px;
+#image {
+  height: 100px;
 }
-#image{
-    height: 100px;
-}
-#instructions{
-    margin: 10px;
-    font-weight: bold;
+#instructions {
+  margin: 10px;
+  font-weight: bold;
 }
 
+
+
 @media (max-width: 620px) {
-.dev-nav{
+  .dev-nav {
     display: flex;
     justify-content: center;
-}
+  }
 }

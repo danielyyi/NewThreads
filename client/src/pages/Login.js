@@ -45,6 +45,7 @@ function Login(props) {
           <div class="subtitle">Login</div>
           <div class="input-container ic1">
             <input
+            maximum-scale = {1}
               id="username"
               placeholder=" "
               name="username"
@@ -59,6 +60,7 @@ function Login(props) {
           </div>
           <div class="input-container ic2">
             <input
+            maximum-scale = {1}
               id="password"
               type="password"
               placeholder=" "

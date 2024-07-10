@@ -1,6 +1,12 @@
 #about-section{
-    padding: 20px 20px 0px 50px;
-    max-width: 600px;
+    padding: 20px 20px 0px 20px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+#about-subsection{
+    margin: 0px 0px;
+    max-width: 500px;
 }
 #click-me{
     margin: 15px 0px;
@@ -10,3 +16,11 @@
     margin-top:20px;
     margin-left: -25px;
 }
+
+@media (max-width: 600px) {
+    #about-section{
+        display: flex;
+        text-align: center;
+        justify-content: center;
+    }
+  }

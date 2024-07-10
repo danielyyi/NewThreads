@@ -11,6 +11,7 @@ function About() {
     <>
       <Headerbar />
       <div id="about-section">
+        <div id="about-subsection">
         <h1>About Us</h1>
         <div>
           NewThreads strive to connect you with small, unique clothing brands.
@@ -33,8 +34,8 @@ function About() {
           emerging brands, ensuring that your fashion choices are always
           on-trend and distinctive.
         </div>
-
-        <div>
+        </div>
+        <div id="about-subsection">
           <h2>Give Feedback</h2>
           Noticed a bug? Want to suggest a new feature? NewThreads is always
           evolving to help users and brands alike, so any feedback on the site
@@ -43,8 +44,8 @@ function About() {
           <div id="form">
           <iframe
             src="https://docs.google.com/forms/d/e/1FAIpQLSdEgNQ0aKmTeFVDmPHXEMhAZJeQgOLeDEMZSERgwj32WeXsNw/viewform?embedded=true"
-            width="640"
-            height="629"
+            width="400"
+            height="800"
             frameborder="0"
             marginheight="0"
             marginwidth="0"
