@@ -1,10 +1,10 @@
 const {AuthenticationError} = require('apollo-server');
 const { args } = require('commander');
-const { off } = require('../../models/Post');
+const { off } = require('../models/Post');
 
 
-const Post = require('../../models/Post');
-const checkAuth = require('../../util/check-auth')
+const Post = require('../models/Post');
+const checkAuth = require("../../graphql/util/check-auth");
 
 module.exports = {
     Query: {

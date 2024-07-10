@@ -6,13 +6,13 @@ const { args } = require("commander");
 const {
   validateRegisterInput,
   validateLoginInput,
-} = require("../../util/validators");
-const { SECRET_KEY } = require("../../config");
-const User = require("../../models/User");
-const Application = require("../../models/Application");
+} = require("../../graphql/util/validators");
+const { SECRET_KEY } = require("../config");
+const User = require("../models/User");
+const Application = require("../models/Application");
 const { getIntrospectionQuery } = require("graphql");
-const checkAuth = require("../../util/check-auth");
-const Auto = require("../../models/Auto");
+const checkAuth = require("../../graphql/util/check-auth");
+const Auto = require("../models/Auto");
 
 //resolver for user accounts
 

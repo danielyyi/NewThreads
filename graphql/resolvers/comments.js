@@ -1,7 +1,7 @@
 const {AuthenticationError, UserInputError} = require('apollo-server')
 
 const Post = require("../../models/Post")
-const checkAuth = require("../../util/check-auth")
+const checkAuth = require("../../graphql/util/check-auth");
 //UPDATE THE GOOGLE SPREADSHEET: 9/18/2021, added comment creation and deletion. 45 min
 module.exports = {
     Mutation: {
