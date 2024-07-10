@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 
-
 import { AuthProvider } from "./context/auth";
 import AuthRoute from "./util/AuthRoute";
 
@@ -20,31 +19,49 @@ import Men from "./pages/Men";
 import Brands from "./pages/Brands";
 import Women from "./pages/Women";
 import EditProfile from "./pages/EditProfile";
-import { HashRouter } from "react-router-dom";
-
+import About from "./pages/About";
 function App() {
   return (
     <AuthProvider>
       <Router>
         <Routes>
           <Route exact path="/search" element={<Search />} />
-          <Route exact path="/brands" element={<Brands />} />
+          <Route exact path="/about" element={<About />} />
+          <Route exact path="/brands" element={<Brands/>} />
           <Route exact path="/men" element={<Men />} />
-          <Route exact path="/clothes/:page" element={<Clothes />} />
+          <Route exact path="/clothes" element={<Clothes />} />
           <Route exact path="/women" element={<Women />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/posts/:postId" element={<SinglePost />} />
-          <Route exact path="/brands/:username" element={<SingleUser />} />
+          <Route exact path="/brands/:userId" element={<SingleUser />} />
           <Route exact path="/" element={<Home />} />
-          <Route exact path="/profile" element={<Profile />} />
+          <Route
+            exact
+            path="/profile"
+            element={
+              <AuthRoute redirectTo="/login">
+                <Profile />
+              </AuthRoute>
+            }
+          />
+
           <Route exact path="/noprofile" element={<NoProfile />} />
           <Route exact path="/register" element={<Register />} />
           <Route
             exact
-            path="/createpost"
+            path="/profile/create"
             element={
               <AuthRoute redirectTo="/">
                 <CreatePost />
+              </AuthRoute>
+            }
+          />
+          <Route
+            exact
+            path="/profile/edit"
+            element={
+              <AuthRoute redirectTo="/">
+                <EditProfile />
               </AuthRoute>
             }
           />

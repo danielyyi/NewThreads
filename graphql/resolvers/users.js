@@ -9,8 +9,10 @@ const {
 } = require("../../util/validators");
 const { SECRET_KEY } = require("../../config");
 const User = require("../../models/User");
+const Application = require("../../models/Application");
 const { getIntrospectionQuery } = require("graphql");
 const checkAuth = require("../../util/check-auth");
+const Auto = require("../../models/Auto");
 
 //resolver for user accounts
 
@@ -20,7 +22,6 @@ function generateToken(user) {
     {
       id: user.id,
       username: user.username,
-
     },
     SECRET_KEY,
     { expiresIn: "1h" }
@@ -29,9 +30,9 @@ function generateToken(user) {
 
 module.exports = {
   Query: {
-    async getUser(_, { id }) {
+    async getUser(_, { userId }) {
       try {
-        const user = await User.findById(id);
+        const user = await User.findById(userId);
         if (user) {
           return user;
         } else {
@@ -45,7 +46,7 @@ module.exports = {
       try {
         let totalDocs = 5;
         let randomIndex = Math.floor(Math.random() * totalDocs);
-        const user = await User.find().skip(randomIndex).limit(1)
+        const user = await User.find().skip(randomIndex).limit(1);
 
         if (user) {
           return user;
@@ -90,6 +91,50 @@ module.exports = {
   },
 
   Mutation: {
+    async editProfile(_, { bio, email, pfp, brandLink, username }, context) {
+      const user = checkAuth(context);
+      if (user) {
+        let newUser;
+        if (username) {
+          newUser = await User.findByIdAndUpdate(
+            user.id,
+            { username: username },
+            { new: true }
+          );
+        }
+        if (bio) {
+          newUser = await User.findByIdAndUpdate(
+            user.id,
+            { bio: bio },
+            { new: true }
+          );
+        }
+        if (email) {
+          newUser = await User.findByIdAndUpdate(
+            user.id,
+            { email: email },
+            { new: true }
+          );
+        }
+        if (pfp) {
+          newUser = await User.findByIdAndUpdate(
+            user.id,
+            { pfp: pfp },
+            { new: true }
+          );
+        }
+        if (brandLink) {
+          newUser = await User.findByIdAndUpdate(
+            user.id,
+            { brandLink: brandLink },
+            { new: true }
+          );
+        }
+        return newUser;
+      } else {
+        throw new Error("Action not allowed");
+      }
+    },
     async login(_, { username, password }) {
       //checks for input-side errors like empty inputs
       const { errors, valid } = validateLoginInput(username, password);
@@ -102,8 +147,15 @@ module.exports = {
       //wrong username
       const user = await User.findOne({ username });
       if (!user) {
-        errors.general = "User not found";
-        throw new UserInputError("User not found", { errors });
+        const user2 = await Application.findOne({username})
+        if(user2){
+          errors.general = "Brand is awaiting approval"
+          throw new UserInputError("Brand is awaiting approval", { errors });
+        }else{
+          errors.general = "User not found";
+          throw new UserInputError("User not found", { errors });
+        }
+
       }
       //wrong password
       const match = await bcrypt.compare(password, user.password);
@@ -142,30 +194,36 @@ module.exports = {
       const { valid, errors } = validateRegisterInput(
         username,
         password,
+        brandLink,
+        bio,
+        pfp,
         email,
         confirmPassword
       );
 
       //TODO: Need to update external validators
 
-      //if there are any input-side errors then return them
-      if (!valid) {
-        throw new UserInputError("Errors", { errors });
-      }
       //make sure user with that username doesnt already exist
-      const user = await User.findOne({ username });
-      if (user) {
+      const user1 = await User.findOne({ username });
+      const user2 = await Application.findOne({ username });
+
+      if (user1 || user2) {
         throw new UserInputError("Username is taken", {
           errors: {
             username: "This username is taken",
           },
         });
       }
+
+      //if there are any input-side errors then return them
+      if (!valid) {
+        throw new UserInputError("Errors", { errors });
+      }
       //hashes password 12 times to encrypt
       password = await bcrypt.hash(password, 12);
 
       //then makes a new user (referring to the User model) with these variables
-      const newUser = new User({
+      const newUser = new Application({
         username,
         password,
         email,

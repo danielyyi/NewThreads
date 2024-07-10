@@ -7,7 +7,6 @@ const postSchema = new Schema({
     price: String,
     image: String,
     productLink: String,
-    brandLink: String,
     createdAt: String,
     
     sex: {
@@ -16,7 +15,7 @@ const postSchema = new Schema({
     },
     category: {
         type: String,
-        enum: ['sweatshirt', 'tshirt', 'shorts', 'pants'] // Enum for type
+        enum: ['sweatshirt', 'tshirt', 'shorts', 'pants', 'hat', 'other'] // Enum for type
     },
     user: {
         type: Schema.Types.ObjectId,

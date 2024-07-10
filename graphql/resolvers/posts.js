@@ -16,13 +16,27 @@ module.exports = {
             throw new Error(error);
           }
         },
-        async loadPosts(_, {limit, offset}) {
-          try {
-            const posts = await Post.find({}).sort({createdAt:-1}).skip(parseInt(offset)).limit(parseInt(limit))
-            return posts;
-          } catch (error) {
-            throw new Error(error);
+        async loadPosts(_, {limit, offset, category, price}) {
+          if(category != "all"){
+            try {
+              const posts = await Post.find({ category: category})
+                .sort({ createdAt: -1 })
+                .skip(parseInt(offset))
+                .limit(parseInt(limit));
+             // const posts = await Post.find({category: category}).sort({createdAt:-1}).skip(parseInt(offset)).limit(parseInt(limit))
+              return posts;
+            } catch (error) {
+              throw new Error(error);
+            }
+          }else{
+            try {
+              const posts = await Post.find({}).sort({createdAt:-1}).skip(parseInt(offset)).limit(parseInt(limit))
+              return posts;
+            } catch (error) {
+              throw new Error(error);
+            }
           }
+
         },
         async loadBySex(_, {limit, sex}) {
           try {
@@ -40,9 +54,9 @@ module.exports = {
             throw new Error(error);
           }
         },
-        async getPostsByUser(_, {username, limit}) {
+        async getPostsByUser(_, {userId, limit}) {
           try {
-            const posts = await Post.find({username: username}).sort({createdAt:-1}).limit(parseInt(limit));
+            const posts = await Post.find({user: userId}).sort({createdAt:-1}).limit(parseInt(limit));
             return posts;
           } catch (error) {
             throw new Error(error);
@@ -59,6 +73,18 @@ module.exports = {
           }catch(err){
             throw new Error( err)
           }
+        },
+        async countPosts(_, {userId}){
+          try{
+            const count = await Post.find({user: userId}).countDocuments();
+            if(count){
+              return count;
+            }else{
+              throw new Error('Count not found')
+            }
+          }catch(err){
+            throw new Error( err)
+          }
         }
       },
       Mutation: {
@@ -68,6 +94,10 @@ module.exports = {
 
           if(caption.trim() === ''){
             throw new Error('Post body must not be empty')
+          }
+          const count = await Post.find({user: user.id}).countDocuments();
+          if(count>=12){
+            throw new Error('The maximum number of posts is 12 for each brand. Please remove one of your current posts to create another.')
           }
 
           const newPost = new Post({ 
@@ -79,7 +109,6 @@ module.exports = {
             sex, 
             category,
             user: user.id,
-            brandLink: user.brandLink,
             username: user.username,
             createdAt: new Date().toISOString()
           })
@@ -93,8 +122,9 @@ module.exports = {
 
           try{
             const post = await Post.findById(postId)
-            if(user.username === post.username || user.username == "Admin"){
-             
+            console.log(user.id);
+            console.log(post.user)
+            if(user.id == post.user || user.username == "Admin"){
               await post.deleteOne();
               return 'Post deleted successfully'
             }else{
@@ -103,6 +133,7 @@ module.exports = {
           }catch(error){
             throw new Error(error)
           }
-        }
+        },
+
       }
 }

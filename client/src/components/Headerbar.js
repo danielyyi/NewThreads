@@ -1,58 +1,51 @@
 import Logo from "../YoustagramLogo.png";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import "../Misc.css";
+import "./Headerbar.css";
 import { faCaretDown, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { AuthContext } from "../context/auth";
+
 function Headerbar() {
+  const { user } = useContext(AuthContext);
+  const pathname = window.location.href.substring(
+    window.location.href.lastIndexOf("/") + 1, window.location.href.lastIndexOf("/")+6
+  ); //name of page aka /login etc.
+
+  const path = pathname === "" ? "home" : pathname;
+  console.log(pathname);
+  const [activeItem] = useState(path);
+
   return (
     <nav className="navbar">
-      <div className="left-section">
+      <div id="nav-elements">
         <Link to="/">
           <div className="logo">NewThreads</div>
         </Link>
-        <div className="dropdown">
-          <button className="dropbtn">
-            <Link to="/clothes/0">APPAREL</Link>
-          </button>
-        </div>
-        <div className="dropdown">
-          <button className="dropbtn">
-            <Link to="/brands">BRANDS</Link>
-          </button>
-        </div>
-
-        <div className="dropdown">
-          <button className="dropbtn">
-            <Link to="/women">DISCOVER</Link>
-          </button>
-          <div className="dropdown-content">
-            <a href="#">Tees</a>
-            <a href="#">Hoodies/Sweaters</a>
-            <a href="#">Pants</a>
-            <a href="#">Shorts</a>
-            <a href="#">Dresses</a>
-          </div>
-        </div>
-
-      </div>
-      <div className="right-section">
-        <div className="dropdown">
-          <button className="dropbtn">
-            <FontAwesomeIcon size="xl" icon={faUserCircle} />
-          </button>
-          <div className="dropdown-content">
-            <div className="dropdown-content">
-              <Link to="/login">
-                <a href="#">Login</a>
-              </Link>
-              <Link to="/register">
-                <a href="#">Register</a>
-              </Link>
-              <Link to="/profile">
-                <a href="#">Profile</a>
-              </Link>
-            </div>
-          </div>
+        <div id="nav-buttons">
+          <Link
+            to="/clothes"
+            id={activeItem === "cloth" ? "active-icon" : "inactive-icon"}
+          >
+            APPAREL
+          </Link>
+          <Link
+            to="/brands"
+            id={activeItem === "brand" ? "active-icon" : "inactive-icon"}
+          >
+            BRANDS
+          </Link>
+          {user ? (
+            <Link
+              to="/profile"
+              id={activeItem === "profile" ? "active-icon" : "inactive-icon"}
+            >
+              <FontAwesomeIcon icon={faUserCircle} />
+            </Link>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </nav>

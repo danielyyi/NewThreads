@@ -1,20 +1,20 @@
 .card {
   font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 1.1em;
-  background-color: rgb(239, 239, 239);
+  background-color: #ffffff;
   max-width: 300px;
   margin: 10px 10px;
   padding: 5px;
-
 }
+#link{}
 
 .image{
-  animation-name: example;
+  animation-name: image;
   animation-duration: .25s;
   animation-iteration-count: 1;
 }
 
-@keyframes example {
+@keyframes image {
   0%  {opacity: 0;}
   100% {opacity: 1;}
 }
@@ -31,6 +31,7 @@
 .card-text {
   padding: 5px;
   text-align: left;
+  
   display: flex;
   flex-direction: column;
   justify-content: space-between;

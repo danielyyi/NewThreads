@@ -1,41 +1,98 @@
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 50px;
+.single-post-container {
+  display: flex;
+  justify-content: center;
+  margin: 0px 50px 50px 50px;
+}
+#item-button {
+  background-color: rgb(80, 80, 80);
+  color: white;
+  border: none;
+  margin-top: 30px;
+  font-size: large;
+}
+
+#back-button {
+  background-color: rgb(80, 80, 80);
+  color: white;
+  border: none;
+  margin: 30px;
+}
+.item-date {
+  font-size: medium;
+  margin: 10px 0px;
+}
+#item-button:hover {
+  background-color: rgb(106, 106, 106);
+}
+
+#back-button:hover {
+  background-color: rgb(106, 106, 106);
 }
 
 .item-image img {
-    width: 500px;
-    height: auto;
+  width: 460px;
+  height: auto;
+  margin: 0px 10px;
 }
 
+.item-title {
+  font-size: x-large;
+  font-weight: 500;
+}
+.item-caption {
+  margin: 10px 0px;
+}
+
+.item-price {
+  font-size: xx-large;
+  font-weight: bold;
+  margin: 10px 0px;
+}
 .item-info {
-    padding: 0 20px;
-}
-
-.item-info h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-.item-info p {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-.item-info button {
-    background-color: #777777; /* Green */
-    border: none;
-    color: white;
-    padding: 7px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 10px 0px;
+  margin: 0px 0px 0px 30px;
+  height: 100%;
+  max-width: 400px;
 }
 
 .item-info button:hover {
-    background-color: #a9a9a9;
+  background-color: #a9a9a9;
 }
+
+#link {
+  text-decoration: underline;
+  font-size: large;
+}
+
+
+
+@media (max-width: 900px) {
+  .item-image img {
+    width: 55vw;
+    margin: 0px 0px;
+  }
+}
+
+@media (max-width: 620px) {
+    .item-image img {
+      width:90vw;
+      margin: 0px 0px;
+    }
+    .item-image{
+        display: flex;
+        justify-content: center;
+    }
+    .single-post-container{
+        display: block;
+    }
+    #back-button {
+        margin: 15px;
+        margin-left: 20px;
+      }
+      .single-post-container {
+        margin: 0px 0px 50px 0px;
+      }
+      .item-info{
+        margin: 15px 30px;
+      }
+  }
+  

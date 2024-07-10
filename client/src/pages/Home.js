@@ -7,15 +7,16 @@ import { Link } from "react-router-dom";
 import pfp from "../pfp.png";
 import "../Misc.css";
 import Headerbar from "../components/Headerbar";
-import BrandCard from "../components/BrandCard";
+import Daily from "../components/Daily";
+import Seasonal from "../components/Seasonal";
+import Spotlight from "../components/Spotlight";
+import Footer from "../components/Footer";
 import "./Home.css";
 function Home() {
   const [term, newTerm] = useState("");
 
   const [page, setPage] = useState(0);
   const limit = 1;
-
-
 
   var users = [];
   console.log(limit * page);
@@ -37,30 +38,23 @@ function Home() {
   return (
     <div>
       <Headerbar />
-      <div>June 12th Collection</div>
-      {loading ? (
-        <div className="loader-holder">
-          <div className="loader"></div>
+      <div id="intro">
+        <div id="intro-text">NEW CLOTHES FROM STARTUP BRANDS</div>
+      </div>
+      <Daily />
+      <Link to="/clothes">
+        <div id="shop-apparel">
+          <div id="shop-apparel-text">Browse Apparel</div>
         </div>
-      ) : (
-        <div className="brand-holder">
-          {users.map((user) => (
-            <>
-              {user.username.toLowerCase().indexOf(term.toLowerCase()) != -1 ? (
-                <BrandCard user={user}></BrandCard>
-              ) : (
-                <></>
-              )}
-            </>
-          ))}
+      </Link>
+      <Link to="/brands">
+        <div id="shop-brands">
+          <div id="shop-brands-text">Discover Brands</div>
         </div>
-      )}
-      <button onClick={() => refetch()}>
-        Press Me to Find <span>NEW</span> Clothes
-      </button>
+      </Link>
+      <Footer />
     </div>
   );
 }
-
 
 export default Home;

@@ -37,14 +37,14 @@ function BrandCard({ user: { id, username, brandLink, bio, pfp} }) {
         )}
       </div>
       <div className="brand-card-bottom">
-        <BrandTag user={{username, pfp, bio}}/>
+        <BrandTag user={{username, id, pfp, bio}}/>
       </div>
     </div>
   );
 }
 const GET_USER_POSTS = gql`
-  query GetPostsByUser($username: String!, $limit: Int!) {
-    getPostsByUser(username: $username, limit: $limit) {
+  query GetPostsByUser($id: ID!, $limit: Int!) {
+    getPostsByUser(id: $id, limit: $limit) {
       caption
       createdAt
       id

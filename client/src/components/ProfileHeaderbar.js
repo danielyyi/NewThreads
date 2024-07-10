@@ -19,35 +19,47 @@ import { FETCH_POSTS_QUERY } from "../util/graphql";
 import "./ProfileHeaderbar.css";
 import { Link } from "react-router-dom";
 
-function ProfileHeaderbar() {
+function ProfileHeaderbar({ canPost }) {
   const { user, logout } = useContext(AuthContext);
   //if it works it works...
   const { data } = useQuery(FETCH_USER_QUERY, {
     variables: {
-      username: user.username,
+      userId: user.id,
     },
   });
   console.log(data);
   let searchUser;
   if (data) {
-    searchUser = data.searchUser;
+    searchUser = data.getUser;
   }
+
   //----
   let postMarkup;
   if (!searchUser) {
-    postMarkup = <p>Loading...</p>;
+    postMarkup = <p></p>;
   } else {
     const { bio, createdAt, email, id, username, pfp, brandLink } = searchUser;
     postMarkup = (
       <div className="profile-headerbar">
         <div className="profile-top">
-          <img className="pfp" src={pfp}></img>
+          <img id="pfp" src={pfp}></img>
         </div>
         <div className="profile-middle">
           <div className="profile-name">{username}</div>
           <div className="profile-buttons">
-            <Link to="/createpost">
-              <button className="post-button">Post +</button>
+            {canPost ? (
+                  <Link to="/profile/create">
+                  <button className="post-button" >
+                    Post +
+                  </button>
+                </Link>
+              
+            ) : (
+              <button className="post-button" disabled>Post +</button>
+            )}
+
+            <Link to="/profile/edit">
+              <button className="post-button">Edit Profile</button>
             </Link>
             <Link to="/">
               <button className="dots-button" onClick={logout}>
@@ -65,8 +77,8 @@ function ProfileHeaderbar() {
 }
 
 const FETCH_USER_QUERY = gql`
-  query ($username: String!) {
-    searchUser(username: $username) {
+  query ($userId: ID!) {
+    getUser(userId: $userId) {
       bio
       createdAt
       email

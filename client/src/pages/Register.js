@@ -1,26 +1,30 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import gql from "graphql-tag";
 import { useForm } from "../util/hooks";
-import {AuthContext} from '../context/auth'
-import '../Login.css'
+import { AuthContext } from "../context/auth";
+import "./Register.css";
 import Navbar from "../components/Navbar";
 import FileBase from "react-file-base64";
+import Footer from "../components/Footer"
 function Register(props) {
-  const context = useContext(AuthContext)
+  const context = useContext(AuthContext);
   const [errors, setErrors] = useState({});
+  const [applied, setApplied] = useState(false);
   const navigate = useNavigate();
   const { onChange, onSubmit, values } = useForm(registerUser, {
     username: "",
     email: "",
     password: "",
-    bio: "", 
+    bio: "",
     brandLink: "",
     pfp: "",
     confirmPassword: "",
   });
-
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   function resizeImage(base64Str, maxWidth = 600, maxHeight = 600) {
     return new Promise((resolve) => {
       let img = new Image();
@@ -57,15 +61,14 @@ function Register(props) {
     console.log(image);
     setImage(image);
     resizeImage(image, 600, 600).then((result) => (values.pfp = result));
-    console.log(values.pfp)
+    console.log(values.pfp);
   }
 
-
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
-    update(_, {data: {register: userData}}) {
+    update(_, { data: { register: userData } }) {
       console.log(userData);
-      context.login(userData)
-      navigate('/profile');
+      //context.login(userData);
+      setApplied(true);
     },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.errors);
@@ -79,119 +82,158 @@ function Register(props) {
 
   return (
     <>
-    <div className="form-holder">
-      <form className="form" onSubmit={onSubmit} noValidate>
-      <div class="title">New Threads</div>
-      <div class="subtitle">Register Your Brand</div>
-      <div class="input-container ic1">
-        <input
-          placeholder=" "
-          id= "username"
-          name="username"
-          value={values.username}
-          className="input"
-          onChange={onChange}
-        />
-        <div class="cut"></div>
-        <label for="username" className="placeholder">Username</label>
-        </div>
-        <div class="input-container ic2">
-        <input
-          placeholder=" "
-          id="email"
-          name="email"
-          value={values.email}
-          className="input"
-          onChange={onChange}
-        />
-        <div class="cut"></div>
-        <label for="email" className="placeholder">Email</label>
-        </div>
-        <div class="input-container ic2">
-        <input
-          placeholder=" "
-          id="bio"
-          name="bio"
-          value={values.bio}
-          className="input"
-          onChange={onChange}
-        />
-        <div class="cut"></div>
-        <label for="bio" className="placeholder">Bio</label>
-        </div>
-        <div class="input-container ic2">
-        <input
-          placeholder=" "
-          id="brandLink"
-          name="brandLink"
-          value={values.brandLink}
-          className="input"
-          onChange={onChange}
-        />
-        <div class="cut"></div>
-        <label for="brandLink" className="placeholder">Brand Link</label>
-        </div>
-        <div class="input-container ic2">
-        <input
-          placeholder=" "
-          type="password"
-          id="password"
-          name="password"
-          value={values.password}
-          className="input"
-          onChange={onChange}
-        />
-        <div class="cut"></div>
-        <label for="password" className="placeholder">Password</label>
-        </div>
-        <div class="input-container ic2">
-        <input
-        type="password"
-          id="confirmPassword"
-          placeholder=" "
-          name="confirmPassword"
-          value={values.confirmPassword}
-          className="input"
-          onChange={onChange}
-        />
-         <div class="cut"></div>
-        <label for="confirmPassword" className="placeholder">Confirm Password</label>
-        </div>
-        <div className="post">
-                  <div style={{ display: "flex", justifyContent: "center" }}>
-                    {image === "" ? (
-                      <div className="fake-post-image">
-                        <FileBase
-                          title=" "
-                          type="file"
-                          multiple={false}
-                          onDone={({ base64 }) => changeImage(base64)}
-                        />
-                      </div>
-                    ) : (
-                      <img className="post-image" src={image} />
-                    )}
-                  </div>
+      <nav className="dev-nav">
+        <Link to="/">
+          <div className="logo">
+            NewThreads <span id="share"> - Register</span>
+          </div>
+        </Link>
+      </nav>
+      {!applied ? (
+        <div className="register-form-holder">
+          <Link to="/">
+            <button id="back">Back</button>
+          </Link>
+          <form className="post-form" onSubmit={onSubmit} noValidate>
+            <div id="input-group">
+              <label for="username" className="">
+                Brand Name
+              </label>
+              <input
+                placeholder=" "
+                id="username"
+                name="username"
+                value={values.username}
+                className=""
+                onChange={onChange}
+              />
+            </div>
+            <div id="input-group">
+              <label for="email" className="">
+                Brand Email
+              </label>
+              <input
+                placeholder=" "
+                id="email"
+                name="email"
+                value={values.email}
+                className=""
+                onChange={onChange}
+              />
+            </div>
+            <div id="input-group">
+              <label for="bio" className="">
+                Brand Description
+              </label>
+              <textarea
+                placeholder="A couple sentences or less..."
+                id="bio"
+                name="bio"
+                value={values.bio}
+                className=""
+                onChange={onChange}
+              />
+            </div>
+            <div id="input-group">
+              <label for="brandLink" className="">
+                Brand Link
+              </label>
+              <input
+                placeholder=" "
+                id="brandLink"
+                name="brandLink"
+                value={values.brandLink}
+                className=""
+                onChange={onChange}
+              />
+            </div>
+            <div id="input-group">
+              <label for="password" className="password-label">
+                Password (Minimum of 8 characters, 1 uppercase character, 1 lowercase character, and 1 special character)
+              </label>
+              <input
+                placeholder=" "
+                type="password"
+                id="password"
+                name="password"
+                value={values.password}
+                className=""
+                onChange={onChange}
+              />
+            </div>
+            <div id="input-group">
+              <label for="confirmPassword" className="">
+                Password
+              </label>
+              <input
+                type="password"
+                id="confirmPassword"
+                placeholder=" "
+                name="confirmPassword"
+                value={values.confirmPassword}
+                className=""
+                onChange={onChange}
+              />
+            </div>
+            <div id="input-group">
+              <label for="logo" className="">
+                Brand Logo
+              </label>
+                <div className="fake-post-image">
+                  <FileBase
+                    title=" "
+                    name = "logo"
+                    type="file"
+                    multiple={false}
+                    onDone={({ base64 }) => changeImage(base64)}
+                  />
+               
+                {image === "" ? <></> : <img id="image" src={image} />}
                 </div>
-        {loading ? (<div className="loader-holder-small"><div className="loader-small"></div></div>):(<button className="submit" type="submit">Sign Up</button>)}
-        
-        {Object.keys(errors).length > 0 && (
-        <div>
-          <ul>
-            {Object.values(errors).map((value) => (
-              <li className="errors" key={value}>{value}</li>
-            ))}
-          </ul>
+            </div>
+            {loading ? (
+              <div className="loader-holder">
+              <div className="loader">Finding New Clothes....</div>
+            </div>
+            ) : (
+              <div>
+                {Object.keys(errors).length > 0 && (
+                  <div>
+                    <ul>
+                      {Object.values(errors).map((value) => (
+                        <li className="errors" key={value}>
+                          {value}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                <div className="register-button-holder">
+                  <button className="register-button" type="submit">
+                    Sign Up
+                  </button>
+                </div>
+              </div>
+            )}
+          </form>
         </div>
+      ) : (
+        <>
+        <div id="after-submit">
+          Your brand has successfully been registered for approval. Please allow up to 24 hours for your brand to be approved.
+        </div>
+        <div id="after-submit">
+        You can login to NewThreads using your Brand Username and Passcode to view your brand's status. 
+        </div>
+        <div id="after-submit-button">
+          <Link to="/">
+            <button>Okay</button>
+          </Link>
+          </div>
+        
+        </>
       )}
-      <Link to="/">
-        <div style={{  fontSize:"larger",color: "white", margin:15 }}>Back</div>
-      </Link>
-      </form>
-      
-      
-    </div>
-    <Navbar />
+      <Footer />
     </>
   );
 }

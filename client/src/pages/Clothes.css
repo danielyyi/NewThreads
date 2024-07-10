@@ -3,23 +3,166 @@
     flex-wrap: wrap;
     justify-content: center;
     margin: 20px;
-
 }
 
 .nav-button {
-    background-color: #777777; /* Green */
+  background-color: rgb(80, 80, 80);
     border: none;
     color: white;
-    padding: 7px;
+    padding: 10px 15px;
+    text-align: center;
+    justify-content: center;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 10px 0px 10px 30px;
+    margin: 10px;
   }
+.loader-holder{
+  display: flex;
+  padding-top: 50px;
+  justify-content: center;
+  height: 70vh;
+}
+.loader{
+  color: rgb(255, 255, 255);
+  animation-name: loader;
+  animation-duration: 2s;
+  animation-delay: 1s;
+  animation-iteration-count: infinite;
+}
 
+@keyframes loader {
+  0%  {color: white;}
+  50% {color: black;}
+  100% {color: white;}
+}
   .nav-button:hover{
-    background-color: rgb(179, 179, 179);
+    background-color: rgb(106, 106, 106);
   }
+#home{
+  display: flex;
+  justify-content: center;
+}
 
-  
+.active-button{
+  background-color: rgb(80, 80, 80);
+  color: white;
+  border: none;
+  margin:  5px 5px ;
+}
+.inactive-button{
+  background-color: #d4d4d4;
+  border: none;
+  margin: 5px 5px ;
+}
+.inactive-button:hover{
+  background-color: #e7e7e7;
+  border: none;
+}
+
+
+.gender-active-button{
+  background-color: rgb(80, 80, 80);
+  color: white;
+  border: none;
+}
+.gender-inactive-button{
+  background-color: #d4d4d4;
+  border: none;
+}
+.gender-inactive-button:hover{
+  background-color: #e7e7e7;
+  border: none;
+}
+
+/* Styles for the slider component */
+.slider {
+  height: 10px;
+  width: 100%;
+  background-color: #ddd;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+/* Styles for the slider thumb */
+.slider .thumb {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: #4b4b4b;
+  cursor: grab;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  top:-5px;
+}
+
+/* Styles for the slider active state */
+.slider .thumb.active {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+#nav-buttons{
+  display: flex;
+  justify-content: center;
+}
+#prices{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#maxPrice{
+  background-color: red;
+  width: 30px;
+}
+#filters{
+  margin: 20px 100px 0px 100px;
+
+}
+
+#categories{
+
+}
+
+#slider-holder{
+  margin: 0px 10px;
+  min-width: 60%;
+}
+
+#slider-level{
+  display: flex;
+}
+
+#slider-holder-holder{
+  display: flex;
+  justify-content: space-between;
+  width: 500px;
+}
+
+#apply-filter{
+  margin: 10px 20px;
+  background-color: #d4d4d4;
+  border: none;
+}
+
+#apply-filter:hover{
+  background-color: #e7e7e7;
+  border: none;
+}
+
+.loading-placeholder{
+  height: 75vh;
+}
+
+@media (max-width: 600px) {
+  #filters{
+    margin: 20px 0px 0px 0px;
+    display: flex;
+    justify-content: center;
+  }
+  #categories{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 270px;
+  }
+}

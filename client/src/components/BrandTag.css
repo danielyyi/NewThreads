@@ -1,19 +1,31 @@
 #brand-tag{
     display: flex;
-    padding: 10px 20px 10px 10px;
-    justify-content: space-between;
-    
+    padding: 0px 10px 10px 10px;
+    border-bottom: 1.5px solid black;
+    margin: 20px 80px;
 }
 #tag-pfp{
-    height: 200px;
+    width: 150px;
+    
+}
+.brand-tag-holder{
+    margin: 20px 50px;
+}
+#tag-pfp-holder{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 #tag-text{
     margin: auto 20px;
 }
 #tag-desc{
+   
+    border-radius: 5px;
+    padding: 5px;
     max-height: 100px;
     overflow: scroll;
-    margin: 10px;
+    margin: 10px 10px 10px 0px;
     font-size: large;
 }
 a{
@@ -21,5 +33,17 @@ a{
     color: inherit;
 }
 #tag-name{
-    font-size: xx-large;
+    font-size: 27px;
+}
+
+@media (max-width: 600px) {
+    #tag-text{
+        display: none;
+        visibility: hidden;
+    }
+
+    #brand-tag{
+        justify-content: center;
+        border-bottom: none;
+    }
 }

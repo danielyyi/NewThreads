@@ -2,11 +2,8 @@
 .brand-card {
   font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 1.1em;
-  background-color: rgb(240, 240, 240);
+  background-color: rgb(255, 255, 255);
   padding: 10px 10px;
-  box-shadow: 5px 5px 5px rgb(84, 84, 84);
-  border-style: solid;
-  border-width: 1px;
   width: 90%;
 }
 .brand-info{

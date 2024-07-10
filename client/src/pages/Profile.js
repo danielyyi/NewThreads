@@ -1,5 +1,5 @@
-import React, { useContext, useRef } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { AuthContext } from "../context/auth";
 import ProfileHeaderbar from "../components/ProfileHeaderbar";
@@ -9,21 +9,32 @@ import gql from "graphql-tag";
 import { FETCH_POSTS_QUERY } from "../util/graphql";
 import Post from "../components/Post";
 import "./SingleUser.css";
+import Footer from "../components/Footer"
 
 function Profile() {
   const { user, logout } = useContext(AuthContext);
-  const username = user.username;
-  const limit = 10;
+  const navigate = useNavigate();
+  useEffect(() => {
+    window.scrollTo(0, 0)
+    console.log("not logged in")
+    if(!user){
+      navigate("/login");
+    }
+  }, [user]);
+
+  const userId = user.id;
+  const limit = 20;
   const { loading, data, refetch } = useQuery(GET_USER_POSTS, {
     variables: {
-      username,
+      userId,
       limit,
     },
     fetchPolicy: "network-only", // Used for first execution
     nextFetchPolicy: "cache-first",
   });
-  var posts = [];
+  var posts;
   if (!loading && data && data.getPostsByUser) {
+    posts = []
     data.getPostsByUser.forEach((element) => {
       posts.push(element);
     });
@@ -51,29 +62,30 @@ function Profile() {
   return (
     <div className="profile-page">
       <Headerbar />
-      <ProfileHeaderbar />
+      {!posts || posts.length>=12? (<ProfileHeaderbar canPost={false}/>):(<ProfileHeaderbar canPost={true}/>)}
+      
   
-      <div className="current-posts" onScroll={onScroll} ref={listInnerRef}>
+      <div className="posts-holder">
         {loading ? (
           <div className="loader-holder">
-            <div className="loader"></div>
+            <div className="loader">Loading...</div>
           </div>
         ) : (
           posts &&
           posts.map((post) => (
-            <div className="posts-holder" key={post.id}>
-              <Post post={post} />
-            </div>
+           
+              <Post post={post}  key={post.id}/>
+            
           ))
         )}
-        <div></div>
       </div>
+      <Footer />
     </div>
   );
 }
 const GET_USER_POSTS = gql`
-  query GetPostsByUser($username: String!, $limit: Int!) {
-    getPostsByUser(username: $username, limit: $limit) {
+  query GetPostsByUser($userId: ID!, $limit: Int!) {
+    getPostsByUser(userId: $userId, limit: $limit) {
       caption
       createdAt
       price
@@ -81,6 +93,7 @@ const GET_USER_POSTS = gql`
       title
       caption
       id
+      user
       image
       username
     }

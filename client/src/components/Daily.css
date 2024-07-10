@@ -1,0 +1,94 @@
+#title1 {
+  font-size: 2.2em;
+  font-weight: bold;
+  animation-name: daily-title;
+  animation-duration: 1s;
+  margin: 20px 20px;
+  animation-iteration-count: 1;
+  color: rgb(0, 0, 0);
+}
+#daily-image {
+  width: 22vw;
+  animation-name: image;
+  animation-duration: 0.25s;
+  animation-iteration-count: 1;
+}
+#daily-card-text{
+  font-size: larger;
+}
+@keyframes daily-image {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.daily-inner-card {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 1.1em;
+  background-color: rgb(255, 255, 255);
+  padding: 5px 5px 10px 5px;
+  min-width: 200px;
+}
+
+.daily-inner-card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+@keyframes daily-title {
+  0% {
+    margin-left: -400px;
+  }
+  100% {
+    margin-left: 20px;
+  }
+}
+#daily-card {
+  margin: 20px 30px;
+
+}
+#daily-posts {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 899px) {
+  #daily-card {
+    text-align: center;
+  
+  }
+  #daily-card-text{
+    font-size: large;
+    text-align: left;
+  }
+  
+  #daily-posts{
+    justify-content: space-around;
+  }
+  #daily-image {
+    width: 42vw;
+  }
+  .daily-inner-card {
+    margin-bottom: 10px;
+  }
+  #title1 {
+    font-size: 5.5vw;
+  }
+}
+
+
+@media (max-width: 499px) {
+  #daily-posts{
+    justify-content: space-around;
+  }
+  #daily-image {
+    width: 80vw;
+  }
+  #title1 {
+    font-size: 7vw;
+  }
+
+}

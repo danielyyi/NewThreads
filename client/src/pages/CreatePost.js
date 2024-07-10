@@ -9,13 +9,18 @@ import { useMutation, useQuery } from "@apollo/client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComments, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { useForm } from "../util/hooks";
-import { FETCH_POSTS_QUERY, LOAD_POSTS_QUERY } from "../util/graphql";
+import {
+  FETCH_POSTS_QUERY,
+  LOAD_POSTS_QUERY,
+  COUNT_POSTS,
+} from "../util/graphql";
 import FileBase from "react-file-base64";
 import moment from "moment";
 import "./CreatePost.css";
 import pfp from "../pfp.png";
 import Output from "../components/Output";
 import Cropper from "react-easy-crop";
+import Footer from "../components/Footer";
 //import generateDownload from "./cropUtil"
 
 //TODO: Figure out resizeImage
@@ -23,6 +28,8 @@ const CROP_AREA_ASPECT = 4 / 5;
 
 function MakePost(props) {
   const { user, logout } = useContext(AuthContext);
+  console.log(user);
+
   const navigate = useNavigate();
   const { values, onChange, onSubmit } = useForm(createPostCallback, {
     caption: "",
@@ -105,8 +112,14 @@ function MakePost(props) {
 
     ctx.putImageData(
       data,
-      0 - (safeArea / 2 +2) + img.width * 0.5 - (img.width * pixelCrop.x) / 100,
-      0 - (safeArea / 2 +2) + img.height * 0.5 - (img.height * pixelCrop.y) / 100
+      0 -
+        (safeArea / 2 + 2) +
+        img.width * 0.5 -
+        (img.width * pixelCrop.x) / 100,
+      0 -
+        (safeArea / 2 + 2) +
+        img.height * 0.5 -
+        (img.height * pixelCrop.y) / 100
     );
 
     // As Base64 string
@@ -134,6 +147,7 @@ function MakePost(props) {
     //values.image = image;
     //resizeImage(image, 600, 600).then((result) => (values.image = result));
   }
+  const [errors, setErrors] = useState({});
 
   const [createPost, { error }] = useMutation(CREATE_POST_MUTATION, {
     variables: values,
@@ -150,36 +164,38 @@ function MakePost(props) {
         });
         values.caption = "";
       }
+      navigate("/profile");
+    },
+    onError(err) {
+      console.log(err.graphQLErrors[0].message);
+      setErrors(err.graphQLErrors[0].message);
     },
   });
 
   async function createPostCallback() {
     await prepareImage(values.image, croppedArea);
     createPost();
-    navigate("/");
   }
 
   return (
     <div>
       <nav className="dev-nav">
         <Link to="/">
-          <div className="logo">NewThreads <span id="share"> - Share an Item</span></div>
+          <div className="logo">
+            NewThreads <span id="share"> - Share an Item</span>
+          </div>
         </Link>
       </nav>
 
       <div className="create-holder">
-        
         <div>
-        <Link to="/profile">
-                <button id="create-button">Cancel</button>
-              </Link>
+          <Link to="/profile">
+            <button id="cancel-button">Cancel</button>
+          </Link>
           <form onSubmit={onSubmit} className="post-form">
-            <FileBase
-              title=" "
-              type="file"
-              multiple={false}
-              onDone={({ base64 }) => changeImage(base64)}
-            />
+            <label for="title" className="">
+              Title
+            </label>
             <input
               wrap="soft"
               type="text"
@@ -189,28 +205,34 @@ function MakePost(props) {
               name="title"
               placeholder="Title"
             />
-
+            <label for="price" className="">
+              Price
+            </label>
             <input
               wrap="soft"
               type="number"
-              min="0.00"
-              max="10000.00"
+              min="0"
+              max="100"
               step="0.01"
-              maxLength={10}
+              maxLength={6}
               onChange={onChange}
               id="price"
               value={values.price}
               name="price"
               placeholder="Price"
             />
-
+            <label for="sex" className="">
+              Sex
+            </label>
             <select onChange={onChange} id="sex" value={values.sex} name="sex">
               <option value="unisex">Unisex</option>
               <option value="male">Men</option>
               <option value="female">Women</option>
             </select>
-
-            <select 
+            <label for="category" className="">
+              Category
+            </label>
+            <select
               onChange={onChange}
               id="category"
               value={values.category}
@@ -220,7 +242,13 @@ function MakePost(props) {
               <option value="sweatshirt">Sweatshirt/Hoodie</option>
               <option value="shorts">Shorts</option>
               <option value="pants">Pants</option>
+              <option value="hat">Hat</option>
+              <option value="other">Other</option>
             </select>
+
+            <label for="productLink" className="">
+              Product Link
+            </label>
             <input
               wrap="soft"
               type="text"
@@ -230,54 +258,79 @@ function MakePost(props) {
               name="productLink"
               placeholder="URL to purchase item"
             />
+
+            <label for="caption" className="">
+              Description
+            </label>
             <textarea
               wrap="soft"
               rows="20"
               cols="70"
-              maxLength={1000}
+              maxLength={700}
               onChange={onChange}
               value={values.caption}
               name="caption"
-             placeholder="Description of Apparel"
+              placeholder="Description of Apparel"
             ></textarea>
+            <label for="image" className="">
+              Image
+            </label>
+            <FileBase
+              title=" "
+              name="image"
+              type="file"
+              multiple={false}
+              onDone={({ base64 }) => changeImage(base64)}
+            />
+            {image ? (            <div className="images">
+              <div className="cropper">
+                <Cropper
+                  image={image}
+                  aspect={CROP_AREA_ASPECT}
+                  crop={crop}
+                  zoom={zoom}
+                  onCropChange={setCrop}
+                  onZoomChange={setZoom}
+                  onCropAreaChange={setCroppedArea}
+                />
+              </div>
+              <div className="viewer">
+                <div>
+                  {croppedArea && (
+                    <Output
+                      ratio={CROP_AREA_ASPECT}
+                      image={image}
+                      croppedArea={croppedArea}
+                    />
+                  )}
+                </div>
+              </div>
+            </div>):(<></>)}
+
 
             <div>
-
-              <button
-                type="submit"  id="create-button"
-                disabled={values.title == "" || values.image == "" || values.price == "" ||  values.caption == "" || values.productLink == ""}
-              >
-                Share
-              </button>
+              {errors.length > 0 ? (
+                <div>{errors}</div>
+              ) : (
+                <button
+                  type="submit"
+                  id="create-button"
+                  disabled={
+                    values.title == "" ||
+                    values.image == "" ||
+                    values.price == "" ||
+                    values.caption == "" ||
+                    values.productLink == ""
+                  }
+                >
+                  Share
+                </button>
+              )}
             </div>
           </form>
         </div>
-
-        <div className="images">
-          <div className="cropper">
-            <Cropper
-              image={image}
-              aspect={CROP_AREA_ASPECT}
-              crop={crop}
-              zoom={zoom}
-              onCropChange={setCrop}
-              onZoomChange={setZoom}
-              onCropAreaChange={setCroppedArea}
-            />
-          </div>
-          <div className="viewer">
-            <div>
-              {croppedArea && (
-                <Output
-                  ratio={CROP_AREA_ASPECT}
-                  image={image}
-                  croppedArea={croppedArea}
-                />
-              )}
-            </div>
-          </div>
-        </div>
       </div>
+      <Footer />
     </div>
   );
 }

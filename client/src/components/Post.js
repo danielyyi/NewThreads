@@ -9,35 +9,27 @@ import { AuthContext } from "../context/auth";
 import "./Post.css";
 
 function Post({
-  post: {
-    caption,
-    image,
-    title,
-    productLink,
-    price,
-    brandLink,
-    createdAt,
-    id,
-    username,
-  },
+  post
 }) {
   const { user } = useContext(AuthContext);
 
   return (
-    <div class="card">
-      <Link to={`/posts/${id}`}>
-        <img src={image} alt={"post"} className="image" />
+    <div className="card">
+      <Link to={`/posts/${post.id}`}>
+        <img src={post.image} alt={"post"} className="image" />
       </Link>
       <div className="card-text">
         <div>
-        <div>{title}</div>
-        <div class="price">${price}</div>
+        <div>{post.title}</div>
+        <div className="price">${post.price}</div>
         </div>
         <br></br>
         <div className="text-bottom">
-          <div>{username}</div>
-          {user && (user.username === username || user.username == "Admin") && (
-            <DeleteButton postId={id} />
+          <Link to={`/brands/${post.user}`}>
+          <div id="link">{post.username}</div>
+          </Link>
+          {user && (user.id === post.user || user.username == "Admin") && (
+            <DeleteButton postId={post.id} />
           )}
         </div>
       </div>

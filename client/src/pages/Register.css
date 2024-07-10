@@ -7,8 +7,6 @@ body {
   padding: 0;
 }
 .images {
-  margin-right: 400px;
-  margin-left: 15px;
 }
 .post-form {
   display: flex;
@@ -17,22 +15,32 @@ body {
 .create-holder {
   display: flex;
   justify-content: space-between;
-  margin: 10px 0px 0px 20px;
+  margin: 10px 100px 0px 20px;
 }
 
 .cropper {
   position: relative;
-  width: 300px;
+  height: 40vh;
   background-color: rgb(255, 0, 0);
 }
 
 .viewer {
-  width: 300px;
+  height: 50vh;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
+#after-submit {
+  display: flex;
+  justify-content: center;
+  margin: 20px 20px;
+  text-align: left;
+}
+#after-submit-button {
+  display: flex;
+  justify-content: center;
+  margin: 20px 30px 700px 30px;
+}
 .output {
   position: relative;
   width: 300px;
@@ -47,13 +55,6 @@ body {
   transform-origin: top left;
 }
 
-textarea {
-  resize: none;
-  margin: 8px 10px;
-  padding: 12px 20px;
-  max-width: 400px;
-  box-sizing: border-box;
-}
 #share {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   font-style: normal;
@@ -78,43 +79,68 @@ textarea {
   text-decoration: none;
 }
 
-#create-button {
-  padding: 10px 10px;
-  margin: 8px 5px;
-  font-size: large;
-  box-sizing: border-box;
+#input-group {
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  border: none;
 }
 
-#cancel-button {
-  padding: 10px 10px;
-  margin: 15px 8px;
-  font-size:small;
-  box-sizing: border-box;
+#image {
+  display: block;
+  height: 200px;
 }
 
+button {
+  padding: 10px 10px;
+  box-sizing: border-box;
+}
+#back{
+  margin: 10px 0px;
+}
 input {
-  padding: 12px 20px;
+  padding: 10px 20px;
+  margin: 8px 0;
   box-sizing: border-box;
-  max-width: 400px;
 }
 select {
   padding: 12px 20px;
-  margin: 5px 10 20px 0px;
+  margin: 8px 0;
   box-sizing: border-box;
 }
 #category {
-  max-width: 180px;
+  max-width: 200px;
 }
 #sex {
-  max-width: 180px;
+  max-width: 200px;
 }
 
 #price {
-  max-width: 180px;
+  max-width: 200px;
 }
 
-@media (max-width: 760px) {
-  .create-holder {
-    display: block;
-  }
+.register-button {
+  padding: 10px;
+}
+
+#input-group label {
+}
+#bio {
+  margin-left: 0px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  resize: none;
+}
+.register-button-holder {
+  display: flex;
+  justify-content: left;
+}
+.register-form-holder {
+  padding: 0px 30px;
+}
+.password-label {
+  margin-top: 20px;
+}
+.password-label div {
+  font-size: smaller;
 }

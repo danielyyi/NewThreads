@@ -10,40 +10,41 @@ import { AuthContext } from "../context/auth";
 import pfp from "../pfp.png";
 import "./SingleUserHeaderbar.css";
 
-function SingleUserHeaderbar({ username }) {
-  console.log(username);
+function SingleUserHeaderbar({ userId }) {
+  console.log(userId);
   //if it works it works...
   const { data } = useQuery(FETCH_USER_QUERY, {
     variables: {
-      username,
+      userId,
     },
   });
 
   let searchUser;
   if (data) {
-    searchUser = data.searchUser;
+    searchUser = data.getUser;
   }
   //----
   let postMarkup;
   if (!searchUser) {
-    postMarkup = <p>Loading...</p>;
+    postMarkup = <p></p>;
   } else {
     const { bio, createdAt, email, id, username, pfp, brandLink } = searchUser;
     postMarkup = (
       <div className="profile-headerbar">
       <div className="profile-top">
-        <img className="pfp" src={pfp}></img>
+        <img id="pfp" src={pfp}></img>
       </div>
       <div className="profile-middle">
         <div className="profile-name">{username}</div>
         <div className="profile-buttons">
         <a
           href={`${brandLink}`}
-          className="profile-bio"
+          className="profile-link"
+          id="visit"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Visit their site
+          Visit site
         </a>
         </div>
       </div>
@@ -56,8 +57,8 @@ function SingleUserHeaderbar({ username }) {
   return postMarkup;
 }
 const FETCH_USER_QUERY = gql`
-  query ($username: String!) {
-    searchUser(username: $username) {
+  query ($userId: ID!) {
+    getUser(userId: $userId) {
       bio
       createdAt
       email

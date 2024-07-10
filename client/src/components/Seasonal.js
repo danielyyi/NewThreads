@@ -9,22 +9,17 @@ import { faComments, faTrash } from "@fortawesome/free-solid-svg-icons";
 import DeleteButton from "./DeleteButton";
 import { AuthContext } from "../context/auth";
 import Post from "./Post";
+import BrandTag from "./BrandTag";
 
-import "./BrandTag.css";
+import "./Seasonal.css";
 
-function BrandTag({ user: { id, username, bio, brandLink, pfp } }) {
+function Seasonal() {
   return (
-    <Link to={`/brands/${id}`}>
-      <div id="brand-tag" key={id}>
-        <div id="tag-pfp-holder">
-          <img id="tag-pfp" src={pfp}></img>
-        </div>
-        <div id="tag-text">
-          <div id="tag-name">{username}</div>
-          <div id="tag-desc">"{bio}"</div>
-        </div>
-      </div>
-    </Link>
+    <div id="seasonal-card">
+      <div id="title3">Summer Shorts</div>
+      <div>insert four pieces of the clothing</div>
+    </div>
   );
 }
-export default BrandTag;
+
+export default Seasonal;

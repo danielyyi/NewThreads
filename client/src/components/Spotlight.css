@@ -1,0 +1,20 @@
+#title2{
+  font-size: 3em;
+  font-style: italic;
+  animation-name: example;
+  animation-duration: 1.5s;
+  animation-iteration-count: 1;
+}
+
+@keyframes example {
+  0% {
+    margin-left: -200px;
+  }
+  100% {
+    margin-left: 0;
+  }
+}
+#spotlight-card {
+  display: flex;
+  margin: 20px 80px;
+}

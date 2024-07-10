@@ -1,4 +1,5 @@
-import React, { useContext, useRef } from "react";
+
+import React, { useContext, useRef, useEffect } from "react";
 import gql from "graphql-tag";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import SingleUserHeaderbar from "../components/SingleUserHeaderbar";
@@ -7,21 +8,27 @@ import { FETCH_POSTS_QUERY } from "../util/graphql";
 import Post from "../components/Post";
 import Navbar from "../components/Navbar";
 import Headerbar from "../components/Headerbar";
+import Footer from "../components/Footer"
 import "../Misc.css";
 import pfp from "../pfp.png";
 import "./SingleUser.css";
+
 function SingleUser() {
   const navigate = useNavigate();
-  const { username } = useParams();
-  console.log(username);
+  const { userId } = useParams();
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+  console.log(userId);
   //const username = props.match.params.username;
-  const limit = 3;
+  const limit = 20;
   const { loading, data, refetch } = useQuery(GET_USER_POSTS, {
     variables: {
-      username,
+      userId,
       limit,
     },
   });
+  console.log(data);
   var posts = {};
   if (!loading) {
     posts = data.getPostsByUser;
@@ -49,35 +56,37 @@ function SingleUser() {
       <Headerbar></Headerbar>
       <div className="brandInfo"></div>
 
-      <SingleUserHeaderbar username={username} />
-      <div className="current-posts" onScroll={onScroll} ref={listInnerRef}>
+      <SingleUserHeaderbar userId={userId} />
+      <div className="posts-holder">
         {loading ? (
           <div className="loader-holder">
-            <div className="loader"></div>
+            <div className="loader">Loading...</div>
           </div>
         ) : (
           posts &&
           posts.map((post) => (
-            <div className="posts-holder" key={post.id}>
-              <Post post={post} />
-            </div>
+           
+              <Post post={post}  key={post.id}/>
+            
           ))
         )}
-        <div></div>
       </div>
+      <Footer />
     </div>
+    
   );
 }
 
 const GET_USER_POSTS = gql`
-  query GetPostsByUser($username: String!, $limit: Int!) {
-    getPostsByUser(username: $username, limit: $limit) {
+  query GetPostsByUser($userId: ID!, $limit: Int!) {
+    getPostsByUser(userId: $userId, limit: $limit) {
       caption
       createdAt
       id
       price
       title
       productLink
+      user
       image
       username
     }

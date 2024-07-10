@@ -1,34 +1,51 @@
-
-.profile-name{
-    margin: auto 0;
-    font-size: xx-large;
-    font-weight: bolder;
+.profile-name {
+  margin: auto 0;
+  font-size: xx-large;
+  font-weight: bolder;
 }
-.profile-bio{
-    font-size: larger;
-    font-weight: normal;
-    margin: 10px;
-   
+.profile-link {
+  font-size: larger;
+  font-weight: normal;
+  margin: 10px;
+
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   font-style: italic;
 }
-.profile-middle{
-    display: flex;
-    justify-content: space-between;
+.profile-bio {
+  font-size: larger;
+  font-weight: normal;
+  margin: 10px 0px;
+  font-style: italic;
 }
-.pfp{
-    height: 200px;
+.profile-middle {
+  display: flex;
+  justify-content: space-between;
+}
+#pfp {
+  height: 200px;
+}
+.profile-buttons button{
+  margin: 0px 5px;
+}
+.profile-top {
+  display: flex;
+  justify-content: center;
+}
+.profile-headerbar {
+  background-color: rgb(242, 242, 242);
+  padding: 10px 50px 20px 50px;
+  background-image: linear-gradient(#ffffff, rgb(234, 234, 234));
 }
 
-.profile-top{
-    display: flex;
-    justify-content: center;
-    
+@media (max-width: 600px) {
+    .profile-middle{
+        display: block;
+    }
+    #pfp{
+        height: 100px;
+    }
+    .profile-name{
+      font-size: x-large;
+      text-align: center;
+    }
 }
-.profile-headerbar{
-    background-color: rgb(242, 242, 242);
-    padding: 10px 50px 20px 50px;
-    background-image: linear-gradient(#ffffff, rgb(234, 234, 234));
-}
-
-

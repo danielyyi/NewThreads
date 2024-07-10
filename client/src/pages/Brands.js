@@ -1,66 +1,101 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
+import {useSearchParams} from "react-router-dom"
 import Navbar from "../components/Navbar";
 import gql from "graphql-tag";
-import { FETCH_USERS_QUERY } from "../util/graphql";
+import { FETCH_USERS_QUERY, LOAD_USERS_QUERY } from "../util/graphql";
 import { Link } from "react-router-dom";
 import pfp from "../pfp.png";
 import "../Misc.css";
 import "./Search.css";
 import Headerbar from "../components/Headerbar";
 import BrandTag from "../components/BrandTag";
-
+import Footer from "../components/Footer";
 function Brands() {
-  const { loading, data } = useQuery(FETCH_USERS_QUERY);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    if (!searchParams.get("page")) {
+      setSearchParams({ page: 0 });
+    }
+    window.scrollTo(0, 0)
+  }, [searchParams]);
+
+  const page = Number(searchParams.get("page"));
+
+  const next = page + 1;
+  const prev = page - 1;
+  const limit = 12;
+
+
+  const { loading, data, refetch } = useQuery(LOAD_USERS_QUERY, {
+    variables: {
+      limit: limit,
+      offset: page * limit,
+    },
+    fetchPolicy: "network-only", // Used for first execution
+    nextFetchPolicy: "cache-first",
+  });
   const [term, newTerm] = useState("");
   var users = [];
   if (!loading) {
-    users = data.getUsers;
+
+    users = data.loadUsers;
   }
-  
+
+  const nextPage = () => {
+    setSearchParams({ page: next });
+  };
+
+  const prevPage = () => {
+    setSearchParams({ page: prev});
+  };
+
 
   return (
-    <div >
-      <Headerbar/>
+    <div>
+      <Headerbar />
+      
       {loading ? (
-        <div className="loader-holder"><div className="loader"></div></div>
+        <div className="loader-holder">
+          <div className="loader">Loading...</div>
+        </div>
       ) : (
         <div className="search-page">
-            {users.map((user) => (
-              <div className="brand-card">
-                {user.username.toLowerCase().indexOf(term.toLowerCase()) !=
-                -1 ? (
-                  <BrandTag user={user}></BrandTag>
-                ) : (
-                  <></>
-                )}
-              </div>
-            ))}
+          <div id="brands-title">All Brands</div>
+          {users && users.map((user) => (
+            <div key={user.id}>
+              {user.username.toLowerCase().indexOf(term.toLowerCase()) != -1 ? (
+                <BrandTag user={user}></BrandTag>
+              ) : (
+                <></>
+              )}
+            </div>
+          ))}
         </div>
       )}
+            {loading ? (
+        <></>
+      ) : (
+        <>
+          <div id="nav-buttons">
+            <button
+              className="nav-button"
+              disabled={page <= 0}
+              onClick={() => prevPage()}
+            >
+              ≪
+            </button>
+
+            <button className="nav-button" onClick={() => nextPage()}>
+              ≫
+            </button>
+          </div>
+        </>
+      )}
+      <Footer />
     </div>
   );
 }
-/*
-const SEARCH_USER = gql`
-  query searchUser($username: String!) {
-    searchUser(username: $username) {
-      id
-      username
-      bio
-    }
-  }
-`;*/
-
-
-/*          <div className="search-search-holder">
-            <div className="search-search">
-              <input
-                type="text"
-                placeholder="Search..."
-                onChange={(e) => newTerm(e.target.value)}
-              ></input>
-            </div>
-          </div>*/
 
 export default Brands;

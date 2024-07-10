@@ -1,0 +1,28 @@
+.edit-profile-button{
+    padding: 10px;
+   
+}
+.edit-button-holder{
+    display: flex;
+    justify-content: center;
+}
+#cancel-button{
+    margin: 10px;
+}
+.edit-form-holder{
+    padding: 0px 20px;
+}
+#image{
+    height: 100px;
+}
+#instructions{
+    margin: 10px;
+    font-weight: bold;
+}
+
+@media (max-width: 620px) {
+.dev-nav{
+    display: flex;
+    justify-content: center;
+}
+}

@@ -1,0 +1,17 @@
+#title3{
+    font-size: 3em;
+    font-style: italic;
+    animation-name: example;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+}
+
+  
+  @keyframes example {
+    0%  {margin-left: -200px;}
+    100% {margin-left: 0;}
+  }
+#seasonal-card{
+    display: flex;
+    margin: 20px 80px;
+}

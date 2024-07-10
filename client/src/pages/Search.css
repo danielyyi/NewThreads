@@ -1,6 +1,26 @@
-.search_page{
+.search-page{
 
 }
 .brand-card{
     margin: 20px auto;
 }
+#brand-image{
+    width: 300px;
+    
+}
+
+#brands-title{
+    display: flex;
+    padding: 0px 10px 20px 10px;
+    border-bottom: 1.5px solid black;
+    margin: 20px 80px;
+    font-size: xx-large;
+}
+
+@media (max-width: 600px) {
+    #brands-title{
+      justify-content: center;
+      text-align: center;
+      
+    }
+  }

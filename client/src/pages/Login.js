@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import gql from "graphql-tag";
@@ -6,6 +6,7 @@ import { useForm } from "../util/hooks";
 import { AuthContext } from "../context/auth";
 import "../Login.css";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer"
 
 function Login(props) {
   const context = useContext(AuthContext);
@@ -15,6 +16,10 @@ function Login(props) {
     username: "",
     password: "",
   });
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update(_, { data: { login: userData } }) {
@@ -89,13 +94,13 @@ function Login(props) {
             </div>
           )}
           <Link to="/">
-            <div style={{ fontSize: "larger", color: "white", margin: 15 }}>
+            <div className="subtitle" style={{marginTop:20}}>
               Back
             </div>
           </Link>
         </form>
       </div>
-      <Navbar />
+      <Footer />
     </>
   );
 }

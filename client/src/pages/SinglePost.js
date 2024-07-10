@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import gql from "graphql-tag";
 import { useMutation, useQuery } from "@apollo/client";
@@ -9,11 +9,14 @@ import { AuthContext } from "../context/auth";
 import DeleteButton from "../components/DeleteButton";
 import Headerbar from "../components/Headerbar";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer"
 import "./SinglePost.css";
 function SinglePost() {
   const { postId } = useParams();
   //const postId = props.match.params.postId;
-  const { user } = useContext(AuthContext);
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   const navigate = useNavigate();
 
   console.log(postId);
@@ -47,10 +50,11 @@ function SinglePost() {
       caption,
       image,
       username,
-      title, 
-      category, 
+      title,
+      category,
       sex,
       createdAt,
+      user,
       price,
       productLink,
       brandLink,
@@ -59,30 +63,43 @@ function SinglePost() {
 
     postMarkup = (
       <>
-      <Headerbar/>
-      <button onClick={() => navigate(-1)}>Go back</button>
-      <div class="container">
-        <div class="item-image">
-          <img src={image} alt={"post"} />
-        </div>
-        <div class="item-info">
-          <h2>{title}</h2>
-          <h3>${price}</h3>
-          <div>{caption}</div>
-          <div>{username}</div>        
-          <a target="_blank" rel="noopener noreferrer" href={`${productLink}`}><button>Visit Product</button></a>
-          <div> Posted on         {moment(createdAt).format("MMMM Do, YYYY")} (
-        {moment(createdAt).fromNow()})</div>
-        <div>{category}</div>
-        <div>{sex}</div>
+        <Headerbar />
+        <button onClick={() => navigate(-1)} id="back-button">
+          Back
+        </button>
+        <div className="single-post-container">
+          <div className="item-image">
+            <img src={image} alt={"post"} />
+          </div>
+          <div className="item-info">
+            <div className="item-title">{title}</div>
+            <div className="item-price">${price}</div>
+            <div className="item-caption">{caption}</div>
+            <div className="item-caption">
+              {category}, {sex}
+            </div>
+            <Link to={`/brands/${user}`}>
+              <div id="link">{username}</div>
+            </Link>
 
-        {user && (user.username === username || user.username == "Admin") && (
-          <DeleteButton postId={id} callback={deletePostCallback} />
-        )}
+            <div className="item-date">
+              Posted {moment(createdAt).format("MMMM Do, YYYY")}
+            </div>
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={`${productLink}`}
+            >
+              <button id="item-button">Visit Site</button>
+            </a>
+            {user &&
+              (user.username === username || user.username == "Admin") && (
+                <DeleteButton postId={id} callback={deletePostCallback} />
+              )}
+          </div>
         </div>
-        </div>
-        </>
-      
+        <Footer />
+      </>
     );
   }
 
@@ -102,7 +119,7 @@ const FETCH_POST_QUERY = gql`
       price
       productLink
       username
-      
+      user
     }
   }
 `;
