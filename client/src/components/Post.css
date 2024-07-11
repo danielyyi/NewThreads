@@ -5,6 +5,7 @@
   max-width: 300px;
   margin: 10px 10px;
   padding: 5px;
+
 }
 #link{}
 
@@ -44,3 +45,26 @@
 }
 
 
+@media (max-width: 700px) {
+  .card{
+    .image{
+      width: 220px;
+    }
+  }
+}
+
+@media (max-width: 540px) {
+  .card{
+    width: 150px;
+    margin: 5px 0px;
+    #link{
+      font-size: small;
+    }
+    .card-text{
+      font-size: x-small;
+    }
+    .image{
+      width: 150px;
+    }
+  }
+}

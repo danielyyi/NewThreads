@@ -48,7 +48,9 @@ function Clothes() {
       limit: limit,
       offset: page * limit,
       category: category,
-    }
+    },
+    fetchPolicy:'cache-and-network',
+    nextFetchPolicy:'network-only'
     //there is an error when we dont include fetchPolicy: 'network-only'
   });
 
