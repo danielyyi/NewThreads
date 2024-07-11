@@ -30,8 +30,7 @@ function Clothes() {
     if (!searchParams.get("page") && !searchParams.get("category")) {
       setSearchParams({ page: 0, category: "all" });
     }
-    window.scrollTo(0, 0)
-    
+    window.scrollTo(0, 0);
   }, [searchParams]);
 
   const page = Number(searchParams.get("page"));
@@ -44,15 +43,15 @@ function Clothes() {
 
   var posts = [];
 
-  const { loading, data, refetch } = useQuery(LOAD_POSTS_QUERY, {
+  const { loading, data, refetch} = useQuery(LOAD_POSTS_QUERY, {
     variables: {
       limit: limit,
       offset: page * limit,
       category: category,
-    },
-    fetchPolicy: "network-only", // Used for first execution
-    nextFetchPolicy: "cache-first",
+    }
+    //there is an error when we dont include fetchPolicy: 'network-only'
   });
+
 
   if (!loading && data && data.loadPosts) {
     let i = 0;
@@ -151,7 +150,6 @@ function Clothes() {
               <div className="loader">Finding New Clothes....</div>
             </div>
           ) : (
-            
             posts && posts.map((post) => <Post key={post.id} post={post} />)
           )}
         </div>

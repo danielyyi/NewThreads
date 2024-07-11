@@ -10,8 +10,6 @@ export const FETCH_USERS_QUERY = gql`
   }
 `;
 
-
-
 export const FETCH_POSTS_QUERY = gql`
   {
     getPosts {
@@ -29,18 +27,8 @@ export const FETCH_POSTS_QUERY = gql`
 `;
 
 export const LOAD_POSTS_QUERY = gql`
-  query LoadPosts(
-    $limit: Int!
-    $offset: Int!
-    $category: String!
-    $price: String
-  ) {
-    loadPosts(
-      limit: $limit
-      offset: $offset
-      category: $category
-      price: $price
-    ) {
+  query LoadPosts($limit: Int!, $offset: Int!, $category: String!) {
+    loadPosts(limit: $limit, offset: $offset, category: $category) {
       price
       title
       category
@@ -67,9 +55,9 @@ export const GET_AUTO = gql`
 `;
 
 export const COUNT_POSTS = gql`
-query Query($userId: ID!) {
-  countPosts(userId: $userId)
-}
+  query Query($userId: ID!) {
+    countPosts(userId: $userId)
+  }
 `;
 
 export const LOAD_USERS_QUERY = gql`

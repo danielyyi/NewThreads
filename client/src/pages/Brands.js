@@ -32,9 +32,7 @@ function Brands() {
     variables: {
       limit: limit,
       offset: page * limit,
-    },
-    fetchPolicy: "network-only", // Used for first execution
-    nextFetchPolicy: "cache-first",
+    }
   });
   const [term, newTerm] = useState("");
   var users = [];

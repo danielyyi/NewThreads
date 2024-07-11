@@ -16,7 +16,7 @@ module.exports = {
             throw new Error(error);
           }
         },
-        async loadPosts(_, {limit, offset, category, price}) {
+        async loadPosts(_, {limit, offset, category}) {
           if(category != "all"){
             try {
               const posts = await Post.find({ category: category})

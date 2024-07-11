@@ -7,7 +7,7 @@ import { AuthContext } from "../context/auth";
 import "./Register.css";
 import Navbar from "../components/Navbar";
 import FileBase from "react-file-base64";
-import Footer from "../components/Footer"
+import Footer from "../components/Footer";
 function Register(props) {
   const context = useContext(AuthContext);
   const [errors, setErrors] = useState({});
@@ -23,8 +23,8 @@ function Register(props) {
     confirmPassword: "",
   });
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [applied])
+    window.scrollTo(0, 0);
+  }, [applied]);
   function resizeImage(base64Str, maxWidth = 600, maxHeight = 600) {
     return new Promise((resolve) => {
       let img = new Image();
@@ -100,7 +100,7 @@ function Register(props) {
                 Brand Name
               </label>
               <input
-                maximum-scale = {1}
+                maximum-scale={1}
                 placeholder=" "
                 id="username"
                 name="username"
@@ -114,7 +114,7 @@ function Register(props) {
                 Brand Email
               </label>
               <input
-              maximum-scale = {1}
+                maximum-scale={1}
                 placeholder=" "
                 id="email"
                 name="email"
@@ -128,7 +128,7 @@ function Register(props) {
                 Brand Description
               </label>
               <textarea
-              maximum-scale = {1}
+                maximum-scale={1}
                 placeholder="A couple sentences or less..."
                 id="bio"
                 name="bio"
@@ -142,7 +142,7 @@ function Register(props) {
                 Brand Link
               </label>
               <input
-              maximum-scale = {1}
+                maximum-scale={1}
                 placeholder=" "
                 id="brandLink"
                 name="brandLink"
@@ -153,10 +153,11 @@ function Register(props) {
             </div>
             <div id="input-group">
               <label for="password" className="password-label">
-                Password (Minimum of 8 characters, 1 uppercase character, 1 lowercase character, and 1 special character)
+                Password (Minimum of 8 characters, 1 uppercase character, 1
+                lowercase character, and 1 special character)
               </label>
               <input
-              maximum-scale = {1}
+                maximum-scale={1}
                 placeholder=" "
                 type="password"
                 id="password"
@@ -171,7 +172,7 @@ function Register(props) {
                 Password
               </label>
               <input
-              maximum-scale = {1}
+                maximum-scale="1"
                 type="password"
                 id="confirmPassword"
                 placeholder=" "
@@ -185,23 +186,23 @@ function Register(props) {
               <label for="logo" id="image-input">
                 Brand Logo
               </label>
-                <div className="fake-post-image">
-                  <FileBase
-                    id="image-input"
-                    title=" "
-                    name = "logo"
-                    type="file"
-                    multiple={false}
-                    onDone={({ base64 }) => changeImage(base64)}
-                  />
-               
+              <div className="fake-post-image">
+                <FileBase
+                  id="image-input"
+                  title=" "
+                  name="logo"
+                  type="file"
+                  multiple={false}
+                  onDone={({ base64 }) => changeImage(base64)}
+                />
+
                 {image === "" ? <></> : <img id="image" src={image} />}
-                </div>
+              </div>
             </div>
             {loading ? (
               <div className="loader-holder">
-              <div className="loader">Loading...</div>
-            </div>
+                <div className="loader">Loading...</div>
+              </div>
             ) : (
               <div>
                 {Object.keys(errors).length > 0 && (
@@ -226,18 +227,19 @@ function Register(props) {
         </div>
       ) : (
         <>
-        <div id="after-submit">
-          Your brand has successfully been registered for approval. Please allow up to 24 hours for your brand to be approved.
-        </div>
-        <div id="after-submit">
-        You can login to NewThreads using your Brand Username and Passcode to view your brand's status. 
-        </div>
-        <div id="after-submit-button">
-          <Link to="/">
-            <button>Okay</button>
-          </Link>
+          <div id="after-submit">
+            Your brand has successfully been registered for approval. Please
+            allow up to 24 hours for your brand to be approved.
           </div>
-        
+          <div id="after-submit">
+            You can login to NewThreads using your Brand Username and Passcode
+            to view your brand's status.
+          </div>
+          <div id="after-submit-button">
+            <Link to="/">
+              <button>Okay</button>
+            </Link>
+          </div>
         </>
       )}
       <Footer />

@@ -13,27 +13,6 @@ import Spotlight from "../components/Spotlight";
 import Footer from "../components/Footer";
 import "./Home.css";
 function Home() {
-  const [term, newTerm] = useState("");
-
-  const [page, setPage] = useState(0);
-  const limit = 1;
-
-  var users = [];
-  console.log(limit * page);
-  const { loading, data, refetch } = useQuery(GET_RANDOM_USER_QUERY, {
-    fetchPolicy: "network-only", // Used for first execution
-    nextFetchPolicy: "cache-first",
-  });
-  console.log(data);
-  if (!loading && data && data.getRandomUser) {
-    data.getRandomUser.forEach((element) => {
-      users.pop();
-      users.push(element);
-    });
-
-    console.log(users);
-    console.log("pressed");
-  }
 
   return (
     <div>

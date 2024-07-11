@@ -25,9 +25,7 @@ function Daily() {
   const { loading, data, refetch } = useQuery(GET_AUTO, {
     variables: {
       counter,
-    },
-    fetchPolicy: "network-only", // Used for first execution
-    nextFetchPolicy: "cache-first",
+    }
   });
 
   console.log(data);

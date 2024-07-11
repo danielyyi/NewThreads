@@ -23,14 +23,12 @@ function Profile() {
   }, [user]);
 
   const userId = user.id;
-  const limit = 20;
+  const limit = 12;
   const { loading, data, refetch } = useQuery(GET_USER_POSTS, {
     variables: {
       userId,
       limit,
-    },
-    fetchPolicy: "network-only", // Used for first execution
-    nextFetchPolicy: "cache-first",
+    }
   });
   var posts;
   if (!loading && data && data.getPostsByUser) {

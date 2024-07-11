@@ -104,6 +104,7 @@ button {
   background-color: rgb(106, 106, 106);
 }
 input {
+  font-size: 16px;
   padding: 10px 20px;
   margin: 8px 0;
   box-sizing: border-box;
