@@ -27,7 +27,7 @@ export const FETCH_POSTS_QUERY = gql`
 `;
 
 export const LOAD_POSTS_QUERY = gql`
-  query LoadPosts($limit: Int!, $offset: Int!, $category: String!) {
+  query LoadPosts($limit: Int!, $offset: Int!, $category: Int!) {
     loadPosts(limit: $limit, offset: $offset, category: $category) {
       price
       title

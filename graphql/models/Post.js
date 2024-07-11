@@ -15,7 +15,7 @@ const postSchema = new Schema({
     },
     category: {
         type: String,
-        enum: ['sweatshirt', 'tshirt', 'shorts', 'pants', 'hat', 'other'] // Enum for type
+        enum: [ 'tshirt', 'sweatshirt', 'shorts', 'pants', 'hat', 'other'] // Enum for type
     },
     user: {
         type: Schema.Types.ObjectId,

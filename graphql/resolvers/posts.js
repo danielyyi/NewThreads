@@ -17,9 +17,20 @@ module.exports = {
           }
         },
         async loadPosts(_, {limit, offset, category}) {
-          if(category != "all"){
+          let c = 0;
+          switch(category){
+            case 0: c = "all";break;
+            case 1: c = "tshirt";break;
+            case 2: c = "sweatshirt";break;
+            case 3: c = "shorts";break;
+            case 4: c = "pants";break;
+            case 5: c = "hat";break;
+            case 6: c = "other";break;
+          }
+
+          if(c != "all"){
             try {
-              const posts = await Post.find({ category: category})
+              const posts = await Post.find({ category: c})
                 .sort({ createdAt: -1 })
                 .skip(parseInt(offset))
                 .limit(parseInt(limit));

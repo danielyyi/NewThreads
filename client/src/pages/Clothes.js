@@ -28,14 +28,14 @@ function Clothes() {
 
   useEffect(() => {
     if (!searchParams.get("page") && !searchParams.get("category")) {
-      setSearchParams({ page: 0, category: "all" });
+      setSearchParams({ page: 0, category: 0 });
     }
+    
     window.scrollTo(0, 0);
   }, [searchParams]);
-
+  const category = Number(searchParams.get("category"));
   const page = Number(searchParams.get("page"));
-  const category = searchParams.get("category");
-  const gender = searchParams.get("g");
+
 
   const next = page + 1;
   const prev = page - 1;
@@ -43,15 +43,13 @@ function Clothes() {
 
   var posts = [];
 
-  const { loading, data, refetch} = useQuery(LOAD_POSTS_QUERY, {
+  const { loading, data} = useQuery(LOAD_POSTS_QUERY, {
     variables: {
       limit: limit,
       offset: page * limit,
       category: category,
-    },
-    fetchPolicy:'cache-and-network',
-    nextFetchPolicy:'network-only'
-    //there is an error when we dont include fetchPolicy: 'network-only'
+    }
+    //there is an error when we dont include fetchPolicy: 'network-only', fixed it by using numbers for categories instead of strings through url
   });
 
 
@@ -87,9 +85,9 @@ function Clothes() {
         <div id="filters">
           <div id="categories">
             <button
-              onClick={() => filterCategory("all")}
+              onClick={() => filterCategory(0)}
               className={
-                !category || category === "all"
+                !category || category === 0
                   ? "active-button"
                   : "inactive-button"
               }
@@ -97,49 +95,49 @@ function Clothes() {
               All
             </button>
             <button
-              onClick={() => filterCategory("tshirt")}
+              onClick={() => filterCategory(1)}
               className={
-                category === "tshirt" ? "active-button" : "inactive-button"
+                category === 1 ? "active-button" : "inactive-button"
               }
             >
               Tees
             </button>
             <button
-              onClick={() => filterCategory("sweatshirt")}
+              onClick={() => filterCategory(2)}
               className={
-                category === "sweatshirt" ? "active-button" : "inactive-button"
+                category === 2 ? "active-button" : "inactive-button"
               }
             >
               Sweatshirts/Hoodies
             </button>
             <button
-              onClick={() => filterCategory("shorts")}
+              onClick={() => filterCategory(3)}
               className={
-                category === "shorts" ? "active-button" : "inactive-button"
+                category === 3 ? "active-button" : "inactive-button"
               }
             >
               Shorts
             </button>
             <button
-              onClick={() => filterCategory("pants")}
+              onClick={() => filterCategory(4)}
               className={
-                category === "pants" ? "active-button" : "inactive-button"
+                category === 4 ? "active-button" : "inactive-button"
               }
             >
               Pants
             </button>
             <button
-              onClick={() => filterCategory("hat")}
+              onClick={() => filterCategory(5)}
               className={
-                category === "hat" ? "active-button" : "inactive-button"
+                category === 5 ? "active-button" : "inactive-button"
               }
             >
               Hats
             </button>
             <button
-              onClick={() => filterCategory("other")}
+              onClick={() => filterCategory(6)}
               className={
-                category === "other" ? "active-button" : "inactive-button"
+                category === 6 ? "active-button" : "inactive-button"
               }
             >
               Other

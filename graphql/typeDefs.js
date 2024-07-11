@@ -45,7 +45,7 @@ module.exports = gql`
     getUser(userId: ID!): User
     getUserByName(username: String!): User
     searchUser(username: String!): User
-    loadPosts(limit: Int!, offset: Int!, category: String!): [Post]
+    loadPosts(limit: Int!, offset: Int!, category: Int!): [Post]
     loadBySex(limit: Int!, sex: String!): [Post]
     loadByCategory(limit: Int!, category: String!): [Post]
     getDailyPosts(post1: ID!, post2:ID!, post3:ID!, post4: ID!) : [Post]
