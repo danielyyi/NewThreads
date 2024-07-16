@@ -15,7 +15,7 @@
   background-color: rgb(80, 80, 80);
   color: white;
   border: none;
-  margin: 30px;
+  margin: 10px 30px;
 }
 .item-date {
   font-size: medium;
@@ -85,7 +85,7 @@
         display: block;
     }
     #back-button {
-        margin: 15px;
+        margin: 10px;
         margin-left: 20px;
       }
       .single-post-container {

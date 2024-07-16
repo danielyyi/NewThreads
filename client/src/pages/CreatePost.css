@@ -52,6 +52,7 @@ textarea {
   margin: 8px 10px;
   padding: 12px 20px;
   max-width: 400px;
+  font-size: 16px;
   box-sizing: border-box;
 }
 #share {
@@ -103,6 +104,7 @@ input {
   padding: 12px 20px;
   box-sizing: border-box;
   max-width: 400px;
+  font-size: 16px;
 }
 select {
   padding: 12px 20px;

@@ -148,8 +148,8 @@ function MakePost(props) {
     //resizeImage(image, 600, 600).then((result) => (values.image = result));
   }
   const [errors, setErrors] = useState({});
-
   const [createPost, { error }] = useMutation(CREATE_POST_MUTATION, {
+    
     variables: values,
     update(proxy, result) {
       const data = proxy.readQuery({
@@ -173,6 +173,7 @@ function MakePost(props) {
   });
 
   async function createPostCallback() {
+  values.price = Number(values.price);
     await prepareImage(values.image, croppedArea);
     createPost();
   }
@@ -353,7 +354,7 @@ const CREATE_POST_MUTATION = gql`
   mutation createPost(
     $caption: String!
     $image: String!
-    $price: String!
+    $price: Float!
     $title: String!
     $productLink: String!
     $sex: String!

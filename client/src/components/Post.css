@@ -1,5 +1,4 @@
 .card {
-  font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 1.1em;
   background-color: #ffffff;
   max-width: 300px;
@@ -13,6 +12,8 @@
   animation-name: image;
   animation-duration: .25s;
   animation-iteration-count: 1;
+  width: 300px;
+  height: 375px;
 }
 
 @keyframes image {
@@ -49,22 +50,26 @@
   .card{
     .image{
       width: 220px;
+      height: 275px;
     }
   }
 }
 
 @media (max-width: 540px) {
+
   .card{
-    width: 150px;
-    margin: 5px 0px;
+    width: 157px;
+
+    margin: 0px 0px;
     #link{
       font-size: small;
     }
     .card-text{
-      font-size: x-small;
+      font-size: small;
     }
     .image{
-      width: 150px;
+      width: 157px;
+      height: 196.3px;
     }
   }
 }

@@ -45,13 +45,24 @@ text-decoration: none;
     #nav-buttons{
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
+      padding: 0px;
+    }
+    #active-icon{
+      padding: 0px;
     }
     #nav-elements{
-      display: block;
+  
     }
     .navbar{
-      justify-content: center;
+      padding: 10px 20px;
+      
+    }
+    .navbar a{
+      font-size: small;
+      margin: 5px;
+    }
+    .logo{
+      font-size: x-large;
     }
     .navbar a{
       margin: 10px 14px;

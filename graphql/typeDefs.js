@@ -1,6 +1,6 @@
 const { gql } = require("apollo-server");
 const {model, Schema} = require('mongoose')
-const { ObjectId } = require('mongodb')
+const { ObjectId, Decimal128 } = require('mongodb')
 //type definitions (one for each 'type' and then include any use cases for each inside each type definition)
 module.exports = gql`
   type User {
@@ -18,7 +18,7 @@ module.exports = gql`
     username: String!
     title: String!
     caption: String!
-    price: String!
+    price: Float!
     image: String!
     productLink: String!
     createdAt: String!
@@ -51,6 +51,7 @@ module.exports = gql`
     getDailyPosts(post1: ID!, post2:ID!, post3:ID!, post4: ID!) : [Post]
     getAuto(counter: Int!): [Post]
     countPosts(userId: ID!): Int!
+    priceFilter(min: Int!, max: Int!): [Post]
   }
   input RegisterInput {
     username: String! 
@@ -68,7 +69,7 @@ module.exports = gql`
     createPost(
       caption: String!
       image: String!
-      price: String!
+      price: Float!
       title: String!
       productLink: String!
       sex: String!

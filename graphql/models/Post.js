@@ -1,10 +1,10 @@
 const {model, Schema} = require('mongoose')
-
+const { ObjectId, Decimal128 } = require('mongodb')
 const postSchema = new Schema({
     username: String, //brandName
     title: String,
     caption: String, //description
-    price: String,
+    price: Schema.Types.Number,
     image: String,
     productLink: String,
     createdAt: String,

@@ -108,7 +108,7 @@ function Clothes() {
                 category === 2 ? "active-button" : "inactive-button"
               }
             >
-              Sweatshirts/Hoodies
+              Pullovers
             </button>
             <button
               onClick={() => filterCategory(3)}

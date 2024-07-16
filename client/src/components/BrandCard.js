@@ -9,11 +9,11 @@ import { faComments, faTrash } from "@fortawesome/free-solid-svg-icons";
 import DeleteButton from "./DeleteButton";
 import { AuthContext } from "../context/auth";
 import Post from "./Post";
-import BrandTag from "./BrandTag"
+import BrandTag from "./BrandTag";
 
 import "./BrandCard.css";
 
-function BrandCard({ user: { id, username, brandLink, bio, pfp} }) {
+function BrandCard({ user: { id, username, brandLink, bio, pfp } }) {
   const limit = 4;
   const { loading, data, refetch } = useQuery(GET_USER_POSTS, {
     variables: {
@@ -23,7 +23,6 @@ function BrandCard({ user: { id, username, brandLink, bio, pfp} }) {
   });
   var posts = {};
   if (!loading) {
- 
     posts = data.getPostsByUser;
   }
 
@@ -37,7 +36,7 @@ function BrandCard({ user: { id, username, brandLink, bio, pfp} }) {
         )}
       </div>
       <div className="brand-card-bottom">
-        <BrandTag user={{username, id, pfp, bio}}/>
+        <BrandTag user={{ username, id, pfp, bio }} />
       </div>
     </div>
   );
@@ -50,7 +49,7 @@ const GET_USER_POSTS = gql`
       id
       price
       title
-      
+
       productLink
       image
       username

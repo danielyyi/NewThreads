@@ -154,7 +154,7 @@
   height: 75vh;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 620px) {
   #filters{
     margin: 20px 0px 0px 0px;
     display: flex;
@@ -164,6 +164,17 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    width: 270px;
+    margin: 0px 0px;
+    
+  }
+  .active-button{
+    margin:  2px 2px ;
+    font-size: small;
+    padding: 7px 7px;
+  }
+  .inactive-button{
+    margin:  2px 2px ;
+    font-size: small;
+    padding: 7px 7px;
   }
 }
