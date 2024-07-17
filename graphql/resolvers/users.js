@@ -222,7 +222,7 @@ module.exports = {
       password = await bcrypt.hash(password, 12);
 
       //then makes a new user (referring to the User model) with these variables
-      const newUser = new Application({
+      const newUser = new User({
         username,
         password,
         email,

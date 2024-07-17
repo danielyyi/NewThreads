@@ -67,7 +67,7 @@ function Register(props) {
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
     update(_, { data: { register: userData } }) {
       console.log(userData);
-      //context.login(userData);
+      context.login(userData);
       setApplied(true);
     },
     onError(err) {
@@ -228,15 +228,10 @@ function Register(props) {
       ) : (
         <>
           <div id="after-submit">
-            Your brand has successfully been registered for approval. Please
-            allow up to 24 hours for your brand to be approved.
-          </div>
-          <div id="after-submit">
-            You can login to NewThreads using your Brand Username and Passcode
-            to view your brand's status.
+            Your brand was created sucessfully.
           </div>
           <div id="after-submit-button">
-            <Link to="/">
+            <Link to="/profile">
               <button>Okay</button>
             </Link>
           </div>
