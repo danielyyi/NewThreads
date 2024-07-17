@@ -45,26 +45,28 @@ text-decoration: none;
     #nav-buttons{
       display: flex;
       flex-direction: row;
+      flex-wrap: wrap;
       padding: 0px;
     }
     #active-icon{
       padding: 0px;
     }
+    #inactive-icon{
+      padding: 0px;
+    }
     #nav-elements{
-  
+
     }
     .navbar{
       padding: 10px 20px;
-      
-    }
-    .navbar a{
-      font-size: small;
-      margin: 5px;
+     
+      padding-right: 10px;
     }
     .logo{
       font-size: x-large;
     }
     .navbar a{
-      margin: 10px 14px;
+      font-size: small;
+      margin: 10px 10px;
     }
 }
