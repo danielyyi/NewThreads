@@ -19,6 +19,10 @@ export const FETCH_POSTS_QUERY = gql`
       price
       user
       title
+      tags{
+        name
+        color
+      }
       productLink
       createdAt
       username
@@ -27,17 +31,20 @@ export const FETCH_POSTS_QUERY = gql`
 `;
 
 export const LOAD_POSTS_QUERY = gql`
-  query LoadPosts($limit: Int!, $offset: Int!, $category: Int!) {
-    loadPosts(limit: $limit, offset: $offset, category: $category) {
-      price
-      title
-      category
-      user
-      id
-      image
-      username
+query LoadPosts($limit: Int!, $offset: Int!, $category: String, $sex: String, $price: String, $tags: String) {
+  loadPosts(limit: $limit, offset: $offset, category: $category, sex: $sex, price: $price, tags: $tags) {
+    id
+    image
+    price
+    title
+    tags {
+      color
+      name
     }
+    user
+    username
   }
+}
 `;
 
 export const GET_AUTO = gql`
@@ -45,6 +52,10 @@ export const GET_AUTO = gql`
     getAuto(counter: $counter) {
       price
       title
+      tags{
+        name
+        color
+      }
       category
       productLink
       id
@@ -58,6 +69,44 @@ export const COUNT_POSTS = gql`
   query Query($userId: ID!) {
     countPosts(userId: $userId)
   }
+`;
+
+
+export const GET_TAGS_QUERY = gql`
+query Query {
+  getTags {
+    color
+    name
+  }
+}
+`;
+
+export const FILTER_TAGS_QUERY = gql`
+query Tags($tags: [String]!) {
+  filterTags(tags: $tags) {
+    tags {
+      color
+      name
+    }
+    category
+    id
+    image
+    price
+    title
+    username
+    user
+  }
+}
+`;
+
+
+export const GET_TAG_QUERY = gql`
+query Query($name: String!) {
+  getTag(name: $name) {
+    color
+    name
+  }
+}
 `;
 
 export const LOAD_USERS_QUERY = gql`

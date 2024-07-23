@@ -1,19 +1,25 @@
 .card {
   font-size: 1.1em;
   background-color: #ffffff;
-  max-width: 300px;
   margin: 10px 10px;
   padding: 5px;
-
+  border-radius: 5px;
 }
 #link{}
 
+.post-tags-holder{
+  height: 30px;
+  overflow: scroll;
+  display: flex;
+  flex-wrap: nowrap;
+}
 .image{
   animation-name: image;
   animation-duration: .25s;
   animation-iteration-count: 1;
   width: 300px;
   height: 375px;
+  border-radius: 5px;
 }
 
 @keyframes image {
@@ -31,7 +37,7 @@
 }
 
 .card-text {
-  padding: 5px;
+  padding: 0px 5px 5px 5px;
   text-align: left;
   
   display: flex;
@@ -46,8 +52,9 @@
 }
 
 
-@media (max-width: 700px) {
+@media (max-width: 1100px) {
   .card{
+    width: 220px;
     .image{
       width: 220px;
       height: 275px;
@@ -55,21 +62,24 @@
   }
 }
 
-@media (max-width: 540px) {
-
+@media (max-width: 510px) {
+  .card-text {
+    font-size: .75em;
+  }
+  #user-link{
+    font-size: 1em;
+    overflow: hidden;
+    max-width: 165px;
+  }
   .card{
-    width: 157px;
-
-    margin: 0px 0px;
-    #link{
-      font-size: small;
-    }
-    .card-text{
-      font-size: small;
-    }
+    margin: 5px 5px;
+    padding: none;
+    width: 165px;
     .image{
-      width: 157px;
-      height: 196.3px;
+      width: 165px;
+      height: 206.3px;
     }
   }
 }
+
+

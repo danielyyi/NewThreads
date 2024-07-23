@@ -1,8 +1,13 @@
 const { gql } = require("apollo-server");
 const {model, Schema} = require('mongoose')
-const { ObjectId, Decimal128 } = require('mongodb')
+const { ObjectId, Decimal128, Array } = require('mongodb')
 //type definitions (one for each 'type' and then include any use cases for each inside each type definition)
 module.exports = gql`
+  type Tag {
+    color: String
+    name: String
+  }
+
   type User {
     id: ID!
     token: String!
@@ -23,9 +28,11 @@ module.exports = gql`
     productLink: String!
     createdAt: String!
     sex: String!
+    tags: [Tag]
     category: String!
     user: ID!
   }
+
   type Auto {
     id: ID!
     counter: Int!
@@ -45,13 +52,16 @@ module.exports = gql`
     getUser(userId: ID!): User
     getUserByName(username: String!): User
     searchUser(username: String!): User
-    loadPosts(limit: Int!, offset: Int!, category: Int!): [Post]
+    loadPosts(limit: Int!, offset: Int!, category: String, sex: String, price: String, tags: String): [Post]
     loadBySex(limit: Int!, sex: String!): [Post]
     loadByCategory(limit: Int!, category: String!): [Post]
     getDailyPosts(post1: ID!, post2:ID!, post3:ID!, post4: ID!) : [Post]
     getAuto(counter: Int!): [Post]
     countPosts(userId: ID!): Int!
     priceFilter(min: Int!, max: Int!): [Post]
+    filterTags(tags: [String]!): [Post]
+    getTags: [Tag]
+    getTag(name: String!): Tag
   }
   input RegisterInput {
     username: String! 
@@ -61,6 +71,10 @@ module.exports = gql`
     bio: String!
     brandLink: String!
     email: String!
+  }
+  input TagInput{
+    color: String
+    name: String
   }
   type Mutation {
     editProfile(bio: String, email: String, pfp: String, brandLink: String, username: String): User!
@@ -73,9 +87,11 @@ module.exports = gql`
       title: String!
       productLink: String!
       sex: String!
+      tags: [TagInput]
       category: String!
     ): Post!
     deletePost(postId: ID!): String!
     createAuto(counter:Int!, post1: ID!, post2:ID!, post3:ID!, post4:ID!) : Auto
+    addTag(tag: TagInput!): Tag
   }
 `;

@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import "../Misc.css";
 import "./Headerbar.css";
-import { faCaretDown, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown, faUserCircle, faUserGroup, faMagnifyingGlass, faPeopleGroup } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AuthContext } from "../context/auth";
 
@@ -14,7 +14,7 @@ function Headerbar() {
   ); //name of page aka /login etc.
 
   const path = pathname === "" ? "home" : pathname;
-  console.log(pathname);
+ // console.log(pathname);
   const [activeItem] = useState(path);
 
   return (
@@ -28,13 +28,13 @@ function Headerbar() {
             to="/clothes"
             id={activeItem === "cloth" ? "active-icon" : "inactive-icon"}
           >
-            APPAREL
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
           </Link>
           <Link
             to="/brands"
             id={activeItem === "brand" ? "active-icon" : "inactive-icon"}
           >
-            BRANDS
+            <FontAwesomeIcon icon={faUserGroup} />
           </Link>
           {user ? (
             <Link

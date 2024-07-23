@@ -3,6 +3,7 @@ const { args } = require("commander");
 const { off } = require("../models/Post");
 
 const Post = require("../models/Post");
+const Tag = require("../models/Tag");
 const checkAuth = require("../../graphql/util/check-auth");
 
 module.exports = {
@@ -15,53 +16,48 @@ module.exports = {
         throw new Error(error);
       }
     },
-    async loadPosts(_, { limit, offset, category }) {
-      let c = 0;
-      switch (category) {
-        case 0:
-          c = "all";
-          break;
-        case 1:
-          c = "tshirt";
-          break;
-        case 2:
-          c = "sweatshirt";
-          break;
-        case 3:
-          c = "shorts";
-          break;
-        case 4:
-          c = "pants";
-          break;
-        case 5:
-          c = "hat";
-          break;
-        case 6:
-          c = "other";
-          break;
+    async loadPosts(_, { limit, offset, category, sex, price, tags }) {
+      var variables = {};
+      var sorts = {createdAt: -1};
+      if(category!=null && category!="all" && category!="" && category!=="null" && category!="NaN"){
+        variables.category = category;
+      }
+      if(sex!=null && sex!=""&& sex!="all" && sex!=="null"){
+        variables.sex= sex;
+      }
+      if(price!=null && price!=""&& price!="NaN" && price!=="null"){
+        let min = Number(price.split("to")[0]);
+        let max = Number(price.split("to")[1]);
+        variables.price = { $gte: min, $lte: max }
+        sorts= {price: 1};
       }
 
-      if (c != "all") {
-        try {
-          const posts = await Post.find({ category: c })
-            .sort({ createdAt: -1 })
-            .skip(parseInt(offset))
-            .limit(parseInt(limit));
-          // const posts = await Post.find({category: category}).sort({createdAt:-1}).skip(parseInt(offset)).limit(parseInt(limit))
-          return posts;
-        } catch (error) {
-          throw new Error(error);
-        }
-      } else {
-        try {
-          const posts = await Post.find({})
-            .sort({ createdAt: -1 })
-            .skip(parseInt(offset))
-            .limit(parseInt(limit));
-          return posts;
-        } catch (error) {
-          throw new Error(error);
-        }
+      if(tags!=null && tags!=""&& tags!="NaN" && tags!=="null"){
+        let tagsArray = tags.split('%2C');
+        variables.tags = { $elemMatch: { name: { $in: tagsArray } } };
+      }
+
+      
+      try {
+        const posts = await Post.find(variables)
+          .sort(sorts)
+          .skip(parseInt(offset))
+          .limit(parseInt(limit));
+
+        return posts;
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
+    async filterTags(_, { tags }) {
+      try {
+        const posts = await Post.find({
+          tags: { $elemMatch: { name: { $in: tags } } },
+        });
+
+        return posts;
+      } catch (error) {
+        throw new Error(error);
       }
     },
     async loadBySex(_, { limit, sex }) {
@@ -118,19 +114,56 @@ module.exports = {
         throw new Error(err);
       }
     },
-    async priceFilter(_, {min, max}) {
+    async priceFilter(_, { min, max }) {
       try {
-        const posts = await Post.find( { price: { $gte: min, $lte:max } } )
+        const posts = await Post.find({ price: { $gte: min, $lte: max } });
         return posts;
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
+    async getTags(_, {}) {
+      try {
+        const tags = await Tag.find({});
+        return tags;
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
+    async getTag(_, { name }) {
+      try {
+        const tag = await Tag.findOne({ name });
+        return tag;
       } catch (error) {
         throw new Error(error);
       }
     },
   },
   Mutation: {
+    async addTag(_, { tag }) {
+      try {
+        const name = tag.name;
+        const color = tag.color;
+        const check = await Tag.findOne({ name: name });
+        if (check) {
+          return;
+        }
+
+        const newTag = new Tag({
+          name,
+          color,
+        });
+
+        const tg = await newTag.save();
+
+        return tg;
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
     async createPost(
       _,
-      { title, caption, image, price, productLink, sex, category },
+      { title, caption, image, price, productLink, sex, category, tags },
       context
     ) {
       const user = checkAuth(context); //authenticate user
@@ -153,6 +186,7 @@ module.exports = {
         price,
         sex,
         category,
+        tags,
         user: user.id,
         username: user.username,
         createdAt: new Date().toISOString(),

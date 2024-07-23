@@ -8,7 +8,12 @@ const postSchema = new Schema({
     image: String,
     productLink: String,
     createdAt: String,
-    
+    tags: [
+        {
+            name: String,
+            color: String
+        }
+    ],
     sex: {
         type: String,
         enum: ['male', 'female', 'unisex'] // Enum for sex

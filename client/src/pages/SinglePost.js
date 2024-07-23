@@ -9,14 +9,17 @@ import { AuthContext } from "../context/auth";
 import DeleteButton from "../components/DeleteButton";
 import Headerbar from "../components/Headerbar";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer"
+import Footer from "../components/Footer";
+import TagItem from "../components/TagItem";
+
 import "./SinglePost.css";
+
 function SinglePost() {
   const { postId } = useParams();
   //const postId = props.match.params.postId;
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
   const navigate = useNavigate();
 
   console.log(postId);
@@ -58,9 +61,10 @@ function SinglePost() {
       price,
       productLink,
       brandLink,
+      tags,
     } = getPost;
     console.log(caption);
-
+    console.log(tags)
     postMarkup = (
       <>
         <Headerbar />
@@ -76,12 +80,15 @@ function SinglePost() {
             <div className="item-price">${price}</div>
             <div className="item-caption">{caption}</div>
             <div className="item-caption">
+              {tags &&
+                tags.map((tag, index) => <TagItem name={tag.name} color={tag.color} key={index} />)}
+            </div>{" "}
+            <div className="item-caption">
               {category}, {sex}
             </div>
             <Link to={`/brands/${user}`}>
               <div id="link">{username}</div>
             </Link>
-
             <div className="item-date">
               Posted {moment(createdAt).format("MMMM Do, YYYY")}
             </div>
@@ -117,6 +124,10 @@ const FETCH_POST_QUERY = gql`
       sex
       createdAt
       price
+      tags{
+        name
+        color
+      }
       productLink
       username
       user

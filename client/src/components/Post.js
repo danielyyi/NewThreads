@@ -5,6 +5,7 @@ import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComments, faTrash } from "@fortawesome/free-solid-svg-icons";
 import DeleteButton from "./DeleteButton";
+import MiniTag from "./MiniTag";
 import { AuthContext } from "../context/auth";
 import "./Post.css";
 
@@ -20,18 +21,21 @@ function Post({
       </Link>
       <div className="card-text">
         <div>
+          
         <div>{post.title}</div>
         <div className="price">${post.price}</div>
         </div>
-        <br></br>
+        <div className="post-tags-holder">{post.tags && post.tags.map((tag, index) => <MiniTag key={index} color={tag.color} name={tag.name}/>)}</div>
+        
         <div className="text-bottom">
           <Link to={`/brands/${post.user}`}>
-          <div id="link">{post.username}</div>
+          <div id="user-link">{post.username}</div>
           </Link>
           {user && (user.id === post.user || user.username == "Admin") && (
             <DeleteButton postId={post.id} />
           )}
         </div>
+        
       </div>
     </div>
   );

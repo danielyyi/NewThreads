@@ -64,18 +64,16 @@ function Profile() {
       
   
       <div className="posts-holder">
-        {loading ? (
-          <div className="loader-holder">
-            <div className="loader">Loading...</div>
-          </div>
-        ) : (
-          posts &&
-          posts.map((post) => (
-           
-              <Post post={post}  key={post.id}/>
-            
-          ))
-        )}
+        <div className="posts">
+
+          {loading ? (
+            <div className="loader-holder">
+              <div className="loader">Finding New Clothes....</div>
+            </div>
+          ) : (
+            posts && posts.map((post) => <Post key={post.id} post={post} />)
+          )}
+        </div>
       </div>
       <Footer />
     </div>

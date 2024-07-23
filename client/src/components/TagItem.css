@@ -1,0 +1,22 @@
+#mini-tag {
+  background-color: rgb(240, 240, 240);
+  display: inline-block;
+  padding: 0.2em 0.5em;
+  margin: 0px 0.1em;
+  margin-left: -.25em;
+  margin-right: .5em;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: small;
+}
+
+#mini-tag-text {
+  cursor: pointer;
+}
+
+
+@media (max-width: 800px) {
+#mini-tag{
+  font-size: x-small;
+}
+}

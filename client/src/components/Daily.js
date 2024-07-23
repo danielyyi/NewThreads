@@ -38,7 +38,8 @@ function Daily() {
 
   return (
     <div id="daily-card">
-      <div id="title1">Daily Finds | {moment().format("MMMM Do")}</div>
+      <div id="title1">Threads of the Day</div>
+      <div id="subtitle1">{moment().format("MMMM Do")}</div>
       <div id="daily-posts">
         {loading ? (
           <div className="loader-holder"></div>

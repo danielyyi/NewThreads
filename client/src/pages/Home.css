@@ -13,6 +13,23 @@
   background-size: 1000px;
 }
 
+
+#explore-text {
+  margin: 20px;
+  font-size: x-large;
+  font-weight: bold;
+  text-align: center;
+}
+
+#shop-by-tag{
+  display: flex;
+  justify-content: center;
+  margin: 0px 15px;
+}
+
+#shop-by-tag #tag-item{
+  margin: 5px;
+}
 #shop-apparel {
   background-image: url("https://images.pexels.com/photos/1897886/pexels-photo-1897886.jpeg?auto=compress&cs=tinysrgb&w=800");
   background-position: -400px -200px;
@@ -22,31 +39,47 @@
   height: 400px;
   margin: 0px 20px 50px 20px;
 }
-#shop-brands-text {
-  margin: auto 0;
-  color: rgb(255, 255, 255);
-  font-size: x-large;
-  text-decoration: underline;
+
+#popular-niches-title{
+  font-size: 1.75em;
+  text-align: center;
+  font-weight: bold;
+  margin: 50px 0px 20px 0px;
 }
 
+#highlight-line{
+  border: 1px black solid;
+  max-width: 500px;
+
+}
 #shop-apparel-text {
   margin: auto 0;
   color: white;
   font-size: x-large;
   text-decoration: underline;
 }
-
-#shop-brands {
-  background-image: url("https://images.pexels.com/photos/7645786/pexels-photo-7645786.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
-  background-position: -500px -60px;
-  background-size: 1000px;
- 
+#highlights-holder{
+  display: flex;
+  flex-wrap: wrap;
+  margin:auto;
+  justify-content: center;
+  max-width: 1200px;
+}
+#highlight-box {
   display: flex;
   justify-content: center;
-
+  background-color: blue;
   height: 400px;
-  margin: 0px 20px 50px 20px;
-
+  width: 500px;
+  margin: 10px 10px;
+  border-radius: 50px;
+  border: 2px black solid;
+}
+#highlight-box-text {
+  margin: auto 0;
+  color: rgb(255, 255, 255);
+  font-size: x-large;
+  text-decoration: underline;
 }
 
 #intro-text {

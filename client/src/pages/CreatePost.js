@@ -5,7 +5,7 @@ import { AuthContext } from "../context/auth";
 import MockPost from "../components/MockPost";
 import { Link } from "react-router-dom";
 import gql from "graphql-tag";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComments, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { useForm } from "../util/hooks";
@@ -13,6 +13,7 @@ import {
   FETCH_POSTS_QUERY,
   LOAD_POSTS_QUERY,
   COUNT_POSTS,
+  GET_TAGS_QUERY,
 } from "../util/graphql";
 import FileBase from "react-file-base64";
 import moment from "moment";
@@ -21,6 +22,7 @@ import pfp from "../pfp.png";
 import Output from "../components/Output";
 import Cropper from "react-easy-crop";
 import Footer from "../components/Footer";
+import TagItem from "../components/TagItem";
 //import generateDownload from "./cropUtil"
 
 //TODO: Figure out resizeImage
@@ -28,8 +30,6 @@ const CROP_AREA_ASPECT = 4 / 5;
 
 function MakePost(props) {
   const { user, logout } = useContext(AuthContext);
-  console.log(user);
-
   const navigate = useNavigate();
   const { values, onChange, onSubmit } = useForm(createPostCallback, {
     caption: "",
@@ -39,11 +39,65 @@ function MakePost(props) {
     productLink: "",
     sex: "unisex",
     category: "tshirt",
+    tags: [],
   });
+
+  const [tags, setTags] = useState([]);
+  var preTags = [];
+
+  function handleKeyDown(e) {
+    if (e.key !== "Enter") return;
+    const value = e.target.value;
+    if(value.length>14) return;
+    if(value.indexOf(',')!=-1) return;
+    if (!value.trim()) return;
+    if (tags.length > 2) return;
+    if (tags.some((el) => el.name === value)) return;
+
+    if (preTags.some((el) => el.name === value)) {
+      const color = preTags.find((x) => x.name === value).color;
+      console.log("already exists");
+      setTags([...tags, { name: value, color: color }]);
+    } else {
+      setTags([
+        ...tags,
+        {
+          name: value,
+          color: `hsla(${~~(360 * Math.random())}, 87%,  60%, 0.8)`,
+        },
+      ]);
+    }
+
+    e.target.value = "";
+  }
+
+  function handleTagClick(name, color) {
+    if (tags.some((el) => el.name === name)) return;
+    if (tags.length > 2) return;
+    setTags([...tags, { name: name, color: color }]);
+  }
+
+  function removeTag(index) {
+    setTags(tags.filter((el, i) => i !== index));
+  }
+
+  const { loading, data } = useQuery(GET_TAGS_QUERY, {
+    fetchPolicy: "cache-first"
+  });
+  if (!loading && data && data.getTags) {
+    preTags = data.getTags;
+  }
+  if (loading) {
+    console.log("LOADING");
+  }
 
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedArea, setCroppedArea] = useState(null);
+
+  const checkKeyDown = (e) => {
+    if (e.key === "Enter") e.preventDefault();
+  };
 
   function resizeImage(base64Str, maxWidth = 600, maxHeight = 600) {
     return new Promise((resolve) => {
@@ -148,8 +202,8 @@ function MakePost(props) {
     //resizeImage(image, 600, 600).then((result) => (values.image = result));
   }
   const [errors, setErrors] = useState({});
+
   const [createPost, { error }] = useMutation(CREATE_POST_MUTATION, {
-    
     variables: values,
     update(proxy, result) {
       const data = proxy.readQuery({
@@ -172,8 +226,50 @@ function MakePost(props) {
     },
   });
 
+  const [addTag1, { tag1Error }] = useMutation(ADD_TAG_MUTATION, {
+    variables: {
+      tag: tags[0],
+    },
+    onError(err) {
+      console.log(err);
+    },
+  });
+
+  const [addTag2, { tag2Error }] = useMutation(ADD_TAG_MUTATION, {
+    variables: {
+      tag: tags[1],
+    },
+    onError(err) {
+      console.log(err);
+      //setErrors(err.graphQLErrors[0].message);
+    },
+  });
+
+  const [addTag3, { tag3Error }] = useMutation(ADD_TAG_MUTATION, {
+    variables: {
+      tag: tags[2],
+    },
+
+    onError(err) {
+      console.log(err);
+      //setErrors(err.graphQLErrors[0].message);
+    },
+  });
+
   async function createPostCallback() {
-  values.price = Number(values.price);
+    values.price = Number(values.price);
+    values.tags = tags;
+    console.log(tags[0]);
+    if (tags[0]) {
+      await addTag1();
+    }
+    if (tags[1]) {
+      await addTag2();
+    }
+    if (tags[2]) {
+      await addTag3();
+    }
+
     await prepareImage(values.image, croppedArea);
     createPost();
   }
@@ -193,7 +289,11 @@ function MakePost(props) {
           <Link to="/profile">
             <button id="cancel-button">Cancel</button>
           </Link>
-          <form onSubmit={onSubmit} className="post-form">
+          <form
+            onSubmit={onSubmit}
+            className="post-form"
+            onKeyDown={(e) => checkKeyDown(e)}
+          >
             <label for="title" className="">
               Title
             </label>
@@ -255,6 +355,63 @@ function MakePost(props) {
               <option value="hat">Hat</option>
               <option value="other">Other</option>
             </select>
+            <label for="tags" className="">
+              Tags
+            </label>
+
+            <div id="pre-tags-input-container">
+              <input
+                onKeyDown={handleKeyDown}
+                id="tags-input"
+                type="text"
+                placeholder="Type tag or choose from existing tags..."
+              />
+              <div name="tags" id="tags-input-container-top">
+                {preTags.length > 0 &&
+                  preTags.map((tag, index) => (
+                    <>
+                      {tags.some((el) => el.name === tag.name) ? (
+                        <span
+                          onClick={() => handleTagClick(tag.name, tag.color)}
+                        >
+                          <TagItem
+                            name={tag.name}
+                            color={tag.color}
+                            clicked={true}
+                            key={index}
+                          />
+                        </span>
+                      ) : (
+                        <span
+                          onClick={() => handleTagClick(tag.name, tag.color)}
+                        >
+                          <TagItem
+                            name={tag.name}
+                            color={tag.color}
+                            clicked={false}
+                            key={index}
+                          />
+                        </span>
+                      )}
+                    </>
+                  ))}
+              </div>
+            </div>
+            <div name="tags" id="tags-input-container-bottom">
+              {tags.map((tag, index) => (
+                <div
+                  id="tag-item"
+                  key={index}
+                  style={{ backgroundColor: tag.color }}
+                >
+                  <span id="tag-text2">{tag.name}</span>
+                  <span id="tag-close" onClick={() => removeTag(index)}>
+                    &times;
+                  </span>
+                </div>
+              ))}
+              <div id="tags-count">{tags.length}/3</div>
+            </div>
 
             <label for="productLink" className="">
               Product Link
@@ -359,6 +516,7 @@ const CREATE_POST_MUTATION = gql`
     $productLink: String!
     $sex: String!
     $category: String!
+    $tags: [TagInput]!
   ) {
     createPost(
       caption: $caption
@@ -368,6 +526,7 @@ const CREATE_POST_MUTATION = gql`
       productLink: $productLink
       sex: $sex
       category: $category
+      tags: $tags
     ) {
       id
       caption
@@ -376,7 +535,20 @@ const CREATE_POST_MUTATION = gql`
       image
       category
       sex
+      tags {
+        name
+        color
+      }
       price
+    }
+  }
+`;
+
+const ADD_TAG_MUTATION = gql`
+  mutation AddTag($tag: TagInput!) {
+    addTag(tag: $tag) {
+      color
+      name
     }
   }
 `;

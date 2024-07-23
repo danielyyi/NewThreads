@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import Navbar from "../components/Navbar";
 import Headerbar from "../components/Headerbar";
 import ReactSlider from "react-slider";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import {
   Link,
   useNavigate,
@@ -9,6 +11,7 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import Post from "../components/Post";
+import Filters from "../components/Filters";
 import { LOAD_POSTS_QUERY } from "../util/graphql";
 import "./Clothes.css";
 import {
@@ -25,17 +28,33 @@ import { FETCH_POSTS_QUERY } from "../util/graphql";
 //YOU NEED TO CHANGE CREATE POST TO LOAD POST QUERY
 function Clothes() {
   const [searchParams, setSearchParams] = useSearchParams();
-
   useEffect(() => {
-    if (!searchParams.get("page") && !searchParams.get("category")) {
-      setSearchParams({ page: 0, category: 0 });
+    window.scrollTo(0, 0)
+  }, [])
+  useEffect(() => {
+    if (!searchParams.get("page")) {
+      setSearchParams({ page: 0 });
     }
-    
+
     window.scrollTo(0, 0);
   }, [searchParams]);
-  const category = Number(searchParams.get("category"));
+  const category = searchParams.get("category");
   const page = Number(searchParams.get("page"));
+  const sex = searchParams.get("sex");
+  const price = searchParams.get("price");
+  const tags = searchParams.get("tags");
 
+  let str = "";
+  let tagsArray = [];
+  if (tags) {
+    tagsArray = tags.split("%2C");
+    tagsArray.forEach((tag) => {
+      str += tag + ",";
+    });
+    if (str[str.length - 1] === ",") {
+      str = str.substring(0, str.length - 2);
+    }
+  }
 
   const next = page + 1;
   const prev = page - 1;
@@ -43,108 +62,74 @@ function Clothes() {
 
   var posts = [];
 
-  const { loading, data} = useQuery(LOAD_POSTS_QUERY, {
+  const { loading, data } = useQuery(LOAD_POSTS_QUERY, {
     variables: {
       limit: limit,
       offset: page * limit,
       category: category,
-    }
+      price: price,
+      sex: sex,
+      tags: str,
+    },
     //there is an error when we dont include fetchPolicy: 'network-only', fixed it by using numbers for categories instead of strings through url
   });
 
-
   if (!loading && data && data.loadPosts) {
-    let i = 0;
-    data.loadPosts.forEach((element) => {
-      posts.push(element);
-      if (i % 2 == 0) {
-        posts.reverse();
-      }
-      i++;
-    });
-    console.log(posts);
+    posts = data.loadPosts;
   }
 
-  const filterCategory = (filter) => {
-    setSearchParams({ page: 0, category: filter });
-  };
-
+  const variables = {};
   const nextPage = () => {
-    setSearchParams({ page: next, category: category });
+    variables.page = next;
+    if (category) {
+      variables.category = category;
+    }
+    if (sex) {
+      variables.sex = sex;
+    }
+    if (price) {
+      variables.price = price;
+    }
+    if (tags) {
+      variables.tags = tags;
+    }
+    console.log(variables);
+
+    setSearchParams(variables);
   };
 
   const prevPage = () => {
-    setSearchParams({ page: prev, category: category });
+    variables.page = prev;
+    if (category) {
+      variables.category = category;
+    }
+    if (sex) {
+      variables.sex = sex;
+    }
+    if (price) {
+      variables.price = price;
+    }
+    if (tags) {
+      variables.tags = tags;
+    }
+    setSearchParams(variables);
   };
+
+  const [showFilters, setShowFilters] = useState(false);
 
   //----
   return (
     <div>
       <Headerbar />
-      <div className="home">
-        <div id="filters">
-          <div id="categories">
-            <button
-              onClick={() => filterCategory(0)}
-              className={
-                !category || category === 0
-                  ? "active-button"
-                  : "inactive-button"
-              }
-            >
-              All
-            </button>
-            <button
-              onClick={() => filterCategory(1)}
-              className={
-                category === 1 ? "active-button" : "inactive-button"
-              }
-            >
-              Tees
-            </button>
-            <button
-              onClick={() => filterCategory(2)}
-              className={
-                category === 2 ? "active-button" : "inactive-button"
-              }
-            >
-              Pullovers
-            </button>
-            <button
-              onClick={() => filterCategory(3)}
-              className={
-                category === 3 ? "active-button" : "inactive-button"
-              }
-            >
-              Shorts
-            </button>
-            <button
-              onClick={() => filterCategory(4)}
-              className={
-                category === 4 ? "active-button" : "inactive-button"
-              }
-            >
-              Pants
-            </button>
-            <button
-              onClick={() => filterCategory(5)}
-              className={
-                category === 5 ? "active-button" : "inactive-button"
-              }
-            >
-              Hats
-            </button>
-            <button
-              onClick={() => filterCategory(6)}
-              className={
-                category === 6 ? "active-button" : "inactive-button"
-              }
-            >
-              Other
-            </button>
+      {showFilters ? <Filters setFilters={setShowFilters} /> : <></>}
+      <div id="top">
+            <span id="filters-button" onClick={() => setShowFilters(true)}>
+              <FontAwesomeIcon icon={faFilter} /> Filters
+            </span>
           </div>
-        </div>
-        <div className="posts-holder">
+      <div className="posts-holder">
+        <div className="posts">
+
           {loading ? (
             <div className="loader-holder">
               <div className="loader">Finding New Clothes....</div>
@@ -177,35 +162,4 @@ function Clothes() {
     </div>
   );
 }
-/* <Link to={`/clothes/${Number(page)-1}`}>*/
 export default Clothes;
-
-/*
-<div className="categories">
-          <button
-              onClick={() => filterCategory("tshirt")}
-              className={
-                category === "unisex" ? "gender-active-button" : "gender-inactive-button"
-              }
-            >
-              Unisex
-            </button>
-            <button
-              onClick={() => filterCategory("tshirt")}
-              className={
-                category === "men" ? "gender-active-button" : "gender-inactive-button"
-              }
-            >
-              Men
-            </button>
-            <button
-              onClick={() => filterCategory("tshirt")}
-              className={
-                category === "women" ? "gender-active-button" : "gender-inactive-button"
-              }
-            >
-              Women
-            </button>
-          </div>
-
-*/

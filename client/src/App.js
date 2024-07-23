@@ -20,6 +20,8 @@ import Brands from "./pages/Brands";
 import Women from "./pages/Women";
 import EditProfile from "./pages/EditProfile";
 import About from "./pages/About";
+import Explore from "./pages/Explore";
+import TagPage from "./pages/TagPage";
 function App() {
   return (
     <AuthProvider>
@@ -29,6 +31,8 @@ function App() {
           <Route exact path="/about" element={<About />} />
           <Route exact path="/brands" element={<Brands/>} />
           <Route exact path="/men" element={<Men />} />
+          <Route exact path="/explore" element={<Explore />} />
+          <Route exact path="/explore/:tag" element={<TagPage />} />
           <Route exact path="/clothes" element={<Clothes />} />
           <Route exact path="/women" element={<Women />} />
           <Route exact path="/login" element={<Login />} />

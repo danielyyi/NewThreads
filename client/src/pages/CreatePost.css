@@ -87,7 +87,84 @@ textarea {
 #create-button:hover {
   background-color: rgb(106, 106, 106);
 }
+#tags-input-container-top{
+  padding: .5em;
+  border-radius: 3px;
+  width: min(80vw, 600px);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .5em;
+}
+#tags-count{
+  margin: 0 5px;
+}
+#tags-input-container-bottom{
+  border: 2px solid #000;
+  padding: .5em;
+  border-radius: 3px;
+  width: min(80vw, 600px);
+  display: flex;
+  margin-top: 1em;
+  min-height: 50px;
+  align-items: center;
+  flex-wrap: wrap;
 
+}
+#pre-tags-input-container{
+  border: 2px solid #000;
+  padding: .5em;
+  border-radius: 3px;
+  width: min(80vw, 600px);
+  margin-top: 1em;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+}
+#tag-item{
+  background-color: rgb(240, 240, 240);
+  display: inline-block;
+  padding: .5em .75em;
+  margin: 0px .1em;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+#tag-item-clicked{
+  background-color: rgb(203, 203, 203);
+  display: inline-block;
+  padding: .5em .75em;
+  border-radius: 20px;
+  outline: 2px rgb(255, 0, 0) solid;
+  border: 2px rgb(255, 255, 255) solid;
+  cursor: pointer;
+}
+
+#tags-input{
+  flex-grow: 1;
+  padding: .5em 0;
+  border: none;
+  outline: none;
+
+}
+#tag-item #tag-close{
+  height: 20px;
+  width: 20px;
+  background-color: rgb(48, 48, 48);
+  display: inline-flex;
+  color: #fff;
+  border-radius: 50%;
+  align-items: center;
+  cursor: pointer;
+  justify-content: center;
+  margin-left: .5em;
+  font-size: 18px;
+}
+
+#tags-text2{
+  cursor: pointer;
+}
 
 
 #cancel-button {
