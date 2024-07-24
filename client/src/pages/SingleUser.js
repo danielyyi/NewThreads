@@ -81,6 +81,10 @@ const GET_USER_POSTS = gql`
       caption
       createdAt
       id
+      tags {
+      color
+      name
+    }
       price
       title
       productLink

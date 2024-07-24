@@ -9,15 +9,15 @@ import gql from "graphql-tag";
 import { FETCH_POSTS_QUERY } from "../util/graphql";
 import Post from "../components/Post";
 import "./SingleUser.css";
-import Footer from "../components/Footer"
+import Footer from "../components/Footer";
 
 function Profile() {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   useEffect(() => {
-    window.scrollTo(0, 0)
-    console.log("not logged in")
-    if(!user){
+    window.scrollTo(0, 0);
+    console.log("not logged in");
+    if (!user) {
       navigate("/login");
     }
   }, [user]);
@@ -28,11 +28,11 @@ function Profile() {
     variables: {
       userId,
       limit,
-    }
+    },
   });
   var posts;
   if (!loading && data && data.getPostsByUser) {
-    posts = []
+    posts = [];
     data.getPostsByUser.forEach((element) => {
       posts.push(element);
     });
@@ -60,12 +60,14 @@ function Profile() {
   return (
     <div className="profile-page">
       <Headerbar />
-      {!posts || posts.length>=12? (<ProfileHeaderbar canPost={false}/>):(<ProfileHeaderbar canPost={true}/>)}
-      
-  
+      {!posts || posts.length >= 12 ? (
+        <ProfileHeaderbar canPost={false} />
+      ) : (
+        <ProfileHeaderbar canPost={true} />
+      )}
+
       <div className="posts-holder">
         <div className="posts">
-
           {loading ? (
             <div className="loader-holder">
               <div className="loader">Finding New Clothes....</div>
@@ -87,8 +89,11 @@ const GET_USER_POSTS = gql`
       price
       productLink
       title
-      caption
       id
+      tags {
+        color
+        name
+      }
       user
       image
       username

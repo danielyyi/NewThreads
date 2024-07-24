@@ -45,7 +45,18 @@ function Daily() {
           <div className="loader-holder"></div>
         ) : (
           posts &&
-          posts.map((post) => (
+          posts.map((post, index) => (
+            <Post key={index} post={post}/>
+          ))
+        )}
+      </div>
+    </div>
+  );
+}
+export default Daily;
+
+
+/*
             <div class="daily-inner-card">
               <Link to={`/posts/${post.id}`}>
                 <img src={post.image} alt={"post"} id="daily-image" />
@@ -61,10 +72,5 @@ function Daily() {
                   )}
               </div>
             </div>
-          ))
-        )}
-      </div>
-    </div>
-  );
-}
-export default Daily;
+
+*/

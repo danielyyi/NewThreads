@@ -26,11 +26,11 @@ import Footer from "../components/Footer";
 import gql from "graphql-tag";
 import { FETCH_POSTS_QUERY } from "../util/graphql";
 //YOU NEED TO CHANGE CREATE POST TO LOAD POST QUERY
-function Clothes() {
+function Clothes({ filterOn }) {
   const [searchParams, setSearchParams] = useSearchParams();
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
   useEffect(() => {
     if (!searchParams.get("page")) {
       setSearchParams({ page: 0 });
@@ -115,7 +115,7 @@ function Clothes() {
     setSearchParams(variables);
   };
 
-  const [showFilters, setShowFilters] = useState(false);
+  const [showFilters, setShowFilters] = useState(filterOn);
 
   //----
   return (
@@ -123,13 +123,13 @@ function Clothes() {
       <Headerbar />
       {showFilters ? <Filters setFilters={setShowFilters} /> : <></>}
       <div id="top">
-            <span id="filters-button" onClick={() => setShowFilters(true)}>
-              <FontAwesomeIcon icon={faFilter} /> Filters
-            </span>
-          </div>
+        <span id="filters-button" onClick={() => setShowFilters(true)}>
+          <FontAwesomeIcon icon={faFilter} /> Filters
+        </span>
+     
+      </div>
       <div className="posts-holder">
         <div className="posts">
-
           {loading ? (
             <div className="loader-holder">
               <div className="loader">Finding New Clothes....</div>

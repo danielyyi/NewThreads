@@ -49,7 +49,10 @@ const GET_USER_POSTS = gql`
       id
       price
       title
-
+      tags {
+      color
+      name
+    }
       productLink
       image
       username

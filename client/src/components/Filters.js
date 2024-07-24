@@ -6,8 +6,6 @@ import "../pages/Clothes.css";
 import TagItem from "./TagItem";
 import { useQuery } from "@apollo/client";
 
-
-
 function Filters(props) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [category, setCategory] = useState(searchParams.get("category"));
@@ -27,7 +25,6 @@ function Filters(props) {
   var preTags = [];
 
   function handleTagClick(name, color) {
-   
     if (tags.length > 4) return;
     if (tags.some((el) => el.name === name)) return;
     setTags([...tags, { name: name, color: color }]);
@@ -58,8 +55,14 @@ function Filters(props) {
     if (str2 != "") {
       variables.price = str2;
     }
-    if(str2 == "0to200"){
-        delete variables.price
+    if (str2 == "0to200") {
+      delete variables.price;
+    }
+    if (category == "all") {
+      delete variables.category;
+    }
+    if (sex == "all") {
+      delete variables.sex;
     }
 
     console.log(variables);
@@ -69,10 +72,10 @@ function Filters(props) {
     setFilters();
   };
 
-  const clearFilters = () =>{
-    setSearchParams({})
+  const clearFilters = () => {
+    setSearchParams({});
     setFilters();
-  }
+  };
 
   const filterPrice = () => {};
 
@@ -103,14 +106,14 @@ function Filters(props) {
   useEffect(() => {
     if (strTags && strTags != "null") {
       let arr = strTags.split(",");
-      let objArr = []
+      let objArr = [];
       arr.forEach((name) => {
         let obj = preTags.find((tag) => tag.name === name);
         if (obj) {
-          objArr.push(obj)
+          objArr.push(obj);
         }
       });
-      setTags(objArr)
+      setTags(objArr);
     }
   }, [loading]);
   //----
@@ -120,7 +123,7 @@ function Filters(props) {
         <span class="close" onClick={() => setFilters(false)}>
           &times;
         </span>
-        <h2>Filters</h2>
+        <h2>Filter Apparel</h2>
         <div id="filters">
           <label id="filter-label">Style</label>
           <div id="categories">
@@ -273,8 +276,12 @@ function Filters(props) {
                 </div>
               ))}
           </div>
-          <button className="inactive-button" onClick={() => applyFilters()}>Apply</button>
-          <button  className="inactive-button" onClick={() => clearFilters()}>Clear</button>
+          <button className="inactive-button" onClick={() => applyFilters()}>
+            Apply
+          </button>
+          <button className="inactive-button" onClick={() => clearFilters()}>
+            Clear
+          </button>
         </div>
       </div>
     </div>

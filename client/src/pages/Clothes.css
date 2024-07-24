@@ -73,7 +73,6 @@
 #filters-button {
   font-size: larger;
   cursor: pointer;
-  margin-left: 25px;
 }
 
 #filters-button:hover {
@@ -82,9 +81,9 @@
 
 
 #top {
-  padding-top: 10px;
-  margin-left: 30px;
-
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
 }
 
 #search-bar {

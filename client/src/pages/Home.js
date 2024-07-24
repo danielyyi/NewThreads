@@ -17,32 +17,37 @@ import { GET_TAGS_QUERY } from "../util/graphql";
 function Home() {
   var tags = [];
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
   const { loading, data } = useQuery(GET_TAGS_QUERY, {});
 
   if (!loading && data && data.getTags) {
-    tags = data.getTags
+    tags = data.getTags;
     console.log(tags);
   }
 
   return (
     <div>
       <Headerbar />
-      <Daily />
-      <div id="shop-by-tag">
-        <div>
-        <div id="explore-text">Shop Niches</div>
-        {loading ? (
-            <div className="loader-holder">
-              <div className="loader">Tags...</div>
-            </div>
-          ) : (
-             tags && tags.map((tag, index) =><Link to={`/explore/${tag.name}`}><TagItem key={index} name={tag.name} color={tag.color} /></Link> )
-          )}
-          </div>
+      <div id="intro">
+        <div  id="intro-text">Find Clothing from Startup Brands.</div>
       </div>
-      
+      <Daily />
+      <div id="explore-text">Shop Niches</div>
+      <div id="shop-by-tag">
+        {loading ? (
+          <div className="loader-holder">
+            <div className="loader">Tags...</div>
+          </div>
+        ) : (
+          tags &&
+          tags.map((tag, index) => (
+            <Link to={`/explore/${tag.name}`}>
+              <TagItem key={index} name={tag.name} color={tag.color} />
+            </Link>
+          ))
+        )}
+      </div>
       <Footer />
     </div>
   );

@@ -26,6 +26,7 @@
 
 #active-icon{
   text-decoration: underline;
+ 
 }
 
 #inactive-icon{
@@ -66,7 +67,7 @@ text-decoration: none;
       font-size: x-large;
     }
     .navbar a{
-      font-size: small;
-      margin: 10px 10px;
+      font-size: medium;
+      margin: 10px 20px;
     }
 }
