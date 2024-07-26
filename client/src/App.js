@@ -22,12 +22,14 @@ import EditProfile from "./pages/EditProfile";
 import About from "./pages/About";
 import Explore from "./pages/Explore";
 import TagPage from "./pages/TagPage";
+import Register2 from "./pages/Register2";
 function App() {
   return (
     <AuthProvider>
       <Router>
         <Routes>
           <Route exact path="/search" element={<Search />} />
+          <Route exact path="/register2" element={<Register2 />} />
           <Route exact path="/about" element={<About />} />
           <Route exact path="/brands" element={<Brands/>} />
           <Route exact path="/men" element={<Men />} />

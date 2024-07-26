@@ -19,6 +19,7 @@ import FileBase from "react-file-base64";
 import moment from "moment";
 import "./CreatePost.css";
 import pfp from "../pfp.png";
+import Headerbar from "../components/Headerbar";
 import Output from "../components/Output";
 import Cropper from "react-easy-crop";
 import Footer from "../components/Footer";
@@ -48,8 +49,8 @@ function MakePost(props) {
   function handleKeyDown(e) {
     if (e.key !== "Enter") return;
     const value = e.target.value;
-    if(value.length>14) return;
-    if(value.indexOf(',')!=-1) return;
+    if (value.length > 14) return;
+    if (value.indexOf(",") != -1) return;
     if (!value.trim()) return;
     if (tags.length > 2) return;
     if (tags.some((el) => el.name === value)) return;
@@ -82,7 +83,7 @@ function MakePost(props) {
   }
 
   const { loading, data } = useQuery(GET_TAGS_QUERY, {
-    fetchPolicy: "cache-first"
+    fetchPolicy: "cache-first",
   });
   if (!loading && data && data.getTags) {
     preTags = data.getTags;
@@ -221,8 +222,8 @@ function MakePost(props) {
       navigate("/profile");
     },
     onError(err) {
-      console.log(err.graphQLErrors[0].message);
-      setErrors(err.graphQLErrors[0].message);
+      console.log(err.graphQLErrors[0].extensions.errors);
+     setErrors(err.graphQLErrors[0].extensions.errors);
     },
   });
 
@@ -276,54 +277,98 @@ function MakePost(props) {
 
   return (
     <div>
-      <nav className="dev-nav">
-        <Link to="/">
-          <div className="logo">
-            NewThreads <span id="share"> - Share an Item</span>
-          </div>
-        </Link>
-      </nav>
-
-      <div className="create-holder">
-        <div>
+      <Headerbar />
+      <div id="create-post-content">
+      <div id="popup-form-holder">
+        <form
+          id="popup-form"
+          onSubmit={onSubmit}
+          className="post-form"
+          onKeyDown={(e) => checkKeyDown(e)}
+        >
           <Link to="/profile">
-            <button id="cancel-button">Cancel</button>
+            <button
+              type="button"
+              id="popup-register-button"
+              style={{ marginTop: "0px" }}
+            >
+              Cancel
+            </button>
           </Link>
-          <form
-            onSubmit={onSubmit}
-            className="post-form"
-            onKeyDown={(e) => checkKeyDown(e)}
-          >
+          <div id="popup-form-title">Create a Post</div>
+          <div id="popup-form-subtitle">
+            Share products from your brand to the world!
+          </div>
+          <div id="popup-form-group">
+            <label for="image" className="">
+              Image
+            </label>
+            <FileBase
+              title=" "
+              name="image"
+              type="file"
+              multiple={false}
+              onDone={({ base64 }) => changeImage(base64)}
+            />
+            {image ? (
+              <div className="images">
+                <div className="cropper">
+                  <Cropper
+                    image={image}
+                    aspect={CROP_AREA_ASPECT}
+                    crop={crop}
+                    zoom={zoom}
+                    onCropChange={setCrop}
+                    onZoomChange={setZoom}
+                    onCropAreaChange={setCroppedArea}
+                  />
+                </div>
+                <div className="viewer">
+                  <div>
+                    {croppedArea && (
+                      <Output
+                        ratio={CROP_AREA_ASPECT}
+                        image={image}
+                        croppedArea={croppedArea}
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
+          <div id="popup-form-group">
             <label for="title" className="">
               Title
             </label>
             <input
-              maximum-scale={1}
               wrap="soft"
               type="text"
-              maxLength={100}
+              maxLength={21}
               onChange={onChange}
               value={values.title}
               name="title"
               placeholder="Title"
-            />
+            ></input>
+          </div>
+          <div id="popup-form-group">
             <label for="price" className="">
               Price
             </label>
             <input
-              maximum-scale={1}
               wrap="soft"
               type="number"
-              min="0"
-              max="100"
-              step="0.01"
               maxLength={6}
               onChange={onChange}
               id="price"
               value={values.price}
               name="price"
               placeholder="Price"
-            />
+            ></input>
+          </div>
+          <div id="popup-form-group">
             <label for="sex" className="">
               Sex
             </label>
@@ -338,6 +383,8 @@ function MakePost(props) {
               <option value="male">Men</option>
               <option value="female">Women</option>
             </select>
+          </div>
+          <div id="popup-form-group">
             <label for="category" className="">
               Category
             </label>
@@ -355,16 +402,18 @@ function MakePost(props) {
               <option value="hat">Hat</option>
               <option value="other">Other</option>
             </select>
-            <label for="tags" className="">
-              Tags
-            </label>
+          </div>
 
+          <div id="popup-form-group">
+            <label for="tags" className="">
+              Add Tags
+            </label>
             <div id="pre-tags-input-container">
               <input
                 onKeyDown={handleKeyDown}
                 id="tags-input"
                 type="text"
-                placeholder="Type tag or choose from existing tags..."
+                placeholder="Type or choose from existing tags..."
               />
               <div name="tags" id="tags-input-container-top">
                 {preTags.length > 0 &&
@@ -412,7 +461,9 @@ function MakePost(props) {
               ))}
               <div id="tags-count">{tags.length}/3</div>
             </div>
+          </div>
 
+          <div id="popup-form-group">
             <label for="productLink" className="">
               Product Link
             </label>
@@ -426,81 +477,50 @@ function MakePost(props) {
               name="productLink"
               placeholder="URL to purchase item"
             />
+          </div>
 
+          <div id="popup-form-group">
             <label for="caption" className="">
               Description
             </label>
             <textarea
               maximum-scale={1}
               wrap="soft"
-              rows="20"
+              rows="10"
               cols="70"
-              maxLength={700}
+              maxLength={600}
               onChange={onChange}
               value={values.caption}
               name="caption"
-              placeholder="Description of Apparel"
+              placeholder="Write some information about this product or copy and paste it from your own website..."
             ></textarea>
-            <label for="image" className="">
-              Image
-            </label>
-            <FileBase
-              title=" "
-              name="image"
-              type="file"
-              multiple={false}
-              onDone={({ base64 }) => changeImage(base64)}
-            />
-            {image ? (
-              <div className="images">
-                <div className="cropper">
-                  <Cropper
-                    image={image}
-                    aspect={CROP_AREA_ASPECT}
-                    crop={crop}
-                    zoom={zoom}
-                    onCropChange={setCrop}
-                    onZoomChange={setZoom}
-                    onCropAreaChange={setCroppedArea}
-                  />
-                </div>
-                <div className="viewer">
-                  <div>
-                    {croppedArea && (
-                      <Output
-                        ratio={CROP_AREA_ASPECT}
-                        image={image}
-                        croppedArea={croppedArea}
-                      />
-                    )}
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <></>
-            )}
+          </div>
 
-            <div>
-              {errors.length > 0 ? (
-                <div>{errors}</div>
-              ) : (
-                <button
-                  type="submit"
-                  id="create-button"
-                  disabled={
-                    values.title == "" ||
-                    values.image == "" ||
-                    values.price == "" ||
-                    values.caption == "" ||
-                    values.productLink == ""
-                  }
-                >
-                  Share
-                </button>
-              )}
-            </div>
-          </form>
-        </div>
+
+          <button id="popup-register-button" type="submit">
+            Share
+          </button>
+          <div>
+            {loading ? (
+              <div className="loader-holder">Loading...</div>
+            ) : (
+              <div>
+                {Object.keys(errors).length > 0 && (
+                  <div>
+                    <ul>
+                      {Object.values(errors).map((value) => (
+                        <li className="errors" key={value}>
+                          - {value}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </form>
+      </div>
       </div>
       <Footer />
     </div>

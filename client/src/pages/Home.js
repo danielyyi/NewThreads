@@ -30,7 +30,7 @@ function Home() {
     <div>
       <Headerbar />
       <div id="intro">
-        <div  id="intro-text">Find Clothing from Startup Brands.</div>
+        <div  id="intro-text">Find Clothes from Startup Brands.</div>
       </div>
       <Daily />
       <div id="explore-text">Shop Niches</div>

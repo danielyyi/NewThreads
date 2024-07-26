@@ -3,7 +3,7 @@
   justify-content: center;
 }
 #intro {
-  height: 400px;
+  height: 300px;
   padding: 0px 10px;
   display: flex;
   flex-wrap: wrap;
@@ -111,10 +111,11 @@
 
 @media (max-width: 620px) {
   #intro {
-    height: 250px;
+    height: 200px;
+    background-position: -400px -300px;
   }
   #intro-text {
-    margin-top: 100px;
+    margin-top: 75px;
     font-size: 30px;
     padding: 0px 10px;
   }

@@ -1,26 +1,37 @@
-import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useContext, useState, useEffect } from "react";
+import ReactSlider from "react-slider";
+import { useSearchParams, Link, useNavigate } from "react-router-dom";
+import { GET_TAGS_QUERY } from "../util/graphql";
+import "../pages/Clothes.css";
+import TagItem from "./TagItem";
+import { useQuery } from "@apollo/client";
+
 import { useMutation } from "@apollo/client";
 import gql from "graphql-tag";
 import { useForm } from "../util/hooks";
 import { AuthContext } from "../context/auth";
-import "./Register.css";
-import "./EditProfile.css";
-import Headerbar from "../components/Headerbar";
+import "./RegisterPopup.css";
+import Navbar from "../components/Navbar";
 import FileBase from "react-file-base64";
+import Footer from "../components/Footer";
 
-function EditProfile(props) {
+function RegisterPopup(props) {
   const context = useContext(AuthContext);
   const [errors, setErrors] = useState({});
+  const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
-  const { onChange, onSubmit, values } = useForm(makeEdit, {
-    email: null,
-    bio: null,
-    brandLink: null,
-    pfp: null,
-    username: null,
+  const { onChange, onSubmit, values } = useForm(registerUser, {
+    username: "",
+    email: "",
+    password: "",
+    bio: "",
+    brandLink: "",
+    pfp: "",
+    confirmPassword: "",
   });
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   function resizeImage(base64Str, maxWidth = 600, maxHeight = 600) {
     return new Promise((resolve) => {
       let img = new Image();
@@ -60,47 +71,58 @@ function EditProfile(props) {
     console.log(values.pfp);
   }
 
-  const [edit, { loading }] = useMutation(EDIT_PROFILE, {
-    /*
+  const [addUser, { loading }] = useMutation(REGISTER_USER, {
     update(_, { data: { register: userData } }) {
       console.log(userData);
-      navigate("/profile");
-    },*/
+      context.login(userData);
+      setSuccess(true);
+    },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.errors);
     },
     variables: values,
   });
 
-  function makeEdit() {
-    edit();
-    navigate("/profile");
+  function registerUser() {
+    addUser();
   }
+
   const resetLogo = () => {
     setImage("");
   };
 
+  const setRegister = (data) => {
+    props.setRegister(data);
+  };
+  const setLogin = (data) => {
+    props.setLogin(data);
+    props.setRegister(false)
+  };
+  //----
   return (
-    <>
-      <Headerbar />
-
-      <div id="popup-form-holder">
-        <form id="popup-form" onSubmit={onSubmit} noValidate>
-          <Link to="/profile">
-            <button
-              type="button"
-              id="popup-register-button"
-              style={{ marginTop: "0px" }}
-            >
-              Cancel
-            </button>
-          </Link>
-          <div id="popup-form-title">Edit Profile</div>
-          <div id="popup-form-subtitle">
-            Fill in the info you'd like to change and leave the rest blank!
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onClick={() => setRegister(false)}>
+          &times;
+        </span>
+        {success ? (
+          <div id="popup-success">
+            <div>Success! Your Brand Account has been created.</div>
+            <Link to="/profile">
+              <button id="popup-register-button">Go to profile</button>
+            </Link>
           </div>
-          <div id="popup-form-group">
-                <label for="username" className="not-required">
+        ) : (
+          <div id="popup-form-holder">
+            <form id="popup-form" onSubmit={onSubmit} noValidate>
+              <div id="popup-form-title">Register Your Brand</div>
+              <div id="popup-form-subtitle" >
+                Take a couple minutes to fill out the form below
+              </div>
+              <div id="popup-form-subtitle2" onClick={()=>setLogin(true)}>Already have an account?</div>
+
+              <div id="popup-form-group">
+                <label for="username" className="">
                   Brand Name
                 </label>
                 <input
@@ -110,7 +132,7 @@ function EditProfile(props) {
                 ></input>
               </div>
               <div id="popup-form-group">
-                <label for="email" className="not-required">
+                <label for="email" className="">
                   Email
                 </label>
                 <input
@@ -120,18 +142,7 @@ function EditProfile(props) {
                 ></input>
               </div>
               <div id="popup-form-group">
-                <label for="bio" className="not-required">
-                  Description
-                </label>
-                <textarea
-                  placeholder="What is your brand's mission or message?"
-                  name="bio"
-                  value={values.bio}
-                  onChange={onChange}
-                />
-              </div>
-          <div id="popup-form-group">
-                <label for="brandLink" className="not-required">
+                <label for="brandLink" className="">
                   Link to Brand's Website
                 </label>
                 <input
@@ -141,7 +152,18 @@ function EditProfile(props) {
                 ></input>
               </div>
               <div id="popup-form-group">
-                <label for="logo" className="not-required">
+                <label for="bio" className="">
+                  Description
+                </label>
+                <textarea
+                  placeholder="What is your brand's mission or message?"
+                  name="bio"
+                  value={values.bio}
+                  onChange={onChange}
+                />
+              </div>
+              <div id="popup-form-group">
+                <label for="logo" className="">
                   Logo
                 </label>
 
@@ -162,8 +184,31 @@ function EditProfile(props) {
                   </div>
                 )}
               </div>
+              <div id="popup-form-group">
+                <label for="password" className="">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder=""
+                  value={values.password}
+                  onChange={onChange}
+                ></input>
+              </div>
+              <div id="popup-form-group">
+                <label for="confirmPassword" className="">
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  value={values.confirmPassword}
+                  onChange={onChange}
+                ></input>
+              </div>
               <button id="popup-register-button" type="submit">
-                Confirm Changes
+                Sign Up
               </button>
               {loading ? (
                 <div className="loader-holder">
@@ -184,32 +229,45 @@ function EditProfile(props) {
                   )}
                 </div>
               )}
-        </form>
+            </form>
+          </div>
+        )}
       </div>
-    </>
+    </div>
   );
 }
-const EDIT_PROFILE = gql`
-  mutation EditProfile(
-    $bio: String
-    $brandLink: String
-    $email: String
-    $pfp: String
-    $username: String
+
+const REGISTER_USER = gql`
+  mutation register(
+    $username: String!
+    $email: String!
+    $bio: String!
+    $brandLink: String!
+    $password: String!
+    $confirmPassword: String!
+    $pfp: String!
   ) {
-    editProfile(
-      bio: $bio
-      brandLink: $brandLink
-      email: $email
-      pfp: $pfp
-      username: $username
+    register(
+      registerInput: {
+        username: $username
+        email: $email
+        password: $password
+        confirmPassword: $confirmPassword
+        brandLink: $brandLink
+        bio: $bio
+        pfp: $pfp
+      }
     ) {
+      id
+      email
+      username
+      createdAt
+      token
       bio
       brandLink
-      username
       pfp
-      email
     }
   }
 `;
-export default EditProfile;
+
+export default RegisterPopup;

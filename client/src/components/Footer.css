@@ -54,6 +54,7 @@ ul {
   color: #bbbbbb;
   display: block;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 .footer-col ul li a:hover {
   color: #ffffff;

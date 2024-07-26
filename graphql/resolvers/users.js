@@ -209,10 +209,11 @@ module.exports = {
       if (user1 || user2) {
         throw new UserInputError("Username is taken", {
           errors: {
-            username: "This username is taken",
+            username: "Your username is taken",
           },
         });
       }
+
 
       //if there are any input-side errors then return them
       if (!valid) {

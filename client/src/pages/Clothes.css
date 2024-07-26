@@ -53,6 +53,7 @@
   padding: 20px;
   border: 1px solid #888;
   max-width: 500px;
+  max-height: 60vh;
   overflow: scroll;
 }
 
@@ -119,7 +120,7 @@
   color: rgb(255, 255, 255);
   animation-name: loader;
   animation-duration: 2s;
-  animation-delay: 1s;
+  animation-delay: .5s;
   animation-iteration-count: infinite;
 }
 
@@ -321,6 +322,7 @@
   .modal-content {
     margin: 0% auto; /* 15% from the top and centered */
     max-width: 100%;
+    max-height: 100%;
   }
 }
 

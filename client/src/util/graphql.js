@@ -57,6 +57,7 @@ export const GET_AUTO = gql`
         color
       }
       category
+      user
       productLink
       id
       image

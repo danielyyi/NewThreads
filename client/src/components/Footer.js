@@ -5,12 +5,28 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComments, faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./Footer.css";
 import { faCaretDown, faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../context/auth";
+import RegisterPopup from "./RegisterPopup";
+import LoginPopup from "./LoginPopup";
 function Footer() {
   const { user } = useContext(AuthContext);
+
+  const [showRegister, setShowRegister] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+
   return (
     <div id="footer-wrapper">
+      {showRegister && !showLogin ? (
+        <RegisterPopup setRegister={setShowRegister} setLogin={setShowLogin}/>
+      ) : (
+        <></>
+      )}
+      {showLogin && !showRegister ? (
+        <LoginPopup setLogin={setShowLogin} setRegister={setShowRegister}/>
+      ) : (
+        <></>
+      )}
       <footer class="footer">
         <div class="footer-container">
           <div class="footer-row">
@@ -26,16 +42,13 @@ function Footer() {
                 ) : (
                   <>
                     <li>
-                      <Link to="/login">
-                        <a href="#">Login</a>{" "}
-                      </Link>
+                      <a onClick={() => setShowLogin(true)}>Login</a>
                     </li>
 
                     <li>
-                      {" "}
-                      <Link to="/register">
-                        <a href="#">Register Your Brand</a>
-                      </Link>
+                      <a onClick={() => setShowRegister(true)}>
+                        Register Your Brand
+                      </a>
                     </li>
                   </>
                 )}

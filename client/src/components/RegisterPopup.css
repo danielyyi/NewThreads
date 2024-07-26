@@ -1,0 +1,125 @@
+#popup-form-holder {
+  display: flex;
+  justify-content: center;
+  margin: 30px 40px;
+}
+#popup-form-group {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  font-family: "Inter";
+}
+
+#popup-form-group select {
+  font-size: 16px;
+}
+#popup-form-title {
+  margin: 0px 0px 0px 0px;
+  font-size: 1.75em;
+  font-weight: bold;
+}
+
+#popup-form-subtitle {
+  font-size: 1.15em;
+  margin: 10px 0px 10px 0px;
+}
+#popup-form-subtitle2 {
+  font-size: 1em;
+  margin: 0px 0px 20px 0px;
+  color: rgb(0, 143, 186);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#logo-close {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+#logo-close:hover,
+#logo-close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#popup-logo {
+  height: 100px;
+  margin: 10px;
+}
+
+#popup-form-group label:after {
+  content: " *";
+  color: red;
+}
+#popup-form-group .not-required:after {
+  content: "";
+
+}
+#popup-form-group input {
+  font-family: "Inter";
+  width: 500px;
+  font-size: 16px;
+  padding: 10px 7px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+
+#popup-form-group textarea {
+  resize: none;
+  margin: 8px 0px 8px 0px;
+  padding: 10px 7px;
+  max-width: 600px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+#popup-form-logo-group {
+  display: flex;
+}
+
+#popup-register-button {
+  background-color: rgb(80, 80, 80);
+  color: white;
+  border-radius: 10px;
+  margin: 20px 0px;
+  border: none;
+}
+
+#popup-register-button:hover {
+  background-color: rgb(104, 104, 104);
+}
+
+#popup-success {
+  text-align: center;
+  margin-top: 50px;
+}
+
+#create-post-content #popup-register-button {
+  max-width: 100px;
+}
+
+@media (max-width: 620px) {
+  #popup-form-group input {
+    width: 100%;
+  }
+  #create-post-content #popup-form-group input {
+    width: 90vw;
+  }
+  #create-post-content #popup-form-group textarea {
+    width: 90vw;
+  }
+
+  .cropper {
+    width: 100px;
+  }
+
+  .viewer {
+    width: 100px;
+  }
+
+  .output {
+    width: 100px;
+  }
+}

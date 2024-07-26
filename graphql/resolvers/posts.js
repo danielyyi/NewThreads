@@ -1,4 +1,4 @@
-const { AuthenticationError } = require("apollo-server");
+const { AuthenticationError, UserInputError } = require("apollo-server");
 const { args } = require("commander");
 const { off } = require("../models/Post");
 
@@ -18,26 +18,31 @@ module.exports = {
     },
     async loadPosts(_, { limit, offset, category, sex, price, tags }) {
       var variables = {};
-      var sorts = {createdAt: -1};
-      if(category!=null && category!="all" && category!="" && category!=="null" && category!="NaN"){
+      var sorts = { createdAt: -1 };
+      if (
+        category != null &&
+        category != "all" &&
+        category != "" &&
+        category !== "null" &&
+        category != "NaN"
+      ) {
         variables.category = category;
       }
-      if(sex!=null && sex!=""&& sex!="all" && sex!=="null"){
-        variables.sex= sex;
+      if (sex != null && sex != "" && sex != "all" && sex !== "null") {
+        variables.sex = sex;
       }
-      if(price!=null && price!=""&& price!="NaN" && price!=="null"){
+      if (price != null && price != "" && price != "NaN" && price !== "null") {
         let min = Number(price.split("to")[0]);
         let max = Number(price.split("to")[1]);
-        variables.price = { $gte: min, $lte: max }
-        sorts= {price: 1};
+        variables.price = { $gte: min, $lte: max };
+        sorts = { price: 1 };
       }
 
-      if(tags!=null && tags!=""&& tags!="NaN" && tags!=="null"){
-        let tagsArray = tags.split('%2C');
+      if (tags != null && tags != "" && tags != "NaN" && tags !== "null") {
+        let tagsArray = tags.split("%2C");
         variables.tags = { $elemMatch: { name: { $in: tagsArray } } };
       }
 
-      
       try {
         const posts = await Post.find(variables)
           .sort(sorts)
@@ -167,15 +172,41 @@ module.exports = {
       context
     ) {
       const user = checkAuth(context); //authenticate user
-
-      if (caption.trim() === "") {
-        throw new Error("Post body must not be empty");
-      }
       const count = await Post.find({ user: user.id }).countDocuments();
       if (count >= 12) {
         throw new Error(
           "The maximum number of posts is 12 for each brand. Please remove one of your current posts to create another."
         );
+      }
+      const errors = {};
+
+      if (title.trim() === "") {
+        errors.title = "Title must not be empty";
+      } 
+      if (title.length > 21) {
+        errors.title1 = "Title is too long";
+      }
+      if (caption.trim() === "") {
+        errors.caption = "Description must not be empty";
+      } 
+      if (caption.length > 100) {
+        errors.caption1 = "Description is too long";
+      }
+      if (image.trim() === "") {
+        errors.image = "Posts must contain an Image";
+      }
+      if (price < 0 || price > 200) {
+        errors.price = "Price must be between 0 and 200";
+      }
+      if (productLink.trim() === "") {
+        errors.productLink = "Product Link must not be empty";
+      }
+      if (productLink.length > 600) {
+        errors.productLink1 = "Product Link is too long";
+      }
+
+      if (Object.keys(errors) && Object.keys(errors).length > 0) {
+        throw new UserInputError("Errors", { errors });
       }
 
       const newPost = new Post({

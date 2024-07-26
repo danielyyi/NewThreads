@@ -120,3 +120,18 @@
   justify-content: center;
   flex-wrap: wrap;
 }
+
+@media (max-width: 510px) {
+
+  #daily-posts .card{
+      width: 220px;
+      .image{
+        width: 220px;
+        height: 275px;
+      }
+    
+  }
+  #daily-posts  .card-text {
+    font-size: 1em;
+  }
+}

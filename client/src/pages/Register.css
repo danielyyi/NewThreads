@@ -104,10 +104,7 @@ button {
   background-color: rgb(106, 106, 106);
 }
 input {
-  font-size: 16px;
-  padding: 10px 20px;
-  margin: 8px 0;
-  box-sizing: border-box;
+
 }
 select {
   padding: 12px 20px;
@@ -130,14 +127,13 @@ select {
   justify-content: left;
 }
 input[type=file]::file-selector-button {
-  margin-right: 20px;
   border: none;
   background-color: rgb(80, 80, 80);
+  max-width: 200px;
   padding: 10px 20px;
-  border-radius: 2px;
+  border-radius: 30px;
   color: #fff;
   cursor: pointer;
-  transition: background .2s ease-in-out;
 }
 
 input[type=file]::file-selector-button:hover {

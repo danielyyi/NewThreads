@@ -7,12 +7,11 @@ body {
   padding: 0;
 }
 .images {
-  margin-right: 400px;
-  margin-left: 15px;
+
 }
 .post-form {
-  display: flex;
-  flex-direction: column;
+  display: flex;  
+  justify-content: center;
 }
 .create-holder {
   display: flex;
@@ -48,12 +47,7 @@ body {
 }
 
 textarea {
-  resize: none;
-  margin: 8px 10px;
-  padding: 12px 20px;
-  max-width: 400px;
-  font-size: 16px;
-  box-sizing: border-box;
+
 }
 #share {
   font-style: normal;
@@ -177,12 +171,6 @@ textarea {
   background-color: rgb(106, 106, 106);
 }
 
-input {
-  padding: 12px 20px;
-  box-sizing: border-box;
-  max-width: 400px;
-  font-size: 16px;
-}
 select {
   padding: 12px 20px;
   margin: 5px 10 20px 0px;

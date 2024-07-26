@@ -26,7 +26,8 @@
   background-color: rgb(80, 80, 80);
   color: white;
   border: none;
-  margin: 5px 5px;
+  margin: 10px 2.5px;
+  border-radius: 30px;
 }
 .profile-buttons button:hover {
   background-color: rgb(106, 106, 106);
