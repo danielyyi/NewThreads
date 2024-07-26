@@ -183,13 +183,13 @@ module.exports = {
       if (title.trim() === "") {
         errors.title = "Title must not be empty";
       } 
-      if (title.length > 21) {
+      if (title.length > 40) {
         errors.title1 = "Title is too long";
       }
       if (caption.trim() === "") {
         errors.caption = "Description must not be empty";
       } 
-      if (caption.length > 100) {
+      if (caption.length > 600) {
         errors.caption1 = "Description is too long";
       }
       if (image.trim() === "") {
@@ -201,7 +201,7 @@ module.exports = {
       if (productLink.trim() === "") {
         errors.productLink = "Product Link must not be empty";
       }
-      if (productLink.length > 600) {
+      if (productLink.length > 100) {
         errors.productLink1 = "Product Link is too long";
       }
 

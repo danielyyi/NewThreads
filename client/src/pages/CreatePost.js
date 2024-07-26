@@ -346,7 +346,7 @@ function MakePost(props) {
             <input
               wrap="soft"
               type="text"
-              maxLength={21}
+              maxLength={40}
               onChange={onChange}
               value={values.title}
               name="title"
