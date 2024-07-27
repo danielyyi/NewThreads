@@ -61,8 +61,10 @@ function Brands() {
       ) : (
         <div className="search-page">
           <div id="brands-title">All Brands</div>
+          <div id="brands-holder-holder">
+          <div id="brands-holder">
           {users && users.map((user) => (
-            <div key={user.id}>
+            <div id="brand-holder" key={user.id}>
               {user.username.toLowerCase().indexOf(term.toLowerCase()) != -1 ? (
                 <BrandTag user={user}></BrandTag>
               ) : (
@@ -70,13 +72,15 @@ function Brands() {
               )}
             </div>
           ))}
+          </div>
+          </div>
         </div>
       )}
             {loading ? (
         <></>
       ) : (
         <>
-          <div id="nav-buttons">
+          <div id="nav-buttons" style={{marginTop:"10px"}}>
             <button
               className="nav-button"
               disabled={page <= 0}

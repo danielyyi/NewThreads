@@ -91,6 +91,7 @@ module.exports = {
 
   Mutation: {
     async editProfile(_, { bio, email, pfp, brandLink, username }, context) {
+      username = username.trim();
       const user = checkAuth(context);
       if (user) {
         let newUser;
@@ -135,13 +136,14 @@ module.exports = {
       }
     },
     async login(_, { username, password }) {
+      username = username.trim();
       //checks for input-side errors like empty inputs
       const { errors, valid } = validateLoginInput(username, password);
       //if there are input-side errors, present them
       if (!valid) {
         throw new UserInputError("Errors", { errors });
       }
-
+      
       //check for database-side errors like wrong password
       //wrong username
       const user = await User.findOne({ username });
@@ -187,6 +189,7 @@ module.exports = {
         },
       }
     ) {
+      username = username.trim();
       //Validate user data
       //this will call our validator register function which will check for input-side errors like incorrect email adresses
       //or too long usernames. It will then return valid for true or false, and also any errors
@@ -201,7 +204,7 @@ module.exports = {
       );
 
       //TODO: Need to update external validators
-
+   
       //make sure user with that username doesnt already exist
       const user1 = await User.findOne({ username });
       const user2 = await Application.findOne({ username });

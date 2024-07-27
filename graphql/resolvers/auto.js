@@ -11,14 +11,20 @@ module.exports = {
     async getAuto(_, { counter }) {
       try {
         const size = await Auto.countDocuments();
-        const auto = await Auto.findOne({}).skip(counter%(size-1));
+        const auto = await Auto.findOne({}).skip(counter%(size));
+        const posts = []
         if (auto) {
+          posts[0] = await Post.findOne({_id: auto.post1})
+          posts[1] = await Post.findOne({_id: auto.post2})
+          posts[2] = await Post.findOne({_id: auto.post3})
+          posts[3] = await Post.findOne({_id: auto.post4})
+          /*
           const posts = await Post.find({
             _id: {
               $in: [auto.post1, auto.post2, auto.post3, auto.post4],
             },
           });
-
+*/
           if (posts) {
             return posts;
           } else {

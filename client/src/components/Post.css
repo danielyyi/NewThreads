@@ -26,8 +26,9 @@
   0%  {opacity: 0;}
   100% {opacity: 1;}
 }
-.price {
+.post-price {
   font-size: large;
+  font-weight: bold;
 }
 .minimal {
   font-size: small;
@@ -39,7 +40,7 @@
 .card-text {
   padding: 0px 5px 5px 5px;
   text-align: left;
-  
+  text-wrap: wrap;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -51,7 +52,13 @@
   text-align: left;
 }
 
-
+.card-title{
+  max-width: 290px;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 @media (max-width: 1100px) {
   .card{
     width: 220px;

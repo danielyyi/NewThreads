@@ -60,7 +60,6 @@ text-decoration: none;
     }
     .navbar{
       padding: 10px 20px;
-     
       padding-right: 10px;
     }
     .logo{
@@ -68,6 +67,6 @@ text-decoration: none;
     }
     .navbar a{
       font-size: medium;
-      margin: 10px 20px;
+      margin: 10px 15px;
     }
 }

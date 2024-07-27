@@ -21,9 +21,9 @@ function Post({
       </Link>
       <div className="card-text">
         <div>
-          
-        <div>{post.title}</div>
-        <div className="price">${post.price}</div>
+        <div className="post-price">${post.price}</div>
+        <div className="card-title">{post.title}</div>
+
         </div>
         <div className="post-tags-holder">{post.tags && post.tags.map((tag, index) => <MiniTag key={index} color={tag.color} name={tag.name}/>)}</div>
         

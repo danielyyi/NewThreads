@@ -48,7 +48,7 @@ function MakePost(props) {
 
   function handleKeyDown(e) {
     if (e.key !== "Enter") return;
-    const value = e.target.value;
+    const value = e.target.value.toLowerCase();
     if (value.length > 14) return;
     if (value.indexOf(",") != -1) return;
     if (!value.trim()) return;

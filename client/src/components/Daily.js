@@ -17,8 +17,8 @@ import "./Daily.css";
 function Daily() {
   const { user } = useContext(AuthContext);
   var d1 = new Date(); //"now"
-  var d2 = new Date("2024-06-25T01:51:00"); // some date
-  var counter = Math.floor((d1 - d2) / 1000 / 60 / 60 / 24);
+  var d2 = new Date("2024-07-25T00:00:00"); // some date
+  var counter = Math.abs(Math.floor((d1 - d2) / 1000 / 60 / 60 / 24));
   console.log(counter);
 
   var posts = [];

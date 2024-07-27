@@ -6,21 +6,54 @@
 }
 #brand-image{
     width: 300px;
-    
 }
 
 #brands-title{
     display: flex;
-    padding: 0px 10px 20px 10px;
-    border-bottom: 1.5px solid black;
-    margin: 20px 80px;
+    padding: 0px 10px 0px 10px;
+   
+    margin: 25px 80px;
     font-size: xx-large;
 }
 
+#brands-holder{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#brands-holder-holder{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#brand-holder{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(212, 212, 212);
+    justify-content: center;
+    margin: 10px 40px;
+    padding: 35px 0px 0px 0px;
+
+}
 @media (max-width: 600px) {
     #brands-title{
       justify-content: center;
-      text-align: center;
-      
+      text-align: center; 
+      font-size: 1.75em;
     }
+    #brand-holder{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+   
+        margin: 3px;
+        padding: 10px 10px;
+    }
+    
+    #brands-holder{
+        max-width: 300px;
+    }
+    
   }

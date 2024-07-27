@@ -1,8 +1,9 @@
 #mini-tag {
   background-color: rgb(240, 240, 240);
-  display: inline-block;
-  padding: 0.2em 0.5em;
+  display: block;
+  padding: 0.2em .4em;
   margin: 0px 0.1em;
+  text-wrap: nowrap;
   margin-left: -.25em;
   margin-right: .5em;
   border-radius: 20px;
