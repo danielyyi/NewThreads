@@ -48,9 +48,9 @@ function TagPage() {
     <>
       <Headerbar />
       <div id="explore-holder">
-        
         <TagTitle tag={tag} />
         <div className="posts-holder">
+        <div className="posts">
           {loading ? (
             <div className="loader-holder">
               <div className="loader">Finding New Clothes....</div>
@@ -59,6 +59,7 @@ function TagPage() {
             posts && posts.map((post) => <Post key={post.id} post={post} />)
           )}
         </div>
+      </div>
       </div>
       <Footer />
     </>
