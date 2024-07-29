@@ -14,10 +14,10 @@ function EditProfile(props) {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const { onChange, onSubmit, values } = useForm(makeEdit, {
-    email: null,
     bio: null,
-    brandLink: null,
+    email: null,
     pfp: null,
+    brandLink: null,
     username: null,
   });
 
@@ -61,20 +61,22 @@ function EditProfile(props) {
   }
 
   const [edit, { loading }] = useMutation(EDIT_PROFILE, {
-    /*
-    update(_, { data: { register: userData } }) {
-      console.log(userData);
-      navigate("/profile");
-    },*/
+    update(_, {}){
+      navigate("/profile")
+    },
     onError(err) {
+      console.log(err.graphQLErrors[0].extensions.errors)
       setErrors(err.graphQLErrors[0].extensions.errors);
     },
     variables: values,
   });
 
   function makeEdit() {
+
+    console.log(values )
     edit();
-    navigate("/profile");
+
+
   }
   const resetLogo = () => {
     setImage("");
@@ -138,6 +140,7 @@ function EditProfile(props) {
                   name="brandLink"
                   value={values.brandLink}
                   onChange={onChange}
+                  placeholder="You can copy/paste this in..."
                 ></input>
               </div>
               <div id="popup-form-group">

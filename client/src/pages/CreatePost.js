@@ -475,7 +475,7 @@ function MakePost(props) {
               onChange={onChange}
               value={values.productLink}
               name="productLink"
-              placeholder="URL to purchase item"
+              placeholder="You can copy/paste this in..."
             />
           </div>
 

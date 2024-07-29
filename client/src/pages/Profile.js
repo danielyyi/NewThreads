@@ -16,7 +16,6 @@ function Profile() {
   const navigate = useNavigate();
   useEffect(() => {
     window.scrollTo(0, 0);
-    console.log("not logged in");
     if (!user) {
       navigate("/login");
     }

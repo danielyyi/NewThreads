@@ -91,48 +91,50 @@ module.exports = {
 
   Mutation: {
     async editProfile(_, { bio, email, pfp, brandLink, username }, context) {
-      username = username.trim();
+      const errors = {};
+      const changes = {};
+
       const user = checkAuth(context);
       if (user) {
         let newUser;
         if (username) {
-          newUser = await User.findByIdAndUpdate(
-            user.id,
-            { username: username },
-            { new: true }
-          );
+          username = username.trim();
+          changes.username = username;
         }
         if (bio) {
-          newUser = await User.findByIdAndUpdate(
-            user.id,
-            { bio: bio },
-            { new: true }
-          );
+          changes.bio = bio;
         }
         if (email) {
-          newUser = await User.findByIdAndUpdate(
-            user.id,
-            { email: email },
-            { new: true }
-          );
+          changes.email = email;
         }
         if (pfp) {
-          newUser = await User.findByIdAndUpdate(
-            user.id,
-            { pfp: pfp },
-            { new: true }
-          );
+          changes.pfp = pfp;
         }
         if (brandLink) {
-          newUser = await User.findByIdAndUpdate(
-            user.id,
-            { brandLink: brandLink },
-            { new: true }
-          );
+          if(brandLink.indexOf("https://")<0){
+            errors.brandLink = "Links must begin with the https:// prefix."
+          }else{
+            changes.brandLink = brandLink;
+          }
         }
+
+
+
+        if (Object.keys(errors) && Object.keys(errors).length > 0) {
+          throw new UserInputError("Errors", { errors });
+        }
+
+        newUser = await User.findByIdAndUpdate(
+          user.id,
+          changes,
+          { new: true }
+        );
+
+
+
         return newUser;
       } else {
-        throw new Error("Action not allowed");
+        throw new UserInputError("Action not allowed");
       }
     },
     async login(_, { username, password }) {

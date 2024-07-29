@@ -204,6 +204,9 @@ module.exports = {
       if (productLink.length > 100) {
         errors.productLink1 = "Product Link is too long";
       }
+      if(productLink.indexOf("https://")<0){
+        errors.productLink1 = "Links must begin with the https:// prefix."
+      }
 
       if (Object.keys(errors) && Object.keys(errors).length > 0) {
         throw new UserInputError("Errors", { errors });

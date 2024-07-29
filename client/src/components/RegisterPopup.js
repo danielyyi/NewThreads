@@ -149,6 +149,7 @@ function RegisterPopup(props) {
                   name="brandLink"
                   value={values.brandLink}
                   onChange={onChange}
+                  placeholder="You can copy/paste this in..."
                 ></input>
               </div>
               <div id="popup-form-group">

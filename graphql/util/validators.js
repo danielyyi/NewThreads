@@ -18,6 +18,9 @@ module.exports.validateRegisterInput = (
   if (brandLink.trim() === "") {
     errors.brandLink = "Brand Link must not be empty";
   }
+  if(brandLink.indexOf("https://")<0){
+    errors.brandLink1 = "Links must begin with the https:// prefix."
+  }
   if (pfp.trim() === "") {
     errors.pfp = "Logo must not be empty";
   }
