@@ -30,23 +30,25 @@ function Home() {
     <div>
       <Headerbar />
       <div id="intro">
-        <div  id="intro-text">Find Clothes from Startup Brands.</div>
+        <div id="intro-text">Find Clothes from Startup Brands.</div>
       </div>
       <Daily />
       <div id="explore-text">Shop Niches</div>
-      <div id="shop-by-tag">
-        {loading ? (
-          <div className="loader-holder">
-            <div className="loader">Tags...</div>
-          </div>
-        ) : (
-          tags &&
-          tags.map((tag, index) => (
-            <Link to={`/explore/${tag.name}`}>
-              <TagItem key={index} name={tag.name} color={tag.color} />
-            </Link>
-          ))
-        )}
+      <div id="shop-by-tag-holder">
+        <div id="shop-by-tag">
+          {loading ? (
+            <div className="loader-holder">
+              <div className="loader">Tags...</div>
+            </div>
+          ) : (
+            tags &&
+            tags.map((tag, index) => (
+              <Link to={`/explore/${tag.name}`}>
+                <TagItem key={index} name={tag.name} color={tag.color} />
+              </Link>
+            ))
+          )}
+        </div>
       </div>
       <Footer />
     </div>

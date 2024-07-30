@@ -71,8 +71,12 @@ function Profile() {
             <div className="loader-holder">
               <div className="loader">Finding New Clothes....</div>
             </div>
+          ) : posts && posts.length > 0 ? (
+            posts.map((post) => <Post key={post.id} post={post} />)
           ) : (
-            posts && posts.map((post) => <Post key={post.id} post={post} />)
+            <div style={{ marginTop: "30px", marginBottom: "30px" }}>
+              No Clothes Found
+            </div>
           )}
         </div>
       </div>

@@ -36,6 +36,9 @@ function SingleUserHeaderbar({ userId }) {
       </div>
       <div className="profile-middle">
         <div className="profile-name">{username}</div>
+
+      </div>
+        <div className="profile-bio">{bio}</div>
         <div className="profile-buttons">
         <a
           href={`${brandLink}`}
@@ -47,9 +50,6 @@ function SingleUserHeaderbar({ userId }) {
           Visit site
         </a>
         </div>
-      </div>
-        <div className="profile-bio">{bio}</div>
-        
       </div>
     );
   }

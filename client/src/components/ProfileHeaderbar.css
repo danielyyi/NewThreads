@@ -26,7 +26,7 @@
   background-color: rgb(80, 80, 80);
   color: white;
   border: none;
-  margin: 10px 2.5px;
+  margin: 20px 2.5px;
   border-radius: 30px;
 }
 .profile-buttons button:hover {
@@ -40,7 +40,7 @@
 .profile-headerbar {
   background-color: rgb(242, 242, 242);
   padding: 10px 50px 20px 50px;
-  background-image: linear-gradient(#ffffff, rgb(234, 234, 234));
+  background-image: linear-gradient(rgb(190, 190, 190),#ffffff);
 }
 
 @media (max-width: 600px) {

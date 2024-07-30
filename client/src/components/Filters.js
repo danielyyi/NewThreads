@@ -170,9 +170,9 @@ function Filters(props) {
               Pants
             </button>
             <button
-              onClick={() => filterCategory("hats")}
+              onClick={() => filterCategory("hat")}
               className={
-                category === "hats" ? "active-button" : "inactive-button"
+                category === "hat" ? "active-button" : "inactive-button"
               }
             >
               Hats

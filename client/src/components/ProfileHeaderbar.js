@@ -46,7 +46,20 @@ function ProfileHeaderbar({ canPost }) {
         </div>
         <div className="profile-middle">
           <div className="profile-name">{username}</div>
-          <div className="profile-buttons">
+        </div>
+
+        <div className="profile-bio">"{bio}"</div>
+        <a
+          href={`${brandLink}`}
+          className="profile-link"
+          id="visit"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Visit site
+        </a> 
+        <div className="profile-buttons">
+
             {canPost ? (
                   <Link to="/profile/create">
                   <button className="post-button" >
@@ -67,9 +80,6 @@ function ProfileHeaderbar({ canPost }) {
               </button>
             </Link>
           </div>
-        </div>
-
-        <div className="profile-bio">"{bio}"</div>
       </div>
     );
   }

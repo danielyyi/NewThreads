@@ -14,7 +14,7 @@ function Headerbar() {
   ); //name of page aka /login etc.
 
   const path = pathname === "" ? "home" : pathname;
- // console.log(pathname);
+ console.log(pathname);
   const [activeItem] = useState(path);
 
   return (
